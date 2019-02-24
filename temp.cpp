@@ -1,5 +1,5 @@
 /*
-ID: jasonyi1
+ID: 
 PROG:
 LANG: C++
 */
@@ -1083,7 +1083,8 @@ template <class T> typename enable_if<is_sequential<T>::value && access<T, int>:
 template <class T, typename I> typename enable_if<is_map<T>::value && access<T, I>::value, bool>::type val(T& t, const I& i){
     return t.count(i);
 }
-template <class T, typename I, typename I2, typename... Is>
+
+template <class T, typename I, typename I2, typename... Is>
             bool val(T& t, const I& i, const I2& i2, const Is&... is) {
     if (!val(t, i)){
         return false;
