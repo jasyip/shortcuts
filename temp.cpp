@@ -1,32 +1,31 @@
 /*
-ID: 
+ID:
 PROG:
 LANG: C++
-*/
 /**
  * ASCII Table: Lines (85) 100 -> 255
  * Operator Precedence Lines 9 -> 63
- * |Precedence|  Operator(s)  |                Description                |Associativity
+ * |Precedence|  Operator(s)  |                Description	          |Associativity
  * +----------+---------------+-------------------------------------------+-------------
- * |    1     |      ::       |             Scope resolution              |Left-to-right
+ * |    1     |      ::       |             Scope resolution	          |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |          |    a++ a--    |  Suffix/postfix increment and decrement   |
+ * |   	      |    a++ a--    |  Suffix/postfix increment and decrement   |
  * |          |type()  type{} |              Functional cast              |
  * |    2     |      a()      |               Function call               |Left-to-right
  * |          |      a[]      |                 Subscript                 |
- * |          |      ->       |               Member access               |
+ * |          |      ->	      |               Member access               |
  * +----------+---------------+-------------------------------------------+-------------
- * |          |   ++a   --a   |      Prefix increment and decrement       |
+ * |          |   ++a   --a   |      Prefix increment and decrement	  |
  * |          |    +a   -a    |           Unary plus and minus            |
  * |          |     !   ~     |        Logical NOT and bitwise NOT        |
  * |          |    (type)     |               C-style cast                |
- * |    3     |      *a       |         Indirection (dereference)         |Right-to-left
- * |          |      &a       |                Address-of                 |
+ * |    3     |      *a	      |         Indirection (dereference)         |Right-to-left
+ * |          |      &a	      |                Address-of                 |
  * |          |    sizeof     |                  Size-of                  |
  * |          |   new new[]   |         Dynamic memory allocation         |
  * |          |delete delete[]|        Dynamic memory deallocation        |
  * +----------+---------------+-------------------------------------------+-------------
- * |    4     |   .*   ->*    |             Pointer-to-member             |Left-to-right
+ * |    4     |   .*   ->*    |             Pointer-to-member	          |Left-to-right
  * +----------+---------------+-------------------------------------------+
  * |    5     |a*b   a/b   a%b|  Multiplication, division, and remainder  |Left-to-right
  * +----------+---------------+-------------------------------------------+
@@ -34,33 +33,34 @@ LANG: C++
  * +----------+---------------+-------------------------------------------+
  * |    7     |    <<   >>    |    Bitwise left shift and right shift     |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    8      |      <=>      |Three-way comparison operator (since C++20)|Left-to-right
+ * |    8     |      <=>      |Three-way comparison operator (since C++20)|Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    9      |    <   <=      |                                           |Left-to-right
- * |          |    >   >=      |                                           |
+ * |    9     |    <   <=     |                                           |Left-to-right
+ * |          |    >   >=     |                                           |
  * +----------+---------------+-------------------------------------------+
- * |    10      |    ==   !=      |                                           |Left-to-right
+ * |    10    |    ==   !=    |                                           |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    11      |       &          |                Bitwise AND                |Left-to-right
+ * |    11    |       &	      |                Bitwise AND                |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    12      |       ^          |        Bitwise XOR (exclusive or)         |Left-to-right
+ * |    12    |       ^	      |        Bitwise XOR (exclusive or)         |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    13    |       |          |         Bitwise OR (inclusive or)         |Left-to-right
+ * |    13    |       |	      |         Bitwise OR (inclusive or)         |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    14      |      &&       |                Logical AND                |Left-to-right
+ * |    14    |      &&       |                Logical AND                |Left-to-right
  * +----------+---------------+-------------------------------------------+
- * |    15      |      ||       |                Logical OR                 |Left-to-right
+ * |    15    |      ||       |                Logical OR                 |Left-to-right
  * +----------+---------------+-------------------------------------------+-------------
- * |          |   a ? b : c      |            Ternary conditional            |
- * |          |     throw      |              throw operator               |
- * |          |       =          |Direct assignment                          |
+ * |	      |   a ? b : c   |            Ternary conditional            |
+ * |          |     throw     |              throw operator               |
+ * |          |       =	      |Direct assignment                          |
  * |    16    |               |     (provided by default for C++ classes) |Right-to-left
  * |          |    +=   -=    |      Compound assignment by + and -       |
  * |          | *=   /=   %=  |    Compound assignment by *, /, and %     |
  * |          |   <<=   >>=   |     Compound assignment by << and >>      |
  * |          | &=   ^=   |=  |  Compound assignment by AND, XOR, and OR  |
  * +----------+---------------+-------------------------------------------+-------------
- * |    17    |       ,          |                   Comma                   |Left-to-right
+ * |    17    |       ,	      |                   Comma                   |Left-to-right
+ *
  *
  *
  *
@@ -110,8 +110,8 @@ LANG: C++
  * 10	012	0A	00001010	LF	&#010;  	       	Line Feed
  * 11	013	0B	00001011	VT	&#011;      	 	Vertical Tab
  * 12	014	0C	00001100	FF	&#012;  	       	Form Feed
- * 13	015	0D	00001101	CR	&#013;              Carriage Return
- * 14	016	0E	00001110	SO	&#014;              Shift Out / X-On
+ * 13	015	0D	00001101	CR	&#013;              	Carriage Return
+ * 14	016	0E	00001110	SO	&#014;              	Shift Out / X-On
  * 15	017	0F	00001111	SI	&#015;	 	        Shift In / X-Off
  * 16	020	10	00010000	DLE	&#016;	 	        Data Line Escape
  * 17	021	11	00010001	DC1	&#017;	 	        Device Control 1 (oft. XON)
@@ -120,7 +120,7 @@ LANG: C++
  * 20	024	14	00010100	DC4	&#020;	        	Device Control 4
  * 21	025	15	00010101	NAK	&#021;	        	Negative Acknowledgement
  * 22	026	16	00010110	SYN	&#022;	        	Synchronous Idle
- * 23	027	17	00010111	ETB	&#023;	            End of Transmit Block
+ * 23	027	17	00010111	ETB	&#023;	            	End of Transmit Block
  * 24	030	18	00011000	CAN	&#024;	 	        Cancel
  * 25	031	19	00011001	EM	&#025;	 	        End of Medium
  * 26	032	1A	00011010	SUB	&#026;	        	Substitute
@@ -129,13 +129,13 @@ LANG: C++
  * 29	035	1D	00011101	GS	&#029;	         	Group Separator
  * 30	036	1E	00011110	RS	&#030;	         	Record Separator
  * 31	037	1F	00011111	US	&#031;	         	Unit Separator
- * 32	040	20	00100000	 	&#32;               Space
+ * 32	040	20	00100000	 	&#32;               	Space
  * 33	041	21	00100001	!	&#33;	 	        Exclamation mark
- * 34	042	22	00100010	"	&#34;	&quot;      Double quotes (or speech marks)
- * 35	043	23	00100011	#	&#35;	    	    Number
+ * 34	042	22	00100010	"	&#34;	&quot;      	Double quotes (or speech marks)
+ * 35	043	23	00100011	#	&#35;	    	    	Number
  * 36	044	24	00100100	$	&#36;	 	        Dollar
- * 37	045	25	00100101	%	&#37;   	 	    Per cent sign
- * 38	046	26	00100110	&	&#38;	&amp;       Ampersand
+ * 37	045	25	00100101	%	&#37;   	 	Per cent sign
+ * 38	046	26	00100110	&	&#38;	&amp;       	Ampersand
  * 39	047	27	00100111	'	&#39;	        	Single quote
  * 40	050	28	00101000	(	&#40;	        	Open parenthesis (or open bracket)
  * 41	051	29	00101001	)	&#41;	        	Close parenthesis (or close bracket)
@@ -157,7 +157,7 @@ LANG: C++
  * 57	071	39	00111001	9	&#57;	        	Nine
  * 58	072	3A	00111010	:	&#58;	        	Colon
  * 59	073	3B	00111011	;	&#59;	        	Semicolon
- * 60	074	3C	00111100	<	&#60;	&lt;        Less than (or open angled bracket)
+ * 60	074	3C	00111100	<	&#60;	&lt;        	Less than (or open angled bracket)
  * 61	075	3D	00111101	=	&#61;	 	        Equals
  * 62	076	3E	00111110	>	&#62;	&gt;    	Greater than (or close angled bracket)
  * 63	077	3F	00111111	?	&#63;	 	        Question mark
@@ -214,8 +214,8 @@ LANG: C++
  * 114	162	72	01110010	r	&#114;	        	Lowercase r
  * 115	163	73	01110011	s	&#115;	 	        Lowercase s
  * 116	164	74	01110100	t	&#116;	        	Lowercase t
- * 117	165	75	01110101	u	&#117;	    	    Lowercase u
- * 118	166	76	01110110	v	&#118;	    	    Lowercase v
+ * 117	165	75	01110101	u	&#117;	    	    	Lowercase u
+ * 118	166	76	01110110	v	&#118;	    	    	Lowercase v
  * 119	167	77	01110111	w	&#119;	        	Lowercase w
  * 120	170	78	01111000	x	&#120;	        	Lowercase x
  * 121	171	79	01111001	y	&#121;	        	Lowercase y
@@ -227,7 +227,7 @@ LANG: C++
  * 127	177	7F	01111111		&#127;	        	Delete
  *
  * Common Data Structure Operations
- * Data Structure|                         Time Complexity	                       |Space Complexity
+ * Data Structure|                        Time Complexity                          |Space Complexity
  * --------------+--------------------------------+--------------------------------+----------------
  *               |            Average	          |             Worst	           |
  *               +--------------------------------+--------------------------------+     Worst
@@ -241,7 +241,7 @@ LANG: C++
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
  *  Forward List | O(n)	| O(n) |  O(1)	 |  O(1)  | O(n) | O(n)	|  O(1)	  |  O(1)  |     O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
- *     List	     | O(n)	| O(n) |  O(1)   |  O(1)  | O(n) | O(n) |  O(1)   |  O(1)  |     O(n)
+ *     List      | O(n)	| O(n) |  O(1)   |  O(1)  | O(n) | O(n) |  O(1)   |  O(1)  |     O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
  *   Skip List	 |log(n)|log(n)|O(log(n))| log(n) | O(n) | O(n)	|  O(n)   |  O(n)  |  O(n log(n))
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
@@ -249,7 +249,7 @@ LANG: C++
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
  * Bnry Srch Tree|log(n)|log(n)|O(log(n))| log(n) | O(n) | O(n)	|  O(n)	  |  O(n)  |     O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
- * Cartesian Tree| N/A	|log(n)|O(log(n))| log(n) |	N/A	 | O(n)	|  O(n)	  |  O(n)  |     O(n)
+ * Cartesian Tree| N/A	|log(n)|O(log(n))| log(n) | N/A	 | O(n)	|  O(n)	  |  O(n)  |     O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
  *     B-Tree	 |log(n)|log(n)|O(log(n))| log(n) |log(n)|log(n)|O(log(n))| log(n) |	 O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
@@ -261,30 +261,6 @@ LANG: C++
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
  *    KD Tree	 |log(n)|log(n)|O(log(n))| log(n) | O(n) | O(n)	|  O(n)	  |  O(n)  |     O(n)
  * --------------+------+------+---------+--------+------+------+---------+--------+----------------
- * Metric prefixes in everyday use
- * Text  |	Symbol 	Factor 	Power
- * ------+------
- * yotta | Y 	    1000000000000000000000000 	10^24
- * zetta |	Z 	    1000000000000000000000 	    10^21
- * exa 	 |  E   	1000000000000000000 	    10^18
- * peta  |	P   	1000000000000000 	        10^15
- * tera  |	T   	1000000000000 	            10^12
- * giga  |	G   	1000000000 	                10^9
- * mega  |	M   	1000000 	                10^6
- * kilo  |	k   	1000 	                    10^3
- * hecto |	h   	100 	                    10^2
- * deca  |	da  	10 	                        10^1
- * (none)| 	(none)  1 	                        10^0
- * deci 	d   	0.1 	                    10^-1
- * centi 	c   	0.01 	                    10^-2
- * milli 	m   	0.001 	                    10^-3
- * micro 	u   	0.000001 	                10^-6
- * nano 	n   	0.000000001 	            10^-9
- * pico 	p   	0.000000000001 	            10^-12
- * femto 	f   	0.000000000000001 	        10^-15
- * atto 	a   	0.000000000000000001 	    10^-18
- * zepto 	z   	0.000000000000000000001 	10^-21
- * yocto 	y   	0.000000000000000000000001 	10^-24
  */
 /// general stuff
 #include <iostream>
@@ -341,7 +317,9 @@ using namespace placeholders;
 
 ///shorter typenames
 typedef long long llng;
+typedef double dbl;
 typedef long double ldbl;
+
 //these typenames remove confusion on the types of priority queues
 #define pqueue priority_queue
 template <typename T> using max_heap = pqueue<T>;
@@ -355,10 +333,60 @@ template <typename T> using min_heap = pqueue<T, vector<T>, greater<T> >;
 #define flist forward_list
 #define arr array
 
-typedef pair<int, int> pairi;
-typedef pair<llng, llng> pairl;
-typedef pair<double, double> paird;
-typedef pair<ldbl, ldbl> pairld;
+typedef pair<int, int> pi;
+typedef pair<llng, llng> pl;
+typedef pair<dbl, dbl> pd;
+typedef pair<ldbl, ldbl> pld;
+
+typedef vector<int> vi;
+typedef vector<llng> vl;
+typedef vector<dbl> vd;
+typedef vector<ldbl> vld;
+
+typedef stack<int> si;
+typedef stack<llng> sl;
+typedef stack<dbl> sd;
+typedef stack<ldbl> sld;
+
+typedef queue<int> qi;
+typedef queue<llng> ql;
+typedef queue<dbl> qd;
+typedef queue<ldbl> qld;
+
+typedef deque<int> di;
+typedef deque<llng> dl;
+typedef deque<dbl> dd;
+typedef deque<ldbl> dld;
+
+typedef pqueue<int> pqi;
+typedef pqueue<llng> pql;
+typedef pqueue<dbl> pqd;
+typedef pqueue<ldbl> pqdl;
+
+typedef vector<pi> vpi;
+typedef vector<pl> vpl;
+typedef vector<pd> vpd;
+typedef vector<pld> vpld;
+
+typedef stack<pi> spi;
+typedef stack<pl> spl;
+typedef stack<pd> spd;
+typedef stack<pld> spld;
+
+typedef queue<pi> qpi;
+typedef queue<pl> qpl;
+typedef queue<pd> qpd;
+typedef queue<pld> qpld;
+
+typedef deque<pi> dpi;
+typedef deque<pl> dpl;
+typedef deque<pd> dpd;
+typedef deque<pld> dpld;
+
+typedef pqueue<pi> pqpi;
+typedef pqueue<pl> pqpl;
+typedef pqueue<pd> pqpd;
+typedef pqueue<pld> pqpld;
 
 #define ALL(c) begin(c), end(c) //used a lot in container/iterator functions + works with C-arrays
 #define RALL(c) (c).rbegin(), (c).rend()
@@ -382,13 +410,6 @@ template <typename T> string GETSTR(const T& what, const bool& condition = 0){
 template<typename...> struct make_void { typedef void type; };
 template<typename... Ts> using void_t = typename make_void<Ts...>::type;
 
-template <class, typename = void> struct can_contain : public false_type {};
-template <class T> struct can_contain<T, void_t< // true trait class for determining containers
-                typename T::value_type,
-                decltype(T())> > : public true_type {};
-template <class T> inline constexpr bool can_contain_v(const T& t) { return can_contain<T>::value; }
-
-
 template <class, typename = void> struct is_iterator : public false_type {};
 template <class T> struct is_iterator<T, void_t<
             decltype(T(declval<T>())),
@@ -401,7 +422,7 @@ template <class T> inline constexpr bool is_iterator_v(const T& t) { return is_i
 template <class, typename = void> struct iterable : public false_type {};
 template <class T> struct iterable<T, void_t<
                 decltype(begin(declval<T&>())),
-                decltype(end(declval<T&>()))> > : public can_contain<T> {};
+                decltype(end(declval<T&>()))> > : public true_type {};
 template <class T> inline constexpr bool iterable_v(const T& t) { return iterable<T>::value; }
 
 template <class, typename = void> struct iter {};
@@ -414,11 +435,18 @@ template <class T> struct iter<T, typename enable_if<iterable<T>::value>::type> 
 };
 template <class T> using iter_t = typename iter<T>::type;
 
-template <class T> using out_iter = is_base_of<output_iterator_tag, typename iterator_traits<iter_t<T>>::iterator_category()>;
-template <class T> using in_iter = is_base_of<input_iterator_tag, typename iterator_traits<iter_t<T>>::iterator_category()>;
-template <class T> using forward_iter = is_base_of<forward_iterator_tag, typename iterator_traits<iter_t<T>>::iterator_category()>;
-template <class T> using two_way_iter = is_base_of<bidirectional_iterator_tag, typename iterator_traits<iter_t<T>>::iterator_category()>;
-template <class T> using random_iter = is_base_of<random_access_iterator_tag, typename iterator_traits<iter_t<T>>::iterator_category()>;
+
+
+template <class T> using random_iter = is_same<random_access_iterator_tag,
+                                        typename iterator_traits<iter_t<T>>::iterator_category>;
+template <class T> using two_way_iter = is_base_of<bidirectional_iterator_tag,
+typename iterator_traits<iter_t<T>>::iterator_category>;
+template <class T> using forward_iter = is_base_of<forward_iterator_tag,
+typename iterator_traits<iter_t<T>>::iterator_category>;
+template <class T> using out_iter = is_base_of<output_iterator_tag,
+typename iterator_traits<iter_t<T>>::iterator_category>;
+template <class T> using in_iter = is_base_of<input_iterator_tag,
+typename iterator_traits<iter_t<T>>::iterator_category>;
 
 template <class T> inline constexpr bool out_iter_v(const T& t) { return out_iter<T>::value; }
 template <class T> inline constexpr bool in_iter_v(const T& t) { return in_iter<T>::value; }
@@ -437,7 +465,7 @@ template <class T> struct std_container<T, void_t<
                 decltype(declval<T>().empty()),
                 decltype(declval<T&>().swap(declval<T&>())),
                 decltype(swap(declval<T&>(), declval<T&>()))
-                > > : public can_contain<T> {};
+                > > : public true_type {};
 template <class T> inline constexpr bool std_container_v(const T& t) { return std_container<T>::value; }
 
 //false trait class for determining containers
@@ -497,7 +525,7 @@ template <class T> struct is_adaptor<T, void_t<
 template <class T> inline constexpr bool is_adaptor_v(const T& t) { return is_adaptor<T>::value; }
 
 template <class, typename = void> struct instant_size : public false_type {};
-template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > : public can_contain<T> {};
+template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > : public true_type {};
 template <class T> inline constexpr bool instant_size_v(const T& t) { return instant_size<T>::value; }
 
 template <class Tuple, size_t N, size_t Last, bool canEmpty> struct same_elements :
@@ -511,15 +539,15 @@ template <class Tuple, bool canEmpty = false> struct same_e : public same_elemen
 template <class Tuple, bool canEmpty = false> inline constexpr bool same_e_v(const Tuple& t) { return same_e<Tuple, canEmpty>::value; }
 
 template <class, size_t, typename = void> struct val_type { };
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_array<T>::value>::type> {
-    typedef typename val_type<typename remove_extent<T>::type, N - 1>::type type;
-};
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && can_contain<T>() &&
+template <class T, size_t N> struct val_type<T, N, typename enable_if<N && iterable<T>::value &&
                                                                     !is_map<T>()>::type> {
-    typedef typename val_type<typename T::value_type, N - 1>::type type;
+    typedef typename val_type<decltype(*declval<iter_t<T>>()), N - 1>::type type;
 };
 template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_map<T>::value>::type> {
     typedef typename val_type<typename T::mapped_type, N - 1>::type type;
+};
+template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_iterator<T>::value>::type> {
+    typedef typename val_type<typename iterator_traits<T>::value_type, N - 1>::type type;
 };
 template <class T> struct val_type<T, 0> {
     typedef T type;
@@ -547,6 +575,12 @@ template <typename F> inline constexpr int sgn (const F& a, const F& b = F(0)) {
 ///these macros of filling with infinity will be removed later on
 #define INF(type, a, n) type a[n]; fill(ALL(a), INT_MAX);
 #define NINF(type, a, n) type a[n]; fill(ALL(a), INT_MIN);
+
+#define ARR(type, a, n) type a[n]; FOR(a##_i, n) { cin >> a[a##_i]; }
+#define FARR(type, a, n, what) type a[n]; fill(ALL(a), what);
+#define ARR2(type, a, m, n) type a[n]; FOR(a##_i, n) { FOR(a##_j, n) { cin >> a[a##_i][a##_j]; } }
+#define FARR2(type, a, m, n, what) type a[n]; FOR(a##_i, n) { FOR(a##_j, n) {\
+                                                                a[a##_i][a##_j] = what; } }
 
 using dummy = int[];
 
@@ -715,9 +749,13 @@ template <typename... T> istream& SCAN (T&... t) { //recursion
 
 #define SVARS(type, what, ...) type __VA_ARGS__; SET_TO(what, __VA_ARGS__);
 #define ZERO(type, ...) SVARS(type, 0, __VA_ARGS__) //create & automatically set them to 0
-template <typename F, typename... R> F SET_TO (const F& what, R&... r) { //recursion
+template <typename T, typename F, typename... R> F& SET_TO (const T& what, F& f, R&... r) { //recursion
+    f = what;
     void(dummy{0, (void(r = what), 0)... });
-    return what;
+    return f;
+}
+template <typename F, typename... R> F& SET0 (F& f, R&... r) { //recursion
+    return SET_TO(F(0), f, r...);
 }
 
 #define EL cout << '\n';
@@ -756,7 +794,13 @@ inline int dig (const int& a, const int& i, const int& base = 10) {//get digit o
     return int(double(a) / pow (base, i)) % base;
 }
 inline bool bit (const llng& a, const size_t& i) {//get bit in the binary form of a number
-    return (a >> i) % 2;
+    return (a >> i) & 1;
+}
+template <typename T = int> inline T mask(const int& end, const int& start){
+    return (1 << end - start) - 1 << start;
+}
+template <typename T = int> inline T mask(const int& start){
+    return mask(numeric_limits<T>::digits(), start);
 }
 
 
@@ -798,7 +842,7 @@ template <typename T> string sepNum (const T& value, const int& amt = 3,
 #define EXCEPTION(msg) throw join("Exception: ", msg, " [in ", __PRETTY_FUNCTION__,\
                                                                     " of line #", __LINE__, "]\n");
 //if condition succeeds OR error occurs -> message of exception is printed
-#define TRY(cond, msg) try { if (!cond) { EXCEPTION(msg); } } catch(string s) { cerr << s << '\n'; }
+#define TRY(cond, msg) try { if (!(cond)) { EXCEPTION(msg); } } catch(string s) { cerr << s << '\n'; }
 
 
 
@@ -819,7 +863,7 @@ template <typename T, size_t S> typename enable_if<!is_same<T, char>::value, ost
     for_each(ALL(t), [&os] (const T& i) { os << i << GETSTR(iterStep, is_same<T, bool>::value); } );
     return os << GETSTR(iterStep, is_same<T, bool>::value).size() * delChar << GETSTR(iterEnd);
 }
-template <class T> typename enable_if<iterable<T>::value &&
+template <class T> typename enable_if<iterable<T>::value && !is_array<T>::value &&
             !is_base_of<string, T>::value, ostream&>::type operator << (ostream& os, const T& t) {
     os << GETSTR(iterStart, holds<T, char>::value);
     for_each(CALL(t), [&os] (typename T::const_reference i) { os << i <<
@@ -920,7 +964,7 @@ template <typename T, typename... Ts> void GET_TIME (const T& f, const Ts&... ar
     auto s = chrono::high_resolution_clock::now();
     f();
     auto e = chrono::high_resolution_clock::now();
-    eprintf("\n[%s %s called at line #%d in %s taking %s ns]\n", args...,
+    eprintf("[%s %s called at line #%d in %s taking %s ns]\n", args...,
                         sepNum(chrono::duration_cast<chrono::nanoseconds> (e - s).count()).c_str());
 }
 //shorter names for the casts
@@ -949,54 +993,45 @@ string asRaw(const string& a){
 
 //consecutive values must be increasing or equal
 
-template <class T, class C> typename enable_if<forward_iter<T>::value, bool>::type
-                                                must_sorted(const T& t, C c, bool canEqual = 0){
-    typename T::const_iterator n = begin(t), p;
-    for (p = n++; n != end(t) && p != end(t); ++n, ++p){
+template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
+                                                must_sorted(const I& first, const I& last, C c, const bool& canEqual = 0){
+    I n = first, p = first;
+    for (++n; n != last && p != last; ++n, ++p){
         if (!c(*p, *n)){
             return false;
         }
     }
-    return *p != *begin(n);
+    return canEqual || *p != *first;
 }
 
-template <class T> typename enable_if<forward_iter<T>::value, bool>::type
-                                                            uphill(const T& t, bool canEqual = 0){
-    return canEqual ? is_sorted(ALL(t), less<typename T::value_type>()) : must_sorted(t, less<typename T::value_type>());
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                            uphill(const I& first, const I& last, bool canEqual = 0){
+    return must_sorted(first, last, less<val_type_t<I, 1>>(), canEqual);
 }
-template <class T> typename enable_if<forward_iter<T>::value, bool>::type ascending(const T& t){
-    return is_sorted(ALL(t), less_equal<typename T::value_type>());
+
+template <class I> typename enable_if<in_iter<I>::value, bool>::type ascending(const I& first, const I& last){
+    return is_sorted(first, last, less_equal<val_type_t<I, 1>>());
 }
-template <class T> typename enable_if<is_container<T>::value, bool>::type
-                                                            downhill(const T& t, bool canEqual = 0){
-    return is_sorted(ALL(t), greater<typename T::value_type>())
-            && (canEqual || *t.cbegin() != *t.crbegin());
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                            downhill(const I& first, const I& last, bool canEqual = 0){
+    return must_sorted(first, last, greater<val_type_t<I, 1> >(), canEqual);
 }
-template <typename T> bool downhill(const initializer_list<T>& t, bool canEqual = 0){
-    return is_sorted(ALL(t), greater<T>()) && (canEqual || *t.begin() != *prev(t.end()));
+template <class I> typename enable_if<in_iter<I>::value, bool>::type descending(const I& first, const I& last){
+    return is_sorted(first, last, greater_equal<val_type_t<I, 1> >());
 }
-template <class T> typename enable_if<is_container<T>::value, bool>::type descending(const T& t){
-    return is_sorted(ALL(t), greater_equal<typename T::value_type>());
+template <class I> typename enable_if<in_iter<I>::value, bool>::type flat(const I& first, const I& last){
+    return is_sorted(first, last, equal_to<val_type_t<I, 1> >());
 }
-template <typename T> bool descending(const initializer_list<T>& t){
-    return is_sorted(ALL(t), greater_equal<T>());
+template <class T> typename enable_if<in_iter<T>::value, bool>::type distinct(const T& t){
+    return t.size() == uset<val_type_t<T, 1>>(ALL(t)).size();
 }
-template <class T> typename enable_if<is_container<T>::value, bool>::type flat(const T& t){
-    return is_sorted(ALL(t), equal_to<typename T::value_type>());
-}
-template <typename T> bool flat(const initializer_list<T>& t){
-    return is_sorted(ALL(t), equal_to<T>());
-}
-template <class T> typename enable_if<instant_size<T>::value, bool>::type distinct(const T& t){
-    return t.size() == uset<typename T::value_type>(ALL(t)).size();
-}
-template <typename T> bool distinct(const initializer_list<T>& t){
-    return t.size() == uset<T>(ALL(t)).size();
+template <class I> typename enable_if<in_iter<I>::value, bool>::type distinct(const I& first, const I& last){
+    return distance(first, last) == uset<val_type_t<I, 1>>(first, last).size();
 }
 
 /*these functions replace <cmath>'s because instead of inputting an int pointer for a 2nd output,
 the output comes as a pair*/
-template <typename T> typename conditional<is_floating_point<T>::value, pair<T, T>, paird>::type
+template <typename T> typename conditional<is_floating_point<T>::value, pair<T, T>, pd>::type
                                                                                 modf(const T& t){
     typename conditional<is_floating_point<T>::value, T, double>::type param;
     typename conditional<is_floating_point<T>::value, T, double>::type result = modf(t, &param);
@@ -1032,17 +1067,21 @@ template <typename T> pair<typename conditional<is_floating_point<T>::value, T, 
     return mp(r, param);
 }
 
-template <class T, class C> typename enable_if<is_container<T>::value, typename T::reference>::type
-                                            min_e(const T& t, C c = less<typename T::value_type>()){
+template <class T> typename enable_if<iterable<T>::value, typename T::reference>::type
+                                            min_e(const T& t){
+    return min_e(t, less<val_type_t<T, 1>>());
+}
+template <class T, class C> typename enable_if<iterable<T>::value, typename T::reference>::type min_e(const T& t, C c){
     return *min_element(ALL(t), c);
 }
-
-template <class T, class C> typename enable_if<is_container<T>::value, typename T::reference>::type
-                                            max_e(const T& t, C c = less<typename T::value_type>()){
+template <class T> typename enable_if<iterable<T>::value, typename T::reference>::type
+                                            max_e(const T& t){
+    return max_e(t, less<val_type_t<T, 1>>());
+}
+template <class T, class C> typename enable_if<iterable<T>::value, typename T::reference>::type
+                                            max_e(const T& t, C c){
     return *max_element(ALL(t), c);
 }
-
-#define ARR(type, a, S, what) type a[S]; uninitialized_fill(ALL(a), what);
 
 template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type rbegin(T& t) {
     return reverse_iterator<iter_t<T> >(end(t));
@@ -1092,10 +1131,108 @@ template <class T, typename I, typename I2, typename... Is>
     return val(at(t, i), i2, is...);
 }
 
+
+
+inline int log2(const int& x) {
+    TRY(x > 0, "Input must be positive.");
+    return x ? 31 - __builtin_clz(x) : 0;
+}
+inline unsigned log2(const unsigned& x){
+    return x ? 31 - __builtin_clz(x) : 0;
+}
+const int digsOf2Pows[33] = {
+    0, 0, 0, 0, 1, 1, 1, 2, 2, 2,
+    3, 3, 3, 3, 4, 4, 4, 5, 5, 5,
+    6, 6, 6, 6, 7, 7, 7, 8, 8, 8,
+    9, 9, 9
+};
+const int tenToThe[] = {
+    1, 10, 100, 1000, 10000, 100000,
+    1000000, 10000000, 100000000, 1000000000
+};
+int log10(const int& x) {
+    return digsOf2Pows[log2(x) + 1];
+}
+unsigned log10 (const unsigned& x){
+    return digsOf2Pows[log2(x) + 1];
+}
+int isqrt(int num){
+    TRY(num >= 0, "Input must be nonnegative")
+    int place = 1 << sizeof(int) * 8 - 2;
+    while (place > num) {
+        place /= 4;
+    }
+    int root = 0;
+    while (place){
+        if (num >= root + place){
+            num -= root + place;
+            root += place * 2;
+        }
+        root /= 2;
+        place /= 4;
+    }
+    return root;
+}
+unsigned isqrt(unsigned num){
+    unsigned place = 1 << sizeof(int) * 8 - 2;
+    while (place > num) {
+        place /= 4;
+    }
+    unsigned root = 0;
+    while (place){
+        if (num >= root + place){
+            num -= root + place;
+            root += place * 2;
+        }
+        root /= 2;
+        place /= 4;
+    }
+    return root;
+}
+int icbrt(int x) {
+    cout << "I";
+    bool neg = false;
+    if (x < 0){
+        neg = true;
+        x = -x;
+    }
+    unsigned y = 0, b;
+    for (int s = 30; s >= 0; s -= 3) {
+        y *= 2;
+        b = 3 * y * (y + 1) + 1 << s;
+        if (x >= b) {
+            x -= b;
+            ++y;
+        }
+    }
+    return neg ? -y : y;
+}
+unsigned icbrt(unsigned x){
+    unsigned y = 0, b;
+    for (int s = 30; s >= 0; s -= 3) {
+        y *= 2;
+        b = 3 * y * (y + 1) + 1 << s;
+        if (x >= b) {
+            x -= b;
+            ++y;
+        }
+    }
+    return y;
+}
+
+
+
+
+
+
 int main() {
+	//TOFILE( )
 
 
 
 
-    return 0;
+
+	cout.flush();
+	fclose(stdout);
+	return 0;
 }
