@@ -389,7 +389,7 @@ typedef pqueue<pd> pqpd;
 typedef pqueue<pld> pqpld;
 
 #define ALL(c) begin(c), end(c) //used a lot in container/iterator functions + works with C-arrays
-#define RALL(c) (c).rbegin(), (c).rend()
+#define RALL(c) rbegin(c), rend(c)
 #define CALL(c) (c).cbegin(), (c).cend()
 #define CRALL(c) (c).crbegin(), (c).crend()
 
@@ -450,8 +450,10 @@ typename iterator_traits<iter_t<T>>::iterator_category>;
 
 template <class T> inline constexpr bool out_iter_v(const T& t) { return out_iter<T>::value; }
 template <class T> inline constexpr bool in_iter_v(const T& t) { return in_iter<T>::value; }
-template <class T> inline constexpr bool forward_iter_v(const T& t) { return forward_iter<T>::value; }
-template <class T> inline constexpr bool two_way_iter_v(const T& t) { return two_way_iter<T>::value; }
+template <class T> inline constexpr bool forward_iter_v(const T& t) {
+                                                                    return forward_iter<T>::value; }
+template <class T> inline constexpr bool two_way_iter_v(const T& t) {
+                                                                    return two_way_iter<T>::value; }
 template <class T> inline constexpr bool random_iter_v(const T& t) { return random_iter<T>::value; }
 
 template <class, typename = void> struct std_container : public false_type {};
@@ -466,7 +468,8 @@ template <class T> struct std_container<T, void_t<
                 decltype(declval<T&>().swap(declval<T&>())),
                 decltype(swap(declval<T&>(), declval<T&>()))
                 > > : public true_type {};
-template <class T> inline constexpr bool std_container_v(const T& t) { return std_container<T>::value; }
+template <class T> inline constexpr bool std_container_v(const T& t) {
+                                                                return std_container<T>::value; }
 
 //false trait class for determining containers
 template <class, typename = void> struct is_container : public false_type {};
@@ -480,7 +483,8 @@ template <class T> struct is_container<T, void_t< // true trait class for determ
                 decltype(declval<T>() != declval<T>()),
                 decltype(declval<T>().max_size())> > :
             public integral_constant<bool, std_container<T>::value && iterable<T>::value> {};
-template <class T> inline constexpr bool is_container_v(const T& t) { return is_container<T>::value; }
+template <class T> inline constexpr bool is_container_v(const T& t) {
+                                                                return is_container<T>::value; }
 
 template <class, typename = void> struct is_tuple : public false_type {};
 template <class T> struct is_tuple<T, void_t< // true trait class for determining containers
@@ -494,24 +498,28 @@ template <class T> inline constexpr bool is_tuple_v(const T& t) { return is_tupl
 template <class, typename = void> struct is_sequential : public false_type {};
 template <class T> struct is_sequential<T, void_t< // true trait class for determining containers
                 decltype(declval<T>().front())> > : public is_container<T> {};
-template <class T> inline constexpr bool is_sequential_v(const T& t) { return is_sequential<T>::value; }
+template <class T> inline constexpr bool is_sequential_v(const T& t) {
+                                                                return is_sequential<T>::value; }
 
 template <class, typename = void> struct can_change_back : public false_type {};
 template <class T> struct can_change_back<T, void_t< // true trait class for determining containers
             decltype(declval<T&>().push_back(declval<typename T::value_type>()))> > :
                                         public is_sequential<T> {};
-template <class T> inline constexpr bool can_change_back_v(const T& t) { return can_change_back<T>::value; }
+template <class T> inline constexpr bool can_change_back_v(const T& t) {
+                                                                return can_change_back<T>::value; }
 
 template <class, typename = void> struct changes_front : public false_type {};
 template <class T> struct changes_front<T, void_t< // true trait class for determining containers
             decltype(declval<T&>().push_front(declval<typename T::value_type>()))> > :
-            public integral_constant<bool, is_sequential<T>::value && !can_change_back<T>::value> {};
-template <class T> inline constexpr bool changes_front_v(const T& t) { return changes_front<T>::value; }
+        public integral_constant<bool, is_sequential<T>::value && !can_change_back<T>::value> {};
+template <class T> inline constexpr bool changes_front_v(const T& t) {
+                                                                return changes_front<T>::value; }
 
 template <class, typename = void> struct is_associative : public false_type {};
 template <class T> struct is_associative<T, void_t< // true trait class for determining containers
             typename T::key_type> > : public is_container<T> {};
-template <class T> inline constexpr bool is_associative_v(const T& t) { return is_associative<T>::value; }
+template <class T> inline constexpr bool is_associative_v(const T& t) {
+                                                                return is_associative<T>::value; }
 
 template <class, typename = void> struct is_map : public false_type {};
 template <class T> struct is_map<T, void_t< // true trait class for determining containers
@@ -525,28 +533,35 @@ template <class T> struct is_adaptor<T, void_t<
 template <class T> inline constexpr bool is_adaptor_v(const T& t) { return is_adaptor<T>::value; }
 
 template <class, typename = void> struct instant_size : public false_type {};
-template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > : public true_type {};
-template <class T> inline constexpr bool instant_size_v(const T& t) { return instant_size<T>::value; }
+template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > :
+                                                                                public true_type {};
+template <class T> inline constexpr bool instant_size_v(const T& t) {
+                                                                    return instant_size<T>::value; }
 
 template <class Tuple, size_t N, size_t Last, bool canEmpty> struct same_elements :
                 public integral_constant<bool, is_same<typename tuple_element<N - 1, Tuple>::type,
-    typename tuple_element<N, Tuple>::type>::value && same_elements <Tuple, N + 1, Last, canEmpty>::value> {};
+    typename tuple_element<N, Tuple>::type>::value &&
+                                            same_elements <Tuple, N + 1, Last, canEmpty>::value> {};
 template <class Tuple, size_t N, bool canEmpty> struct same_elements<Tuple, N, N, canEmpty>
                                                                             : public true_type {};
 template <class Tuple, bool canEmpty> struct same_elements<Tuple, 1, 0, canEmpty> :
                                                     public integral_constant<bool, canEmpty> {};
-template <class Tuple, bool canEmpty = false> struct same_e : public same_elements<Tuple, 1, tuple_size<Tuple>::value, canEmpty> {};
-template <class Tuple, bool canEmpty = false> inline constexpr bool same_e_v(const Tuple& t) { return same_e<Tuple, canEmpty>::value; }
+template <class Tuple, bool canEmpty = false> struct same_e :
+                            public same_elements<Tuple, 1, tuple_size<Tuple>::value, canEmpty> {};
+template <class Tuple, bool canEmpty = false> inline constexpr bool same_e_v(const Tuple& t) {
+                                                            return same_e<Tuple, canEmpty>::value; }
 
 template <class, size_t, typename = void> struct val_type { };
 template <class T, size_t N> struct val_type<T, N, typename enable_if<N && iterable<T>::value &&
                                                                     !is_map<T>()>::type> {
     typedef typename val_type<decltype(*declval<iter_t<T>>()), N - 1>::type type;
 };
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_map<T>::value>::type> {
+template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_map<T>::value>::type>
+{
     typedef typename val_type<typename T::mapped_type, N - 1>::type type;
 };
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_iterator<T>::value>::type> {
+template <class T, size_t N>
+                    struct val_type<T, N, typename enable_if<N && is_iterator<T>::value>::type> {
     typedef typename val_type<typename iterator_traits<T>::value_type, N - 1>::type type;
 };
 template <class T> struct val_type<T, 0> {
@@ -596,6 +611,7 @@ template <class T> inline typename
     enable_if<!instant_size<T>() && forward_iter<T>(), int>::type SIZE (const T& t) {
     return int (distance(t.begin(), t.end())); //also returned as integer
 }
+#define ASIZE(a) sizeof(a) / sizeof(a[0])
 
 ///these constants may be unnecessary but have good intentions
 const double PI = 3.141592653589793;
@@ -631,7 +647,8 @@ string capitalize(const string& a){
     return !a.size() ? "" : string(1, toupper(a[0])) + a.substr(1);
 }
 
-size_t count(const string& a, const string& substr, size_t start = 0, const size_t& end = string::npos){
+size_t count(const string& a, const string& substr, size_t start = 0,
+                                                                const size_t& end = string::npos){
     size_t out;
     for (out = 0; (start = a.find(substr, start)) < end; ++out, ++start) {}
     return out;
@@ -696,7 +713,6 @@ template <typename... T> string join(const T&... t){
     void(dummy {0, (void(ss << t), 0)... } );
     return ss.str();
 }
-
 string strip(const string& a, const string& chars = " \t\n\v\f\r"){
     unordered_set<char> toRepl(CALL(chars));
     size_t l, r;
@@ -716,20 +732,31 @@ string title(string a){
     }
     return a;
 }
+string tolower (string a){
+    for_each(ALL(a), [] (char& i) { i = tolower(i); } );
+    return a;
+}
+string toupper (string a){
+    for_each(ALL(a), [] (char& i) { i = toupper(i); } );
+    return a;
+}
 string zfill(const string& a, const size_t& width){
     return string(width < a.size() ? 0 : width - a.size(), '0') + a;
 }
 
 template <typename T> string type_name() {
-    typedef typename remove_reference<T>::type actual;
+    typedef typename remove_reference<T>::type noref;
     int status;
-    string tname = typeid (actual).name();
+    string tname = typeid (noref).name();
     string demangled_name = abi::__cxa_demangle (tname.c_str(), nullptr, nullptr, &status);
-    return (status ? tname : repl(repl(demangled_name, {"std::", " "}, ""), ",", ", ")) +
-            (is_const<actual>::value ? " const" : "") +
-            (is_volatile<actual>::value ? " volatile" : "") +
-            (is_lvalue_reference<actual>::value ? "&" : "") +
-            (is_rvalue_reference<actual>::value ? "&&" : "");
+    return regex_replace(regex_replace(status ? tname :
+                                repl(repl(demangled_name, {"std::", " "}, ""), ",", ", "),
+    regex(R"(\B(const(?=volatile\b)|(const|volatile)\b))"), " $&"),
+                         regex(R"((unsigned|long)(?=char|short|int|long))"), "$& ") +
+            (is_const<noref>::value ? " const" : "") +
+            (is_volatile<noref>::value ? " volatile" : "") +
+            (is_lvalue_reference<T>::value ? "&" : "") +
+            (is_rvalue_reference<T>::value ? "&&" : "");
 }
 template <typename T> string type_name (const T& t) {//prints out string form of input type
     return type_name<T>();
@@ -768,6 +795,11 @@ template <typename...R> ostream& OUT (const R&...r) { //recursion
     return FOUT(cout, r...);
 }
 
+#define EXCEPTION(msg) throw join("Exception: ", msg, " [in ", __PRETTY_FUNCTION__,\
+                                                                    " of line #", __LINE__, "]\n");
+//if condition succeeds OR error occurs -> message of exception is printed
+#define TRY(cond, msg) try { if (!(cond)) { EXCEPTION(msg); } } catch(string s) {\
+                                                                                cerr << s << '\n'; }
 
 template <typename T> inline T sMax (T& a, const T& b){//only sets a to b if b > a - commonly used
     return a = max (a, b);
@@ -790,6 +822,105 @@ template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type pow(T
     }
     return value;
 }
+template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type pow(T x, unsigned n){
+    T value = T(1);
+    while (n){
+        if (n & 1){
+            value *= x; // for n odd
+        }
+        n >>= 1;
+        x *= x;
+    }
+    return value;
+}
+
+
+inline int log2(const int& x) {
+    TRY(x > 0, "Input must be positive");
+    return x ? 31 - __builtin_clz(x) : 0;
+}
+inline unsigned log2(const unsigned& x){
+    return x ? 31 - __builtin_clz(x) : 0;
+}
+const int digsOf2Pows[33] = {
+    0, 0, 0, 0, 1, 1, 1, 2, 2, 2,
+    3, 3, 3, 3, 4, 4, 4, 5, 5, 5,
+    6, 6, 6, 6, 7, 7, 7, 8, 8, 8,
+    9, 9, 9
+};
+const int tenToThe[] = {
+    1, 10, 100, 1000, 10000, 100000,
+    1000000, 10000000, 100000000, 1000000000
+};
+int log10(const int& x) {
+    return digsOf2Pows[log2(x) + 1];
+}
+unsigned log10 (const unsigned& x){
+    return digsOf2Pows[log2(x) + 1];
+}
+int sqrt(int num){
+    TRY(num >= 0 && num <= INT_MAX / 2, "Input must be nonnegative and at most 1073741823")
+    int place = 1 << sizeof(int) * 8 - 2;
+    while (place > num) {
+        place /= 4;
+    }
+    int root = 0;
+    while (place){
+        if (num >= root + place){
+            num -= root + place;
+            root += place * 2;
+        }
+        root /= 2;
+        place /= 4;
+    }
+    return root;
+}
+unsigned sqrt(unsigned num){
+    unsigned place = 1 << sizeof(int) * 8 - 2;
+    while (place > num) {
+        place /= 4;
+    }
+    unsigned root = 0;
+    while (place){
+        if (num >= root + place){
+            num -= root + place;
+            root += place * 2;
+        }
+        root /= 2;
+        place /= 4;
+    }
+    return root;
+}
+int cbrt(int x) {
+    bool neg = false;
+    if (x < 0){
+        neg = true;
+        x = -x;
+    }
+    unsigned y = 0, b;
+    for (int s = 30; s >= 0; s -= 3) {
+        y *= 2;
+        b = 3 * y * (y + 1) + 1 << s;
+        if (x >= b) {
+            x -= b;
+            ++y;
+        }
+    }
+    return neg ? -y : y;
+}
+unsigned cbrt(unsigned x){
+    unsigned y = 0, b;
+    for (int s = 30; s >= 0; s -= 3) {
+        y *= 2;
+        b = 3 * y * (y + 1) + 1 << s;
+        if (x >= b) {
+            x -= b;
+            ++y;
+        }
+    }
+    return y;
+}
+
 inline int dig (const int& a, const int& i, const int& base = 10) {//get digit of a number
     return int(double(a) / pow (base, i)) % base;
 }
@@ -839,10 +970,6 @@ template <typename T> string sepNum (const T& value, const int& amt = 3,
     ss << fixed << value;
     return regex_replace (ss.str(), regex (join(R"(\B(?=(\d{)", amt, R"(})+(?!\d)\.?))")), sep);
 }
-#define EXCEPTION(msg) throw join("Exception: ", msg, " [in ", __PRETTY_FUNCTION__,\
-                                                                    " of line #", __LINE__, "]\n");
-//if condition succeeds OR error occurs -> message of exception is printed
-#define TRY(cond, msg) try { if (!(cond)) { EXCEPTION(msg); } } catch(string s) { cerr << s << '\n'; }
 
 
 
@@ -883,7 +1010,7 @@ template <class T> typename enable_if <is_adaptor<T>::value &&
                                                         << GETSTR(iterEnd, holds<T, char>::value);
 }
 template <class T> typename enable_if <is_adaptor<T>::value &&
-                    !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
+                !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
                                                     ostream&>::type operator << (ostream& os, T t){
     deque<typename T::value_type> a;
     while (!t.empty()){
@@ -925,25 +1052,26 @@ template <class T> typename enable_if<can_change_back<T>::value && (holds<T, cha
     }
     return is;
 }
-template <class T> typename enable_if<is_sequential<T>::value && !changes_front<T>::value && !can_change_back<T>::value,
-                                                    istream&>::type operator >> (istream& is, T& t){
+template <class T> typename enable_if<is_sequential<T>::value && !changes_front<T>::value &&
+                        !can_change_back<T>::value, istream&>::type operator >> (istream& is, T& t){
     for_each(ALL(t), [&is] (typename T::reference i) { is >> i; } );
     return is;
 }
 
-template <class T> typename enable_if<is_map<T>::value, istream&>::type operator >> (istream& is, T& t){
+template <class T> typename enable_if<is_map<T>::value, istream&>::type
+                                                                    operator >> (istream& is, T& t){
     for_each(ALL(t), [&is] (typename T::reference i) { is >> i.S; } );
     return is;
 }
 template <class T> typename enable_if<is_associative<T>::value && !is_map<T>::value &&
-        (holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
+(holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
     string a;
     is >> a;
     for_each(CALL(a), [&t] (const char& i) { t.insert(holds<T, bool>::value ? i != '0' : i); } );
     return is;
 }
 template <class T> typename enable_if<is_adaptor<T>::value &&
-    (holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
+(holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
     string a;
     is >> a;
     for_each(CALL(a), [&t] (const char& i) { t.push(holds<T, bool>::value ? i != '0' : i); } );
@@ -961,11 +1089,13 @@ __PRETTY_FUNCTION__); debugPrint = true; cerr << a << "]\n"; debugPrint = false;
 #define TIME(f) GET_TIME(f, type_name(f).c_str(), #f, __LINE__, __PRETTY_FUNCTION__);
 //does the real timing; the macros just provide the details
 template <typename T, typename... Ts> void GET_TIME (const T& f, const Ts&... args) {
-    auto s = chrono::high_resolution_clock::now();
+    typedef typename conditional<chrono::high_resolution_clock::is_steady,
+                                chrono::high_resolution_clock, chrono::steady_clock>::type clock;
+    auto s = clock::now();
     f();
-    auto e = chrono::high_resolution_clock::now();
+    auto e = clock::now();
     eprintf("[%s %s called at line #%d in %s taking %s ns]\n", args...,
-                        sepNum(chrono::duration_cast<chrono::nanoseconds> (e - s).count()).c_str());
+                        sepNum((e - s).count()).c_str());
 }
 //shorter names for the casts
 #define scast static_cast
@@ -994,7 +1124,7 @@ string asRaw(const string& a){
 //consecutive values must be increasing or equal
 
 template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
-                                                must_sorted(const I& first, const I& last, C c, const bool& canEqual = 0){
+                must_sorted(const I& first, const I& last, const C& c, const bool& canEqual = 0){
     I n = first, p = first;
     for (++n; n != last && p != last; ++n, ++p){
         if (!c(*p, *n)){
@@ -1005,27 +1135,31 @@ template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
 }
 
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                            uphill(const I& first, const I& last, bool canEqual = 0){
+                                        uphill(const I& first, const I& last, bool canEqual = 0){
     return must_sorted(first, last, less<val_type_t<I, 1>>(), canEqual);
 }
 
-template <class I> typename enable_if<in_iter<I>::value, bool>::type ascending(const I& first, const I& last){
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                        ascending(const I& first, const I& last){
     return is_sorted(first, last, less_equal<val_type_t<I, 1>>());
 }
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                            downhill(const I& first, const I& last, bool canEqual = 0){
+                                        downhill(const I& first, const I& last, bool canEqual = 0){
     return must_sorted(first, last, greater<val_type_t<I, 1> >(), canEqual);
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type descending(const I& first, const I& last){
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                        descending(const I& first, const I& last){
     return is_sorted(first, last, greater_equal<val_type_t<I, 1> >());
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type flat(const I& first, const I& last){
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                                flat(const I& first, const I& last){
     return is_sorted(first, last, equal_to<val_type_t<I, 1> >());
 }
 template <class T> typename enable_if<in_iter<T>::value, bool>::type distinct(const T& t){
     return t.size() == uset<val_type_t<T, 1>>(ALL(t)).size();
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type distinct(const I& first, const I& last){
+template <class I> typename enable_if<in_iter<I>::value, bool>::type
+                                                            distinct(const I& first, const I& last){
     return distance(first, last) == uset<val_type_t<I, 1>>(first, last).size();
 }
 
@@ -1067,31 +1201,35 @@ template <typename T> pair<typename conditional<is_floating_point<T>::value, T, 
     return mp(r, param);
 }
 
-template <class T> typename enable_if<iterable<T>::value, typename T::reference>::type
-                                            min_e(const T& t){
-    return min_e(t, less<val_type_t<T, 1>>());
+template <class I> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+                                            min_e(const I& first, const I& last){
+    return *min_element(first, last);
 }
-template <class T, class C> typename enable_if<iterable<T>::value, typename T::reference>::type min_e(const T& t, C c){
-    return *min_element(ALL(t), c);
+template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+                                                min_e(const I& first, const I& last, const C& c){
+    return *min_element(first, last, c);
 }
-template <class T> typename enable_if<iterable<T>::value, typename T::reference>::type
-                                            max_e(const T& t){
-    return max_e(t, less<val_type_t<T, 1>>());
+template <class I> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+                                            max_e(const I& first, const I& last){
+    return *max_element(first, last);
 }
-template <class T, class C> typename enable_if<iterable<T>::value, typename T::reference>::type
-                                            max_e(const T& t, C c){
-    return *max_element(ALL(t), c);
+template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+                                            max_e(const I& first, const I& last, const C& c){
+    return *max_element(first, last, c);
 }
 
-template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type rbegin(T& t) {
+template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type
+                                                                                    rbegin(T& t) {
     return reverse_iterator<iter_t<T> >(end(t));
 }
-template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type rend(T& t) {
+template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type
+                                                                                        rend(T& t) {
     return reverse_iterator<iter_t<T> >(begin(t));
 }
 
 template <class, typename, typename = void> struct access : public false_type {};
-template <class T, typename A> struct access<T, A, void_t<decltype(declval<T&>()[declval<A>()]) > > : public true_type {};
+template <class T, typename A>
+        struct access<T, A, void_t<decltype(declval<T&>()[declval<A>()]) > > : public true_type {};
 
 template <class T, typename I> auto at(T& t, const I& i) -> decltype(t.at(i)) {
     return t.at(i);
@@ -1116,10 +1254,12 @@ template <class T, typename... Is> val_type_t<T, sizeof...(Is) + 2>&
     return to(to(t, i), i2, is...);
 }
 
-template <class T> typename enable_if<is_sequential<T>::value && access<T, int>::value, bool>::type val(T& t, const int& i){
+template <class T> typename enable_if<is_sequential<T>::value && access<T, int>::value, bool>::type
+                                                                            val(T& t, const int& i){
     return i < SIZE(t);
 }
-template <class T, typename I> typename enable_if<is_map<T>::value && access<T, I>::value, bool>::type val(T& t, const I& i){
+template <class T, typename I>
+    typename enable_if<is_map<T>::value && access<T, I>::value, bool>::type val(T& t, const I& i){
     return t.count(i);
 }
 
@@ -1130,98 +1270,6 @@ template <class T, typename I, typename I2, typename... Is>
     }
     return val(at(t, i), i2, is...);
 }
-
-
-
-inline int log2(const int& x) {
-    TRY(x > 0, "Input must be positive.");
-    return x ? 31 - __builtin_clz(x) : 0;
-}
-inline unsigned log2(const unsigned& x){
-    return x ? 31 - __builtin_clz(x) : 0;
-}
-const int digsOf2Pows[33] = {
-    0, 0, 0, 0, 1, 1, 1, 2, 2, 2,
-    3, 3, 3, 3, 4, 4, 4, 5, 5, 5,
-    6, 6, 6, 6, 7, 7, 7, 8, 8, 8,
-    9, 9, 9
-};
-const int tenToThe[] = {
-    1, 10, 100, 1000, 10000, 100000,
-    1000000, 10000000, 100000000, 1000000000
-};
-int log10(const int& x) {
-    return digsOf2Pows[log2(x) + 1];
-}
-unsigned log10 (const unsigned& x){
-    return digsOf2Pows[log2(x) + 1];
-}
-int isqrt(int num){
-    TRY(num >= 0, "Input must be nonnegative")
-    int place = 1 << sizeof(int) * 8 - 2;
-    while (place > num) {
-        place /= 4;
-    }
-    int root = 0;
-    while (place){
-        if (num >= root + place){
-            num -= root + place;
-            root += place * 2;
-        }
-        root /= 2;
-        place /= 4;
-    }
-    return root;
-}
-unsigned isqrt(unsigned num){
-    unsigned place = 1 << sizeof(int) * 8 - 2;
-    while (place > num) {
-        place /= 4;
-    }
-    unsigned root = 0;
-    while (place){
-        if (num >= root + place){
-            num -= root + place;
-            root += place * 2;
-        }
-        root /= 2;
-        place /= 4;
-    }
-    return root;
-}
-int icbrt(int x) {
-    cout << "I";
-    bool neg = false;
-    if (x < 0){
-        neg = true;
-        x = -x;
-    }
-    unsigned y = 0, b;
-    for (int s = 30; s >= 0; s -= 3) {
-        y *= 2;
-        b = 3 * y * (y + 1) + 1 << s;
-        if (x >= b) {
-            x -= b;
-            ++y;
-        }
-    }
-    return neg ? -y : y;
-}
-unsigned icbrt(unsigned x){
-    unsigned y = 0, b;
-    for (int s = 30; s >= 0; s -= 3) {
-        y *= 2;
-        b = 3 * y * (y + 1) + 1 << s;
-        if (x >= b) {
-            x -= b;
-            ++y;
-        }
-    }
-    return y;
-}
-
-
-
 
 
 
