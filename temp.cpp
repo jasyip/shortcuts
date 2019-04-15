@@ -5,7 +5,7 @@ LANG: C++
 /**
  * ASCII Table: Lines (85) 100 -> 255
  * Operator Precedence Lines 9 -> 63
- * |Precedence|  Operator(s)  |                Description	          |Associativity
+ * |Precedence|  Operator(s)  |                Description	              |Associativity
  * +----------+---------------+-------------------------------------------+-------------
  * |    1     |      ::       |             Scope resolution	          |Left-to-right
  * +----------+---------------+-------------------------------------------+
@@ -60,171 +60,6 @@ LANG: C++
  * |          | &=   ^=   |=  |  Compound assignment by AND, XOR, and OR  |
  * +----------+---------------+-------------------------------------------+-------------
  * |    17    |       ,	      |                   Comma                   |Left-to-right
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- * ASCII control characters (character code 0-31)
- * The first 32 characters in the ASCII-table are unprintable control codes and are used to control
- *     peripherals such as printers.
- * ASCII printable characters (character code 32-127)
- * Codes 32-127 are common for all the different variations of the ASCII table, they are called
- *  printable characters, represent letters,  *digits, punctuation marks, and a few miscellaneous
- *      symbols. You will find almost every character on your keyboard. Character 127 represents
- *          the command DEL.
- * The extended ASCII codes (character code 128-255)
- * There are several different variations of the 8-bit ASCII table. The table below is according to
- *  Windows-1252 (CP-1252) which is a superset of ISO 8859-1, also called ISO Latin-1, in terms of
- *      printable characters, but differs from the IANA's ISO-8859-1 by using displayable characters
- *          rather than control characters in the 128 to 159 range. Characters that differ from
- *              ISO-8859-1 is marked by light blue color.
- * DEC	OCT	HEX	BIN	Symbol	HTML Number	HTML Name	Description
- * 0	000	00	00000000	NUL	&#000;	        	Null char
- * 1	001	01	00000001	SOH	&#001;	        	Start of Heading
- * 2	002	02	00000010	STX	&#002;	         	Start of Text
- * 3	003	03	00000011	ETX	&#003;	         	End of Text
- * 4	004	04	00000100	EOT	&#004;	         	End of Transmission
- * 5	005	05	00000101	ENQ	&#005;      	 	Enquiry
- * 6	006	06	00000110	ACK	&#006;      	 	Acknowledgment
- * 7	007	07	00000111	BEL	&#007;      	 	Bell
- * 8	010	08	00001000	BS	&#008;      	 	Back Space
- * 9	011	09	00001001	HT	&#009;      	 	Horizontal Tab
- * 10	012	0A	00001010	LF	&#010;  	       	Line Feed
- * 11	013	0B	00001011	VT	&#011;      	 	Vertical Tab
- * 12	014	0C	00001100	FF	&#012;  	       	Form Feed
- * 13	015	0D	00001101	CR	&#013;              	Carriage Return
- * 14	016	0E	00001110	SO	&#014;              	Shift Out / X-On
- * 15	017	0F	00001111	SI	&#015;	 	        Shift In / X-Off
- * 16	020	10	00010000	DLE	&#016;	 	        Data Line Escape
- * 17	021	11	00010001	DC1	&#017;	 	        Device Control 1 (oft. XON)
- * 18	022	12	00010010	DC2	&#018;	        	Device Control 2
- * 19	023	13	00010011	DC3	&#019;	        	Device Control 3 (oft. XOFF)
- * 20	024	14	00010100	DC4	&#020;	        	Device Control 4
- * 21	025	15	00010101	NAK	&#021;	        	Negative Acknowledgement
- * 22	026	16	00010110	SYN	&#022;	        	Synchronous Idle
- * 23	027	17	00010111	ETB	&#023;	            	End of Transmit Block
- * 24	030	18	00011000	CAN	&#024;	 	        Cancel
- * 25	031	19	00011001	EM	&#025;	 	        End of Medium
- * 26	032	1A	00011010	SUB	&#026;	        	Substitute
- * 27	033	1B	00011011	ESC	&#027;	         	Escape
- * 28	034	1C	00011100	FS	&#028;      	 	File Separator
- * 29	035	1D	00011101	GS	&#029;	         	Group Separator
- * 30	036	1E	00011110	RS	&#030;	         	Record Separator
- * 31	037	1F	00011111	US	&#031;	         	Unit Separator
- * 32	040	20	00100000	 	&#32;               	Space
- * 33	041	21	00100001	!	&#33;	 	        Exclamation mark
- * 34	042	22	00100010	"	&#34;	&quot;      	Double quotes (or speech marks)
- * 35	043	23	00100011	#	&#35;	    	    	Number
- * 36	044	24	00100100	$	&#36;	 	        Dollar
- * 37	045	25	00100101	%	&#37;   	 	Per cent sign
- * 38	046	26	00100110	&	&#38;	&amp;       	Ampersand
- * 39	047	27	00100111	'	&#39;	        	Single quote
- * 40	050	28	00101000	(	&#40;	        	Open parenthesis (or open bracket)
- * 41	051	29	00101001	)	&#41;	        	Close parenthesis (or close bracket)
- * 42	052	2A	00101010	*	&#42;	        	Asterisk
- * 43	053	2B	00101011	+	&#43;	        	Plus
- * 44	054	2C	00101100	,	&#44;	        	Comma
- * 45	055	2D	00101101	-	&#45;	        	Hyphen
- * 46	056	2E	00101110	.	&#46;	        	Period, dot or full stop
- * 47	057	2F	00101111	/	&#47;	        	Slash or divide
- * 48	060	30	00110000	0	&#48;	        	Zero
- * 49	061	31	00110001	1	&#49;	        	One
- * 50	062	32	00110010	2	&#50;	        	Two
- * 51	063	33	00110011	3	&#51;	        	Three
- * 52	064	34	00110100	4	&#52;	        	Four
- * 53	065	35	00110101	5	&#53;	 	        Five
- * 54	066	36	00110110	6	&#54;	        	Six
- * 55	067	37	00110111	7	&#55;	        	Seven
- * 56	070	38	00111000	8	&#56;	        	Eight
- * 57	071	39	00111001	9	&#57;	        	Nine
- * 58	072	3A	00111010	:	&#58;	        	Colon
- * 59	073	3B	00111011	;	&#59;	        	Semicolon
- * 60	074	3C	00111100	<	&#60;	&lt;        	Less than (or open angled bracket)
- * 61	075	3D	00111101	=	&#61;	 	        Equals
- * 62	076	3E	00111110	>	&#62;	&gt;    	Greater than (or close angled bracket)
- * 63	077	3F	00111111	?	&#63;	 	        Question mark
- * 64	100	40	01000000	@	&#64;	        	At symbol
- * 65	101	41	01000001	A	&#65;	        	Uppercase A
- * 66	102	42	01000010	B	&#66;	        	Uppercase B
- * 67	103	43	01000011	C	&#67;	        	Uppercase C
- * 68	104	44	01000100	D	&#68;	        	Uppercase D
- * 69	105	45	01000101	E	&#69;	        	Uppercase E
- * 70	106	46	01000110	F	&#70;	        	Uppercase F
- * 71	107	47	01000111	G	&#71;	        	Uppercase G
- * 72	110	48	01001000	H	&#72;	        	Uppercase H
- * 73	111	49	01001001	I	&#73;	        	Uppercase I
- * 74	112	4A	01001010	J	&#74;	        	Uppercase J
- * 75	113	4B	01001011	K	&#75;	        	Uppercase K
- * 76	114	4C	01001100	L	&#76;	        	Uppercase L
- * 77	115	4D	01001101	M	&#77;	        	Uppercase M
- * 78	116	4E	01001110	N	&#78;	        	Uppercase N
- * 79	117	4F	01001111	O	&#79;	        	Uppercase O
- * 80	120	50	01010000	P	&#80;	        	Uppercase P
- * 81	121	51	01010001	Q	&#81;	        	Uppercase Q
- * 82	122	52	01010010	R	&#82;	        	Uppercase R
- * 83	123	53	01010011	S	&#83;	        	Uppercase S
- * 84	124	54	01010100	T	&#84;	        	Uppercase T
- * 85	125	55	01010101	U	&#85;	        	Uppercase U
- * 86	126	56	01010110	V	&#86;	        	Uppercase V
- * 87	127	57	01010111	W	&#87;	        	Uppercase W
- * 88	130	58	01011000	X	&#88;	        	Uppercase X
- * 89	131	59	01011001	Y	&#89;	        	Uppercase Y
- * 90	132	5A	01011010	Z	&#90;	        	Uppercase Z
- * 91	133	5B	01011011	[	&#91;	        	Opening bracket
- * 92	134	5C	01011100	\	&#92;	        	Backslash
- * 93	135	5D	01011101	]	&#93;	        	Closing bracket
- * 94	136	5E	01011110	^	&#94;	        	Caret - circumflex
- * 95	137	5F	01011111	_	&#95;	        	Underscore
- * 96	140	60	01100000	`	&#96;	        	Grave accent
- * 97	141	61	01100001	a	&#97;	        	Lowercase a
- * 98	142	62	01100010	b	&#98;	        	Lowercase b
- * 99	143	63	01100011	c	&#99;	        	Lowercase c
- * 100	144	64	01100100	d	&#100;	        	Lowercase d
- * 101	145	65	01100101	e	&#101;	        	Lowercase e
- * 102	146	66	01100110	f	&#102;	        	Lowercase f
- * 103	147	67	01100111	g	&#103;	        	Lowercase g
- * 104	150	68	01101000	h	&#104;	        	Lowercase h
- * 105	151	69	01101001	i	&#105;	        	Lowercase i
- * 106	152	6A	01101010	j	&#106;	        	Lowercase j
- * 107	153	6B	01101011	k	&#107;	        	Lowercase k
- * 108	154	6C	01101100	l	&#108;	        	Lowercase l
- * 109	155	6D	01101101	m	&#109;	        	Lowercase m
- * 110	156	6E	01101110	n	&#110;	        	Lowercase n
- * 111	157	6F	01101111	o	&#111;	        	Lowercase o
- * 112	160	70	01110000	p	&#112;	        	Lowercase p
- * 113	161	71	01110001	q	&#113;	        	Lowercase q
- * 114	162	72	01110010	r	&#114;	        	Lowercase r
- * 115	163	73	01110011	s	&#115;	 	        Lowercase s
- * 116	164	74	01110100	t	&#116;	        	Lowercase t
- * 117	165	75	01110101	u	&#117;	    	    	Lowercase u
- * 118	166	76	01110110	v	&#118;	    	    	Lowercase v
- * 119	167	77	01110111	w	&#119;	        	Lowercase w
- * 120	170	78	01111000	x	&#120;	        	Lowercase x
- * 121	171	79	01111001	y	&#121;	        	Lowercase y
- * 122	172	7A	01111010	z	&#122;	        	Lowercase z
- * 123	173	7B	01111011	{	&#123;	        	Opening brace
- * 124	174	7C	01111100	|	&#124;	        	Vertical bar
- * 125	175	7D	01111101	}	&#125;	        	Closing brace
- * 126	176	7E	01111110	~	&#126;	        	Equivalency sign - tilde
- * 127	177	7F	01111111		&#127;	        	Delete
  *
  * Common Data Structure Operations
  * Data Structure|                        Time Complexity                          |Space Complexity
@@ -301,6 +136,14 @@ LANG: C++
 #include <regex> //used for string manipulation in the functions below
 #include <cstdlib>
 //provides hashing function for pairs so pairs can now be used as keys in hash sets/maps
+typedef long long llng;
+typedef double dbl;
+typedef long double ldbl;
+typedef unsigned long long ullng;
+typedef unsigned uint;
+typedef unsigned short ushort;
+typedef unsigned char uchar;
+
 template <typename T> inline std::size_t hash_combine(const std::size_t& seed, const T& v) {
     return seed ^ std::hash<T>(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
@@ -310,15 +153,43 @@ namespace std {
             return hash_combine(hash_combine(0, v.first), v.second);
         }
     };
+    template <> void swap<int> (int& a, int& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<llng> (llng& a, llng& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<uint> (uint& a, uint& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<ullng> (ullng& a, ullng& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<char> (char& a, char& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<uchar> (uchar& a, uchar& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<short> (short& a, short& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<ushort> (ushort& a, ushort& b){
+        a ^ b && (b ^= a ^= b, a ^= b);
+    }
+    template <> void swap<float> (float& a, float& b){
+        swap(*(int*)&a, *(int*)&b);
+    }
+    template <> void swap<double> (double& a, double& b){
+        swap(*(llng*)&a, *(llng*)&b);
+    }
 };
 
 using namespace std;
 using namespace placeholders;
 
 ///shorter typenames
-typedef long long llng;
-typedef double dbl;
-typedef long double ldbl;
+
 
 //these typenames remove confusion on the types of priority queues
 #define pqueue priority_queue
@@ -392,23 +263,14 @@ typedef pqueue<pld> pqpld;
 #define RALL(c) rbegin(c), rend(c)
 #define CALL(c) (c).cbegin(), (c).cend()
 #define CRALL(c) (c).crbegin(), (c).crend()
+#define AALL(a) a, a + sizeof(a) / sizeof(a[0])
 
 
-const array<const string, 2> varsStart = {"v{"}, varsStep = {", ", " "}, varsEnd = {"}v"};
-const array<const string, 2> iterStart = {"{"}, iterEnd = {"}"};
-const array<const string, 2> tupStart = {"("}, tupEnd = {")"};
-const auto& iterStep = varsStep, tupStep = varsStep;
+template <typename...> struct make_void { typedef void type; };
+template <typename... Ts> using void_t = typename make_void<Ts...>::type;
 
-const string delChar = "\b \b";
 
-bool debugPrint = false;
 
-template <typename T> string GETSTR(const T& what, const bool& condition = 0){
-    return condition ? "" : what.at(!debugPrint);
-}
-
-template<typename...> struct make_void { typedef void type; };
-template<typename... Ts> using void_t = typename make_void<Ts...>::type;
 
 template <class, typename = void> struct is_iterator : public false_type {};
 template <class T> struct is_iterator<T, void_t<
@@ -417,13 +279,12 @@ template <class T> struct is_iterator<T, void_t<
             decltype(++declval<T&>()),
             decltype(declval<T&>()++),
             decltype(*declval<T&>())> > : public true_type {};
-template <class T> inline constexpr bool is_iterator_v(const T& t) { return is_iterator<T>::value; }
 
 template <class, typename = void> struct iterable : public false_type {};
 template <class T> struct iterable<T, void_t<
                 decltype(begin(declval<T&>())),
                 decltype(end(declval<T&>()))> > : public true_type {};
-template <class T> inline constexpr bool iterable_v(const T& t) { return iterable<T>::value; }
+#define iterable_v(T) iterable<T>::value
 
 template <class, typename = void> struct iter {};
 template <class T> struct iter<T, typename enable_if<is_iterator<T>::value>::type> {
@@ -435,26 +296,16 @@ template <class T> struct iter<T, typename enable_if<iterable<T>::value>::type> 
 };
 template <class T> using iter_t = typename iter<T>::type;
 
-
-
 template <class T> using random_iter = is_same<random_access_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
 template <class T> using two_way_iter = is_base_of<bidirectional_iterator_tag,
-typename iterator_traits<iter_t<T>>::iterator_category>;
+                                        typename iterator_traits<iter_t<T>>::iterator_category>;
 template <class T> using forward_iter = is_base_of<forward_iterator_tag,
-typename iterator_traits<iter_t<T>>::iterator_category>;
+                                        typename iterator_traits<iter_t<T>>::iterator_category>;
 template <class T> using out_iter = is_base_of<output_iterator_tag,
-typename iterator_traits<iter_t<T>>::iterator_category>;
+                                        typename iterator_traits<iter_t<T>>::iterator_category>;
 template <class T> using in_iter = is_base_of<input_iterator_tag,
-typename iterator_traits<iter_t<T>>::iterator_category>;
-
-template <class T> inline constexpr bool out_iter_v(const T& t) { return out_iter<T>::value; }
-template <class T> inline constexpr bool in_iter_v(const T& t) { return in_iter<T>::value; }
-template <class T> inline constexpr bool forward_iter_v(const T& t) {
-                                                                    return forward_iter<T>::value; }
-template <class T> inline constexpr bool two_way_iter_v(const T& t) {
-                                                                    return two_way_iter<T>::value; }
-template <class T> inline constexpr bool random_iter_v(const T& t) { return random_iter<T>::value; }
+                                        typename iterator_traits<iter_t<T>>::iterator_category>;
 
 template <class, typename = void> struct std_container : public false_type {};
 template <class T> struct std_container<T, void_t<
@@ -468,8 +319,6 @@ template <class T> struct std_container<T, void_t<
                 decltype(declval<T&>().swap(declval<T&>())),
                 decltype(swap(declval<T&>(), declval<T&>()))
                 > > : public true_type {};
-template <class T> inline constexpr bool std_container_v(const T& t) {
-                                                                return std_container<T>::value; }
 
 //false trait class for determining containers
 template <class, typename = void> struct is_container : public false_type {};
@@ -482,9 +331,7 @@ template <class T> struct is_container<T, void_t< // true trait class for determ
                 decltype(declval<T>() == declval<T>()),
                 decltype(declval<T>() != declval<T>()),
                 decltype(declval<T>().max_size())> > :
-            public integral_constant<bool, std_container<T>::value && iterable<T>::value> {};
-template <class T> inline constexpr bool is_container_v(const T& t) {
-                                                                return is_container<T>::value; }
+            public integral_constant<bool, std_container<T>::value && iterable<T>::value > {};
 
 template <class, typename = void> struct is_tuple : public false_type {};
 template <class T> struct is_tuple<T, void_t< // true trait class for determining containers
@@ -493,63 +340,14 @@ template <class T> struct is_tuple<T, void_t< // true trait class for determinin
             decltype(declval<T>() == declval<T>()),
             decltype(declval<T>() < declval<T>()),
             decltype(tuple_size<T>::value)> > : public true_type {};
-template <class T> inline constexpr bool is_tuple_v(const T& t) { return is_tuple<T>::value; }
-
-template <class, typename = void> struct is_sequential : public false_type {};
-template <class T> struct is_sequential<T, void_t< // true trait class for determining containers
-                decltype(declval<T>().front())> > : public is_container<T> {};
-template <class T> inline constexpr bool is_sequential_v(const T& t) {
-                                                                return is_sequential<T>::value; }
-
-template <class, typename = void> struct can_change_back : public false_type {};
-template <class T> struct can_change_back<T, void_t< // true trait class for determining containers
-            decltype(declval<T&>().push_back(declval<typename T::value_type>()))> > :
-                                        public is_sequential<T> {};
-template <class T> inline constexpr bool can_change_back_v(const T& t) {
-                                                                return can_change_back<T>::value; }
-
-template <class, typename = void> struct changes_front : public false_type {};
-template <class T> struct changes_front<T, void_t< // true trait class for determining containers
-            decltype(declval<T&>().push_front(declval<typename T::value_type>()))> > :
-        public integral_constant<bool, is_sequential<T>::value && !can_change_back<T>::value> {};
-template <class T> inline constexpr bool changes_front_v(const T& t) {
-                                                                return changes_front<T>::value; }
 
 template <class, typename = void> struct is_associative : public false_type {};
 template <class T> struct is_associative<T, void_t< // true trait class for determining containers
             typename T::key_type> > : public is_container<T> {};
-template <class T> inline constexpr bool is_associative_v(const T& t) {
-                                                                return is_associative<T>::value; }
 
 template <class, typename = void> struct is_map : public false_type {};
 template <class T> struct is_map<T, void_t< // true trait class for determining containers
             typename T::mapped_type> > : public is_associative<T> {};
-template <class T> inline constexpr bool is_map_v(const T& t) { return is_map<T>::value; }
-
-
-template <class, typename = void> struct is_adaptor : public false_type {};
-template <class T> struct is_adaptor<T, void_t<
-                typename T::container_type> > : public std_container<T> {};
-template <class T> inline constexpr bool is_adaptor_v(const T& t) { return is_adaptor<T>::value; }
-
-template <class, typename = void> struct instant_size : public false_type {};
-template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > :
-                                                                                public true_type {};
-template <class T> inline constexpr bool instant_size_v(const T& t) {
-                                                                    return instant_size<T>::value; }
-
-template <class Tuple, size_t N, size_t Last, bool canEmpty> struct same_elements :
-                public integral_constant<bool, is_same<typename tuple_element<N - 1, Tuple>::type,
-    typename tuple_element<N, Tuple>::type>::value &&
-                                            same_elements <Tuple, N + 1, Last, canEmpty>::value> {};
-template <class Tuple, size_t N, bool canEmpty> struct same_elements<Tuple, N, N, canEmpty>
-                                                                            : public true_type {};
-template <class Tuple, bool canEmpty> struct same_elements<Tuple, 1, 0, canEmpty> :
-                                                    public integral_constant<bool, canEmpty> {};
-template <class Tuple, bool canEmpty = false> struct same_e :
-                            public same_elements<Tuple, 1, tuple_size<Tuple>::value, canEmpty> {};
-template <class Tuple, bool canEmpty = false> inline constexpr bool same_e_v(const Tuple& t) {
-                                                            return same_e<Tuple, canEmpty>::value; }
 
 template <class, size_t, typename = void> struct val_type { };
 template <class T, size_t N> struct val_type<T, N, typename enable_if<N && iterable<T>::value &&
@@ -567,16 +365,114 @@ template <class T, size_t N>
 template <class T> struct val_type<T, 0> {
     typedef T type;
 };
-template <class T, size_t N> using val_type_t = typename val_type<T, N>::type;
+template <class T, size_t N = 1> using val_type_t = typename val_type<T, N>::type;
 
+template <class, typename = void> struct is_sequential : public false_type {};
+template <class T> struct is_sequential<T, void_t< // true trait class for determining containers
+                decltype(declval<T>().front())> > : public is_container<T> {};
 
+template <class, typename = void> struct can_change_back : public false_type {};
+template <class T> struct can_change_back<T, void_t< // true trait class for determining containers
+            decltype(declval<T&>().push_back(declval<val_type_t<T>>()))> > :
+                                        public is_sequential<T> {};
+
+template <class, typename = void> struct changes_front : public false_type {};
+template <class T> struct changes_front<T, void_t< // true trait class for determining containers
+            decltype(declval<T&>().push_front(declval<val_type_t<T>>()))> > :
+        public integral_constant<bool, is_sequential<T>::value && !can_change_back<T>::value> {};
+
+template <class, typename = void> struct is_adaptor : public false_type {};
+template <class T> struct is_adaptor<T, void_t<
+                typename T::container_type> > : public std_container<T> {};
+
+template <class, typename = void> struct instant_size : public false_type {};
+template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > :
+                                                                                public true_type {};
+
+template <class Tuple, size_t N, size_t Last, bool canEmpty> struct same_elements :
+                public integral_constant<bool, is_same<typename tuple_element<N - 1, Tuple>::type,
+    typename tuple_element<N, Tuple>::type>::value &&
+                                            same_elements <Tuple, N + 1, Last, canEmpty>::value> {};
+template <class Tuple, size_t N, bool canEmpty> struct same_elements<Tuple, N, N, canEmpty>
+                                                                            : public true_type {};
+template <class Tuple, bool canEmpty> struct same_elements<Tuple, 1, 0, canEmpty> :
+                                                    public integral_constant<bool, canEmpty> {};
+template <class Tuple, bool canEmpty = false> struct same_e :
+                            public same_elements<Tuple, 1, tuple_size<Tuple>::value, canEmpty> {};
+
+template <class> struct is_str : public false_type {};
+template <class T> struct is_str<basic_string<T>> : public true_type {};
+
+template <typename T> struct is_bounded_array : false_type {};
+template <typename T, size_t N> struct is_bounded_array<T[N]> : true_type {};
+
+template <typename T> struct remove_cvref {
+    typedef typename remove_cv<typename remove_reference<T>::type>::type type;
+};
+template <typename T> using remove_cvref_t = typename remove_cvref<T>::type;
+
+template <class, typename = void> struct customPrint : public false_type {};
+template <class T> struct customPrint<T, typename enable_if<is_tuple<T>::value && !is_container<T>::value>::type> : public true_type {};
+template <class T> struct customPrint<T, typename enable_if<
+            is_bounded_array<T>::value && !is_same<char, remove_cvref_t<val_type_t<T>>>::value ||
+                    iterable<T>::value && !is_array<T>::value && !is_str<T>::value ||
+                                                is_adaptor<T>::value>::type> : public true_type {};
+
+using dummy = int[];
+
+template <typename T, typename B> using holds = is_same<val_type_t<T>, B>;
+
+template <typename T, typename B> struct hasChar : public integral_constant<bool,
+is_same<val_type_t<T>, char>::value || is_same<val_type_t<T>, signed char>::value ||
+is_same<val_type_t<T>, unsigned char>::value || is_same<val_type_t<T>, wchar_t>::value ||
+is_same<val_type_t<T>, char16_t>::value || is_same<val_type_t<T>, char32_t>::value> {};
+
+template <class, typename, typename = void> struct access : public false_type {};
+template <class T, typename A>
+        struct access<T, A, void_t<decltype(declval<T&>()[declval<A>()]) > > : public true_type {};
+
+bool debugPrint = true, printLN = false;
+
+const struct sBeautifier{
+    string a;
+    enum class pos{
+        start, step, end
+    } type;
+} varsStart{"v{", sBeautifier::pos::start},
+  iterStart{"{", sBeautifier::pos::start},
+  tupStart{"(", sBeautifier::pos::start},
+  varsStep{",", sBeautifier::pos::step},
+  varsEnd{"}v", sBeautifier::pos::end},
+  iterEnd{"}", sBeautifier::pos::end},
+  tupEnd{")", sBeautifier::pos::end};
+const sBeautifier& iterStep(varsStep), tupStep(varsStep);
+template <typename T = void> string GETSTR(const sBeautifier& a, const vector<bool>& b) {
+    string out = !b.at(0) && debugPrint ? a.a : "";
+    switch(a.type){
+    case sBeautifier::pos::start:
+        return out;
+    case sBeautifier::pos::step:
+        return out + (customPrint<T>::value ? '\n' : ' ');
+    case sBeautifier::pos::end:
+        return (!b.at(1) && customPrint<T>::value ? "\n" : "") + out;
+    }
+};
+template <typename T = void> string GETSTR(const sBeautifier& a){
+    return (debugPrint ? a.a : "") + (a.type == sBeautifier::pos::step ? " " : "");
+}
+
+const string delChar = "\b \b";
 
 
 ///after input/output with containers is properly fixed, these following macros will be unnecessary
 
-template <typename F> inline constexpr int sgn (const F& a, const F& b = F(0)) {
+template <typename A, typename B = int> inline constexpr int sgn (const A& a, const B& b = 0) {
     return int ((a > b) - (a < b)); //returns -1 if a < b, 0 if a == b, 1 if a > b
 }//C++20 spaceship operator alternative
+template <typename A, typename B, typename C> inline constexpr int sgn (const A& a, const B& b, const C& tol) {
+    return int ((a > b + tol) - (a < b - tol)); //returns -1 if a < b, 0 if a == b, 1 if a > b
+}//C++20 spaceship operator alternative
+
 //in these for loop macros, the I character means inclusive and the E character means exclusive
 //a character before the "FOR" refers to the starting pos; after the "FOR" refers to the end pos
 #define FOR(i,n) IFORE(i,0,n) //most commonly used version of the for loop
@@ -592,14 +488,12 @@ template <typename F> inline constexpr int sgn (const F& a, const F& b = F(0)) {
 #define NINF(type, a, n) type a[n]; fill(ALL(a), INT_MIN);
 
 #define ARR(type, a, n) type a[n]; FOR(a##_i, n) { cin >> a[a##_i]; }
-#define FARR(type, a, n, what) type a[n]; fill(ALL(a), what);
+#define FARR(type, a, n, what) type a[n]; fill(a, a + n, what);
 #define ARR2(type, a, m, n) type a[n]; FOR(a##_i, n) { FOR(a##_j, n) { cin >> a[a##_i][a##_j]; } }
 #define FARR2(type, a, m, n, what) type a[n]; FOR(a##_i, n) { FOR(a##_j, n) {\
                                                                 a[a##_i][a##_j] = what; } }
 
-using dummy = int[];
 
-template <typename T, typename B> using holds = is_same<typename T::value_type, B>;
 
 template <typename T, size_t S> inline constexpr int SIZE (const T (&t)[S]) {//returns the unstored array size
     return int (S);//returns as integer to prevent confusing comparisons between signed and unsigned
@@ -610,6 +504,9 @@ template <class T> inline auto SIZE (const T& t) -> decltype(t.size(), int()) {
 template <class T> inline typename
     enable_if<!instant_size<T>() && forward_iter<T>(), int>::type SIZE (const T& t) {
     return int (distance(t.begin(), t.end())); //also returned as integer
+}
+template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type dist(const T& a, const T& b){
+    return abs(a - b);
 }
 #define ASIZE(a) sizeof(a) / sizeof(a[0])
 
@@ -786,12 +683,12 @@ template <typename F, typename... R> F& SET0 (F& f, R&... r) { //recursion
 }
 
 #define EL cout << '\n';
-template <typename... T> ostream& FOUT (ostream& os, const T&... t) { //called for the last variable so it prints new line
-    os << GETSTR(varsStart);
-    void (dummy{0, (void(os << t << GETSTR(varsStep)), 0)...});
-    return os << GETSTR(varsStep).size() * delChar << GETSTR(varsEnd) << '\n';
+template <typename F, typename... R> ostream& FOUT (ostream& os, const F& f, const R&... t) { //called for the last variable so it prints new line
+    os << GETSTR(varsStart) << f;
+    void (dummy{0, (void(os << GETSTR(varsStep) << t), 0)...});
+    return os << GETSTR(varsEnd) << '\n';
 }
-template <typename...R> ostream& OUT (const R&...r) { //recursion
+template <typename... R> ostream& OUT (const R&...r) { //recursion
     return FOUT(cout, r...);
 }
 
@@ -807,33 +704,10 @@ template <typename T> inline T sMax (T& a, const T& b){//only sets a to b if b >
 template <typename T> inline T sMin (T& a, const T& b){//only sets a to b if b < a - commonly used
     return a = min (a, b);
 }
-template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type pow(T x, int n) {
-    if (n < 0) {
-        x = 1 / x;
-        n = -n;
-    }
-    T value = T(1);
-    while (n) {
-        if (n & 1) {
-            value *= x; //for n odd
-        }
-        n >>= 1;
-        x *= x;
-    }
-    return value;
-}
-template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type pow(T x, unsigned n){
-    T value = T(1);
-    while (n){
-        if (n & 1){
-            value *= x; // for n odd
-        }
-        n >>= 1;
-        x *= x;
-    }
-    return value;
-}
 
+bool isPowOf2(const uint& v){
+    return v && !(v & (v - 1));
+}
 
 inline int log2(const int& x) {
     TRY(x > 0, "Input must be positive");
@@ -842,22 +716,46 @@ inline int log2(const int& x) {
 inline unsigned log2(const unsigned& x){
     return x ? 31 - __builtin_clz(x) : 0;
 }
-const int digsOf2Pows[33] = {
-    0, 0, 0, 0, 1, 1, 1, 2, 2, 2,
-    3, 3, 3, 3, 4, 4, 4, 5, 5, 5,
-    6, 6, 6, 6, 7, 7, 7, 8, 8, 8,
-    9, 9, 9
-};
-const int tenToThe[] = {
-    1, 10, 100, 1000, 10000, 100000,
-    1000000, 10000000, 100000000, 1000000000
-};
-int log10(const int& x) {
-    return digsOf2Pows[log2(x) + 1];
+int log10(const int& v) {
+    TRY(v > 0, "Input must be positive");
+    return (v >= 1000000000) ? 9 : (v >= 100000000) ? 8 : (v >= 10000000) ? 7 :
+    (v >= 1000000) ? 6 : (v >= 100000) ? 5 : (v >= 10000) ? 4 :
+    (v >= 1000) ? 3 : (v >= 100) ? 2 : (v >= 10) ? 1 : 0;
 }
-unsigned log10 (const unsigned& x){
-    return digsOf2Pows[log2(x) + 1];
+unsigned log10 (const unsigned& v){
+    return (v >= 1000000000u) ? 9u : (v >= 100000000u) ? 8u : (v >= 10000000u) ? 7u :
+    (v >= 1000000u) ? 6u : (v >= 100000u) ? 5u : (v >= 10000u) ? 4u :
+    (v >= 1000u) ? 3u : (v >= 100u) ? 2u : (v >= 10u) ? 1u : 0u;
 }
+
+bool negIf(const int& v, const bool& fDontNegate){
+    return (!fDontNegate ^ (!fDontNegate - 1)) * v;
+}
+
+unsigned nextPowOf2(unsigned v){
+    --v;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    return ++v;
+}
+ullng interleave(const uint& x, const uint& y){
+    ullng z = 0ull;
+    for (int i = 0; i < numeric_limits<uint>::digits; ++i) {
+        z |= (x & 1u << i) << i | (y & 1u << i) << (i + 1);
+    }
+    return z;
+}
+uint bitPermutation(const uint& v){
+    uint t = v | (v - 1u); // t gets v's least significant 0 bits set to 1
+    // Next set to 1 the most significant bit to change,
+    // set to 0 the least significant ones, and add the necessary 1 bits.
+    return (t + 1u) | (((~t & -~t) - 1u) >> (__builtin_ctz(v) + 1u));
+}
+
+
 int sqrt(int num){
     TRY(num >= 0 && num <= INT_MAX / 2, "Input must be nonnegative and at most 1073741823")
     int place = 1 << sizeof(int) * 8 - 2;
@@ -963,7 +861,6 @@ template <class T> typename enable_if<is_adaptor<T>::value &&
 }
 
 ///debugging macros
-
 template <typename T> string sepNum (const T& value, const int& amt = 3,
                                         const string& sep = "\'"){
     stringstream ss; //formats a string of a number to have comma separators
@@ -973,51 +870,81 @@ template <typename T> string sepNum (const T& value, const int& amt = 3,
 
 
 
-
-template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-            && N == tuple_size<T>::value, ostream&>::type operator << (ostream& os, const T& t) {
-    return os << GETSTR(tupEnd, !N);
+template <typename T> typename enable_if<!customPrint<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b){
+    return os << t;
 }
 
 template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-                && N < tuple_size<T>::value, ostream&>::type operator << (ostream& os, const T& t) {
-    return operator << <N + 1, T> (os << GETSTR(N ? tupStep : tupStart) << get<N>(t), t);
+            && N == tuple_size<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
+    return os << GETSTR<typename conditional<N, typename tuple_element<N - 1, T>::type,
+                                                            void>::type>(tupEnd, {false, !!N});
+}
+
+template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
+                && N < tuple_size<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
+    return INSERT <N + 1, T> (INSERT(os << GETSTR<typename tuple_element<N, T>::type>(N ? tupStep :
+                                        tupStart), get<N>(t), N >= tuple_size<T>::value - 1), t, b);
 }
 
 template <typename T, size_t S> typename enable_if<!is_same<T, char>::value, ostream&>::type
-                                                        operator << (ostream& os, const T (&t)[S]){
-    os << GETSTR(iterStart);
-    for_each(ALL(t), [&os] (const T& i) { os << i << GETSTR(iterStep, is_same<T, bool>::value); } );
-    return os << GETSTR(iterStep, is_same<T, bool>::value).size() * delChar << GETSTR(iterEnd);
+                                                    INSERT(ostream& os, const T (&t)[S], const bool& b){
+    if (b){
+        for (auto next = begin(t), it = next++; it != end(t); ++next, ++it){
+            INSERT(os << (it == begin(t) ? GETSTR(iterStart) : GETSTR<T>(iterStep, {is_same<T, bool>::value})), *it, next == end(t));
+        }
+    } else {
+        for (auto it = begin(t); it != end(t); ++it){
+            INSERT(os << (it == begin(t) ? GETSTR(iterStart) : GETSTR<T>(iterStep, {is_same<T, bool>::value})), *it, false);
+        }
+    }
+    return os << GETSTR<T>(iterEnd, {false, b});
 }
+
 template <class T> typename enable_if<iterable<T>::value && !is_array<T>::value &&
-            !is_base_of<string, T>::value, ostream&>::type operator << (ostream& os, const T& t) {
-    os << GETSTR(iterStart, holds<T, char>::value);
-    for_each(CALL(t), [&os] (typename T::const_reference i) { os << i <<
-                GETSTR(iterStep, holds<T, char>::value || holds<T, bool>::value); } );
-    return os << GETSTR(iterStep, holds<T, char>::value || holds<T, bool>::value).size() * delChar
-                                                        << GETSTR(iterEnd, holds<T, char>::value);
+            !is_str<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
+    if (b){
+        for (auto next = t.begin(), it = next++; it != t.end(); ++next, ++it){
+            INSERT(os << (it == t.begin() ? GETSTR(iterStart) : GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), *it, next == end(t));
+        }
+    } else {
+        for (auto it = t.begin(); it != t.end(); ++it){
+            INSERT(os << (it == t.begin() ? GETSTR(iterStart, holds<T, char>::value) :
+            GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), *it, false);
+        }
+    }
+    return os << GETSTR<val_type_t<T>>(iterEnd, {holds<T, char>::value, b});
 }
 
 template <class T> typename enable_if <is_adaptor<T>::value &&
-                    is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
-                                                    ostream&>::type operator << (ostream& os, T t){
-    os << GETSTR(iterStart, holds<T, char>::value);
-    while (!t.empty()){
-        os << pop(t) << GETSTR(iterStep, holds<T, char>::value || holds<T, bool>::value);
+                    is_base_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
+                                                    ostream&>::type INSERT (ostream& os, T t, const bool& b){
+    if (b){
+        for (bool a = true; !t.empty(); a = false){
+            val_type_t<T> v = pop(t);
+            INSERT(os << (a ? GETSTR(iterStart, {holds<T, char>::value}) :
+               GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), v, t.empty());
+        }
+    } else {
+        for (bool a = true; !t.empty(); a = false){
+            INSERT(os << (a ? GETSTR(iterStart, {holds<T, char>::value}) :
+               GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), pop(t), false);
+        }
     }
-    return os << GETSTR(iterStep, holds<T, char>::value || holds<T, bool>::value).size() * delChar
-                                                        << GETSTR(iterEnd, holds<T, char>::value);
+    return os << GETSTR<val_type_t<T>>(iterEnd, {holds<T, char>::value, b});
 }
 template <class T> typename enable_if <is_adaptor<T>::value &&
                 !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
-                                                    ostream&>::type operator << (ostream& os, T t){
-    deque<typename T::value_type> a;
+                                                    ostream&>::type INSERT (ostream& os, T t, const bool& b){
+    typename T::container_type a;
     while (!t.empty()){
         a.pf(pop(t));
     }
-    return os << a;
+    return INSERT(os, a, b);
 }
+template <class T> typename enable_if<customPrint<T>::value, ostream&>::type operator << (ostream& os, const T& t){
+    return INSERT(os, t, printLN);
+}
+
 
 template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
             && N == tuple_size<T>::value, istream&>::type operator >> (istream& is, T& t) {
@@ -1052,9 +979,9 @@ template <class T> typename enable_if<can_change_back<T>::value && (holds<T, cha
     }
     return is;
 }
-template <class T> typename enable_if<is_sequential<T>::value && !changes_front<T>::value &&
+template <class T> typename enable_if<iterable<T>::value && !changes_front<T>::value &&
                         !can_change_back<T>::value, istream&>::type operator >> (istream& is, T& t){
-    for_each(ALL(t), [&is] (typename T::reference i) { is >> i; } );
+    for_each(ALL(t), [&is] (val_type_t<T>& i) { is >> i; } );
     return is;
 }
 
@@ -1136,31 +1063,31 @@ template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
 
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                         uphill(const I& first, const I& last, bool canEqual = 0){
-    return must_sorted(first, last, less<val_type_t<I, 1>>(), canEqual);
+    return must_sorted(first, last, less<val_type_t<I>>(), canEqual);
 }
 
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                                         ascending(const I& first, const I& last){
-    return is_sorted(first, last, less_equal<val_type_t<I, 1>>());
+    return is_sorted(first, last, less_equal<val_type_t<I>>());
 }
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                         downhill(const I& first, const I& last, bool canEqual = 0){
-    return must_sorted(first, last, greater<val_type_t<I, 1> >(), canEqual);
+    return must_sorted(first, last, greater<val_type_t<I> >(), canEqual);
 }
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                                         descending(const I& first, const I& last){
-    return is_sorted(first, last, greater_equal<val_type_t<I, 1> >());
+    return is_sorted(first, last, greater_equal<val_type_t<I> >());
 }
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                                                 flat(const I& first, const I& last){
-    return is_sorted(first, last, equal_to<val_type_t<I, 1> >());
+    return is_sorted(first, last, equal_to<val_type_t<I> >());
 }
 template <class T> typename enable_if<in_iter<T>::value, bool>::type distinct(const T& t){
     return t.size() == uset<val_type_t<T, 1>>(ALL(t)).size();
 }
 template <class I> typename enable_if<in_iter<I>::value, bool>::type
                                                             distinct(const I& first, const I& last){
-    return distance(first, last) == uset<val_type_t<I, 1>>(first, last).size();
+    return distance(first, last) == uset<val_type_t<I>>(first, last).size();
 }
 
 /*these functions replace <cmath>'s because instead of inputting an int pointer for a 2nd output,
@@ -1201,19 +1128,19 @@ template <typename T> pair<typename conditional<is_floating_point<T>::value, T, 
     return mp(r, param);
 }
 
-template <class I> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+template <class I> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
                                             min_e(const I& first, const I& last){
     return *min_element(first, last);
 }
-template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
                                                 min_e(const I& first, const I& last, const C& c){
     return *min_element(first, last, c);
 }
-template <class I> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+template <class I> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
                                             max_e(const I& first, const I& last){
     return *max_element(first, last);
 }
-template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I, 1>&>::type
+template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
                                             max_e(const I& first, const I& last, const C& c){
     return *max_element(first, last, c);
 }
@@ -1227,9 +1154,7 @@ template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<i
     return reverse_iterator<iter_t<T> >(begin(t));
 }
 
-template <class, typename, typename = void> struct access : public false_type {};
-template <class T, typename A>
-        struct access<T, A, void_t<decltype(declval<T&>()[declval<A>()]) > > : public true_type {};
+
 
 template <class T, typename I> auto at(T& t, const I& i) -> decltype(t.at(i)) {
     return t.at(i);
@@ -1246,7 +1171,7 @@ template <class T, typename I, typename I2, typename... Is>
             val_type_t<T, sizeof...(Is) + 2>& at(T& t, const I& i, const I2& i2, const Is&... is) {
     return at(at(t, i), i2, is...);
 }
-template <class T> val_type_t<T, 1>& to(T& t, const int& i) {
+template <class T> val_type_t<T>& to(T& t, const int& i) {
     return t[(i % SIZE(t) + SIZE(t)) % SIZE(t)];
 }
 template <class T, typename... Is> val_type_t<T, sizeof...(Is) + 2>&
@@ -1271,10 +1196,76 @@ template <class T, typename I, typename I2, typename... Is>
     return val(at(t, i), i2, is...);
 }
 
+#define INARR(a) FOR(a##i, sizeof(a) / sizeof(a[0])) { cin >> a[a##i]; }
+#define INARR2(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) { cin >> a[a##i][a##j]; } }
+
+#define PARR(a) cout << GETSTR(iterStart, is_same<char, decay<decltype(a[0])>::type>::value);\
+    bool a##step = is_same<bool, decay<decltype(a[0])>::type>::value || is_same<char, decay<decltype(a[0])>::type>::value;\
+    FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+        cout << a[a##i] << GETSTR(iterStep, a##step); }\
+    cout << GETSTR(iterStep, a##step).size() * delChar << GETSTR(iterEnd, is_same<char, decay<decltype(a[0])>::type>::value);
+
+#define PARR2(a) \
+    bool a##ends = is_same<char, decay<decltype(a[0][0])>::type>::value; \
+    bool a##step = is_same<bool, decay<decltype(a[0][0])>::type>::value || a##ends;\
+    cout << GETSTR(iterStart, a##ends);\
+    FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+        cout << GETSTR(iterStart, a##ends);\
+        FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) {\
+            cout << a[a##i][a##j] << GETSTR(iterStep, a##step); }\
+        cout << GETSTR(iterStep, a##step).size() * delChar << GETSTR(iterEnd, a##ends) << GETSTR(iterStep, a##step); }\
+    cout << GETSTR(iterStep, a##step).size() * delChar << GETSTR(iterEnd, a##ends);
+#define SARR(a, what) FOR(a##i, sizeof(a) / sizeof(a[0])) { a[a##i] = what; }
+#define SARR2(a, what) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) { a[a##i][a##j] = what; } }
+
+#define SARR3(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) {\
+            FOR(a##k, sizeof(a[0][0]) / sizeof(a[0][0][0])) { a[a##i][a##j][a##k] = what; } } }
+#define SARR4(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) {\
+            FOR(a##k, sizeof(a[0][0]) / sizeof(a[0][0][0])) {\
+            FOR(a##l, sizeof(a[0][0][0]) / sizeof(a[0][0][0][0])) {\
+                                                        a[a##i][a##j][a##k][a##l] = what; } } } }
+#define SARR5(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) {\
+            FOR(a##k, sizeof(a[0][0]) / sizeof(a[0][0][0])) {\
+            FOR(a##l, sizeof(a[0][0][0]) / sizeof(a[0][0][0][0])) {\
+            FOR(a##m, sizeof(a[0][0][0][0]) / sizeof(a[0][0][0][0][0])) {\
+                                                a[a##i][a##j][a##k][a##l][a##m] = what; } } } } }
+#define SARR6(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
+            FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) {\
+            FOR(a##k, sizeof(a[0][0]) / sizeof(a[0][0][0])) {\
+            FOR(a##l, sizeof(a[0][0][0]) / sizeof(a[0][0][0][0])) {\
+            FOR(a##m, sizeof(a[0][0][0][0]) / sizeof(a[0][0][0][0][0])) {\
+            FOR(a##n, sizeof(a[0][0][0][0][0]) / sizeof(a[0][0][0][0][0][0])) {\
+                                        a[a##i][a##j][a##k][a##l][a##m][a##n] = what; } } } } } }
+
+#define popcount __builtin_popcount //count how many bits are 1 in int
+#define ffs __builtin_ffs
+#define clz __builtin_clz //get number of leading 0s
+#define ctz __builtin_ctz //get number of trailing 0s
+#define clrsb __builtin_clrsb
+#define powi __builtin_powi //power function where exponent is integer
+#define bswap __builtin_bswap32 //reverse the bits
+
+#define eps 1e-8 //epsilon
+#define MOD 10000007
+
+#define type_ind(type) type_index(typeid(type))
+
+
+
 
 
 int main() {
 	//TOFILE( )
+    debugPrint = 1;
+    printLN = 1;
+
+
+
 
 
 
@@ -1284,3 +1275,4 @@ int main() {
 	fclose(stdout);
 	return 0;
 }
+
