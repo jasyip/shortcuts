@@ -135,64 +135,35 @@ LANG: C++
 #include <cstdarg> //deals with variadic arguments in the form of "..." (typename... Args works too)
 #include <regex> //used for string manipulation in the functions below
 #include <cstdlib>
+
 //provides hashing function for pairs so pairs can now be used as keys in hash sets/maps
 typedef long long llng;
 typedef double dbl;
 typedef long double ldbl;
 typedef unsigned long long ullng;
 typedef unsigned uint;
-typedef unsigned short ushort;
-typedef unsigned char uchar;
 
-template <typename T> inline std::size_t hash_combine(const std::size_t& seed, const T& v) {
+template <typename T> inline std::size_t hash_combine(const std::size_t& seed, const T& v)
+{
     return seed ^ std::hash<T>(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
-namespace std {
-    template <typename S, typename T> struct hash<pair<S, T> > {
-        inline size_t operator()(const pair<S, T>& v) const {
+namespace std
+{
+    template <typename S, typename T> struct hash<pair<S, T> >
+    {
+        inline size_t operator()(const pair<S, T>& v) const
+        {
             return hash_combine(hash_combine(0, v.first), v.second);
         }
-    };
-    template <> void swap<int> (int& a, int& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<llng> (llng& a, llng& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<uint> (uint& a, uint& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<ullng> (ullng& a, ullng& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<char> (char& a, char& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<uchar> (uchar& a, uchar& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<short> (short& a, short& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<ushort> (ushort& a, ushort& b){
-        a ^ b && (b ^= a ^= b, a ^= b);
-    }
-    template <> void swap<float> (float& a, float& b){
-        swap(*(int*)&a, *(int*)&b);
-    }
-    template <> void swap<double> (double& a, double& b){
-        swap(*(llng*)&a, *(llng*)&b);
-    }
+    }; //you can now use pairs in a tuple
 };
 
 using namespace std;
 using namespace placeholders;
 
 ///shorter typenames
-
-
-//these typenames remove confusion on the types of priority queues
 #define pqueue priority_queue
+//these typenames remove confusion on the types of priority queues
 template <typename T> using max_heap = pqueue<T>;
 template <typename T> using min_heap = pqueue<T, vector<T>, greater<T> >;
 #define umap unordered_map
@@ -208,69 +179,155 @@ typedef pair<int, int> pi;
 typedef pair<llng, llng> pl;
 typedef pair<dbl, dbl> pd;
 typedef pair<ldbl, ldbl> pld;
+typedef pair<uint, uint> pui;
+typedef pair<ullng, ullng> pul;
 
 typedef vector<int> vi;
 typedef vector<llng> vl;
 typedef vector<dbl> vd;
 typedef vector<ldbl> vld;
+typedef vector<uint> vui;
+typedef vector<ullng> vul;
 
 typedef stack<int> si;
 typedef stack<llng> sl;
 typedef stack<dbl> sd;
 typedef stack<ldbl> sld;
+typedef stack<uint> sui;
+typedef stack<ullng> sul;
 
 typedef queue<int> qi;
 typedef queue<llng> ql;
 typedef queue<dbl> qd;
 typedef queue<ldbl> qld;
+typedef queue<uint> qui;
+typedef queue<ullng> qul;
 
 typedef deque<int> di;
 typedef deque<llng> dl;
 typedef deque<dbl> dd;
 typedef deque<ldbl> dld;
+typedef deque<uint> dui;
+typedef deque<ullng> dul;
 
 typedef pqueue<int> pqi;
 typedef pqueue<llng> pql;
 typedef pqueue<dbl> pqd;
 typedef pqueue<ldbl> pqdl;
+typedef pqueue<uint> pqui;
+typedef pqueue<ullng> pqul;
+
+typedef min_heap<int> minhi;
+typedef min_heap<llng> minhl;
+typedef min_heap<dbl> minhd;
+typedef min_heap<ldbl> minhld;
+typedef min_heap<uint> minhui;
+typedef min_heap<ullng> minhul;
+
+typedef max_heap<int> maxhi;
+typedef max_heap<llng> maxhl;
+typedef max_heap<dbl> maxhd;
+typedef max_heap<ldbl> maxhld;
+typedef max_heap<uint> maxhui;
+typedef max_heap<ullng> maxhul;
 
 typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<pd> vpd;
 typedef vector<pld> vpld;
+typedef vector<pui> vpui;
+typedef vector<pul> vpul;
 
 typedef stack<pi> spi;
 typedef stack<pl> spl;
 typedef stack<pd> spd;
 typedef stack<pld> spld;
+typedef stack<pui> spui;
+typedef stack<pul> spul;
 
 typedef queue<pi> qpi;
 typedef queue<pl> qpl;
 typedef queue<pd> qpd;
 typedef queue<pld> qpld;
+typedef queue<pui> qpui;
+typedef queue<pul> qpul;
 
 typedef deque<pi> dpi;
 typedef deque<pl> dpl;
 typedef deque<pd> dpd;
 typedef deque<pld> dpld;
+typedef deque<pui> dpui;
+typedef deque<pul> dpul;
 
 typedef pqueue<pi> pqpi;
 typedef pqueue<pl> pqpl;
 typedef pqueue<pd> pqpd;
 typedef pqueue<pld> pqpld;
+typedef pqueue<pui> pqpui;
+typedef pqueue<pul> pqpul;
+
+typedef min_heap<pint> minhi;
+typedef min_heap<pllng> minhl;
+typedef min_heap<pdbl> minhd;
+typedef min_heap<pldbl> minhld;
+typedef min_heap<puint> minhui;
+typedef min_heap<pullng> minhul;
+
+typedef max_heap<pint> maxhi;
+typedef max_heap<pllng> maxhl;
+typedef max_heap<pdbl> maxhd;
+typedef max_heap<pldbl> maxhld;
+typedef max_heap<puint> maxhui;
+typedef max_heap<pullng> maxhul;
+
+#define int2 int, int
+#define int3 int2, int
+#define int4 int3, int
+#define int5 int4, int
+#define int6 int5, int
+
+#define llng2 llng, llng
+#define llng3 llng2, llng
+#define llng4 llng3, llng
+#define llng5 llng4, llng
+#define llng6 llng5, llng
+
+#define dbl2 dbl, dbl
+#define dbl3 dbl2, dbl
+#define dbl4 dbl3, dbl
+#define dbl5 dbl4, dbl
+#define dbl6 dbl5, dbl
+
+#define ldbl2 ldbl, ldbl
+#define ldbl3 ldbl2, ldbl
+#define ldbl4 ldbl3, ldbl
+#define ldbl5 ldbl4, ldbl
+#define ldbl6 ldbl5, ldbl
+
+
+#define uint2 uint, uint
+#define uint3 uint2, uint
+#define uint4 uint3, uint
+#define uint5 uint4, uint
+#define uint6 uint5, uint
+
+#define ullng2 ullng, ullng
+#define ullng3 ullng2, ullng
+#define ullng4 ullng3, ullng
+#define ullng5 ullng4, ullng
+#define ullng6 ullng5, ullng
 
 #define ALL(c) begin(c), end(c) //used a lot in container/iterator functions + works with C-arrays
-#define RALL(c) rbegin(c), rend(c)
-#define CALL(c) (c).cbegin(), (c).cend()
-#define CRALL(c) (c).crbegin(), (c).crend()
-#define AALL(a) a, a + sizeof(a) / sizeof(a[0])
+#define RALL(c) rbegin(c), rend(c) //may not properly work with C-arrays
+#define CALL(c) (c).cbegin(), (c).cend() //doesn't work with C-arrays
+#define CRALL(c) (c).crbegin(), (c).crend() //doesn't work with C-arrays
+#define AALL(a) a, a + sizeof(a) / sizeof(a[0]) //for unbounded arrays
 
 
 template <typename...> struct make_void { typedef void type; };
 template <typename... Ts> using void_t = typename make_void<Ts...>::type;
-
-
-
+//syntatic-sugar for typename enable_if<B, T>::type
+template <bool B, typename T = void> using enable_if_t = typename enable_if<B, T>::type;
 
 template <class, typename = void> struct is_iterator : public false_type {};
 template <class T> struct is_iterator<T, void_t<
@@ -284,29 +341,37 @@ template <class, typename = void> struct iterable : public false_type {};
 template <class T> struct iterable<T, void_t<
                 decltype(begin(declval<T&>())),
                 decltype(end(declval<T&>()))> > : public true_type {};
-#define iterable_v(T) iterable<T>::value
 
-template <class, typename = void> struct iter {};
-template <class T> struct iter<T, typename enable_if<is_iterator<T>::value>::type> {
-    typedef T type;
+template <class, typename = void> struct iter {}; //extracts T's iterator type
+template <class T> struct iter<T, enable_if_t<is_iterator<T>::value>>
+{
+    typedef T type; //return itself if already iterator
 };
 
-template <class T> struct iter<T, typename enable_if<iterable<T>::value>::type> {
-    typedef decltype(begin(declval<T&>())) type;
+template <class T> struct iter<T, enable_if_t<iterable<T>::value>>
+{
+    typedef decltype(begin(declval<T&>())) type; //get iterator if iterable
 };
+
 template <class T> using iter_t = typename iter<T>::type;
 
-template <class T> using random_iter = is_same<random_access_iterator_tag,
+//test if it's random access (arrays, vectors, deques, strings)
+template <class T> using random_iter = is_base_of<random_access_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
+//test if it's bidirectional (lists)
 template <class T> using two_way_iter = is_base_of<bidirectional_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
+//test if it traverses forward (forward_lists)
 template <class T> using forward_iter = is_base_of<forward_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
+//test if it's like an output stream
 template <class T> using out_iter = is_base_of<output_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
+//test if it's like an input stream
 template <class T> using in_iter = is_base_of<input_iterator_tag,
                                         typename iterator_traits<iter_t<T>>::iterator_category>;
 
+//test if it can contain or is adaptor (not tuple)
 template <class, typename = void> struct std_container : public false_type {};
 template <class T> struct std_container<T, void_t<
                 typename T::reference,
@@ -320,9 +385,9 @@ template <class T> struct std_container<T, void_t<
                 decltype(swap(declval<T&>(), declval<T&>()))
                 > > : public true_type {};
 
-//false trait class for determining containers
-template <class, typename = void> struct is_container : public false_type {};
-template <class T> struct is_container<T, void_t< // true trait class for determining containers
+//test if is container (not adaptor)
+template <class, typename = void, typename = void> struct is_container : public false_type {};
+template <class T> struct is_container<T, void_t<
                 typename T::iterator,
                 typename T::const_iterator,
                 typename T::difference_type,
@@ -330,75 +395,79 @@ template <class T> struct is_container<T, void_t< // true trait class for determ
                 decltype(declval<T>().cend()),
                 decltype(declval<T>() == declval<T>()),
                 decltype(declval<T>() != declval<T>()),
-                decltype(declval<T>().max_size())> > :
-            public integral_constant<bool, std_container<T>::value && iterable<T>::value > {};
+                decltype(declval<T>().max_size())>,
+                enable_if_t<std_container<T>::value && iterable<T>::value> > : public true_type {};
 
+//test if is tuple (doesn't include std::array since it's a container)
 template <class, typename = void> struct is_tuple : public false_type {};
-template <class T> struct is_tuple<T, void_t< // true trait class for determining containers
+template <class T> struct is_tuple<T, void_t<
             decltype(T()),
             decltype(T(declval<T>())),
             decltype(declval<T>() == declval<T>()),
             decltype(declval<T>() < declval<T>()),
-            decltype(tuple_size<T>::value)> > : public true_type {};
+            decltype(tuple_size<T>::value)> > : public integral_constant<bool !is_container<T>::value> {};
 
+//test if is associative (set)
 template <class, typename = void> struct is_associative : public false_type {};
-template <class T> struct is_associative<T, void_t< // true trait class for determining containers
+template <class T> struct is_associative<T, void_t<
             typename T::key_type> > : public is_container<T> {};
 
+//test if is map
 template <class, typename = void> struct is_map : public false_type {};
-template <class T> struct is_map<T, void_t< // true trait class for determining containers
+template <class T> struct is_map<T, void_t<
             typename T::mapped_type> > : public is_associative<T> {};
 
+//extract value type of an iterable
 template <class, size_t, typename = void> struct val_type { };
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && iterable<T>::value &&
-                                                                    !is_map<T>()>::type> {
-    typedef typename val_type<decltype(*declval<iter_t<T>>()), N - 1>::type type;
+//for any iterable (except maps because the value type gives you a pair of key and value)
+template <class T, size_t N> struct val_type<T, N, enable_if_t<N && iterable<T>::value &&
+                                                                    !is_map<T>()> >
+{
+    typedef typename val_type<typename remove_reference<
+            decltype(*declval<iter_t<T> >())>::type, N - 1>::type type;
 };
-template <class T, size_t N> struct val_type<T, N, typename enable_if<N && is_map<T>::value>::type>
+//gives you the map's mapped type not pair of key and value
+template <class T, size_t N> struct val_type<T, N, enable_if_t<N && is_map<T>::value> >
 {
     typedef typename val_type<typename T::mapped_type, N - 1>::type type;
 };
+//if it's already an iterator, gives you the value type
 template <class T, size_t N>
-                    struct val_type<T, N, typename enable_if<N && is_iterator<T>::value>::type> {
+                    struct val_type<T, N, enable_if_t<N && is_iterator<T>::value> >
+{
     typedef typename val_type<typename iterator_traits<T>::value_type, N - 1>::type type;
 };
-template <class T> struct val_type<T, 0> {
+template <class T> struct val_type<T, 0>
+{
     typedef T type;
 };
 template <class T, size_t N = 1> using val_type_t = typename val_type<T, N>::type;
 
+//test if it's like a vector or array or deque or string or list or forward_list
 template <class, typename = void> struct is_sequential : public false_type {};
-template <class T> struct is_sequential<T, void_t< // true trait class for determining containers
+template <class T> struct is_sequential<T, void_t<
                 decltype(declval<T>().front())> > : public is_container<T> {};
 
+//test if it's like a vector or deque or string or list or forward_list
 template <class, typename = void> struct can_change_back : public false_type {};
-template <class T> struct can_change_back<T, void_t< // true trait class for determining containers
+template <class T> struct can_change_back<T, void_t<
             decltype(declval<T&>().push_back(declval<val_type_t<T>>()))> > :
                                         public is_sequential<T> {};
+//test if it's like a deque or string or list
+template <class, typename = void, typename = void> struct changes_front : public false_type {};
+template <class T> struct changes_front<T, void_t< 
+            decltype(declval<T&>().push_front(declval<val_type_t<T>>()))>,
+        enable_if_t<is_sequential<T>::value && !can_change_back<T>::value> > : public true_type {};
 
-template <class, typename = void> struct changes_front : public false_type {};
-template <class T> struct changes_front<T, void_t< // true trait class for determining containers
-            decltype(declval<T&>().push_front(declval<val_type_t<T>>()))> > :
-        public integral_constant<bool, is_sequential<T>::value && !can_change_back<T>::value> {};
-
+//test if it's a queue or stack or pqueue
 template <class, typename = void> struct is_adaptor : public false_type {};
 template <class T> struct is_adaptor<T, void_t<
                 typename T::container_type> > : public std_container<T> {};
 
+//test if it can you give you size (true for all containers except forward_list)
 template <class, typename = void> struct instant_size : public false_type {};
 template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > :
                                                                                 public true_type {};
-
-template <class Tuple, size_t N, size_t Last, bool canEmpty> struct same_elements :
-                public integral_constant<bool, is_same<typename tuple_element<N - 1, Tuple>::type,
-    typename tuple_element<N, Tuple>::type>::value &&
-                                            same_elements <Tuple, N + 1, Last, canEmpty>::value> {};
-template <class Tuple, size_t N, bool canEmpty> struct same_elements<Tuple, N, N, canEmpty>
-                                                                            : public true_type {};
-template <class Tuple, bool canEmpty> struct same_elements<Tuple, 1, 0, canEmpty> :
-                                                    public integral_constant<bool, canEmpty> {};
-template <class Tuple, bool canEmpty = false> struct same_e :
-                            public same_elements<Tuple, 1, tuple_size<Tuple>::value, canEmpty> {};
 
 template <class> struct is_str : public false_type {};
 template <class T> struct is_str<basic_string<T>> : public true_type {};
@@ -406,59 +475,109 @@ template <class T> struct is_str<basic_string<T>> : public true_type {};
 template <typename T> struct is_bounded_array : false_type {};
 template <typename T, size_t N> struct is_bounded_array<T[N]> : true_type {};
 
-template <typename T> struct remove_cvref {
+template <typename T> struct remove_cvref
+{
     typedef typename remove_cv<typename remove_reference<T>::type>::type type;
 };
 template <typename T> using remove_cvref_t = typename remove_cvref<T>::type;
 
+//test if my overloaded print operators would be used
 template <class, typename = void> struct customPrint : public false_type {};
-template <class T> struct customPrint<T, typename enable_if<is_tuple<T>::value && !is_container<T>::value>::type> : public true_type {};
-template <class T> struct customPrint<T, typename enable_if<
-            is_bounded_array<T>::value && !is_same<char, remove_cvref_t<val_type_t<T>>>::value ||
-                    iterable<T>::value && !is_array<T>::value && !is_str<T>::value ||
-                                                is_adaptor<T>::value>::type> : public true_type {};
+template <class T> struct customPrint<T, enable_if_t<is_tuple<T>::value>> : public true_type {};
+template <class T> struct customPrint<T, enable_if_t<is_bounded_array<T>::value &&
+        !holds<T, char>::value>> : public true_type{};
+template <class T> struct customPrint<T, enable_if_t<iterable<T>::value && !is_array<T>::value
+        && !is_str<T>::value>> : public true_type {};
+template <class T> struct customPrint<T, enable_if_t<is_adaptor<T>::value>> : public true_type {};
+
+//test if value type needs to have a custom print
+template <class, typename = void> struct shallow : public false_type {};
+template <class T> struct customPrint<T, enable_if_t<customPrint<T>::value>> :
+        public integral_constant<bool, !customPrint<val_type_t<T>>> {};
 
 using dummy = int[];
 
-template <typename T, typename B> using holds = is_same<val_type_t<T>, B>;
+//test if A equals at least one type of the following
+template <typename A, typename T, typename... Ts> struct is_one_of :
+        public integral_constant<bool, is_one_of<A, T>::value || is_one_of<A, Ts...>::value> {}; 
 
-template <typename T, typename B> struct hasChar : public integral_constant<bool,
-is_same<val_type_t<T>, char>::value || is_same<val_type_t<T>, signed char>::value ||
-is_same<val_type_t<T>, unsigned char>::value || is_same<val_type_t<T>, wchar_t>::value ||
-is_same<val_type_t<T>, char16_t>::value || is_same<val_type_t<T>, char32_t>::value> {};
+template <typename A, typename T> struct is_one_of<A, T> :
+        public is_same<remove_cv_ref_t<A>, remove_cv_ref_t<T>> {};
 
+template <class A, typename... Ts> using holds = is_one_of<val_type_t<A>, Ts...>;
+
+//REMOVE?
 template <class, typename, typename = void> struct access : public false_type {};
 template <class T, typename A>
         struct access<T, A, void_t<decltype(declval<T&>()[declval<A>()]) > > : public true_type {};
 
-bool debugPrint = true, printLN = false;
-
-const struct sBeautifier{
-    string a;
-    enum class pos{
-        start, step, end
-    } type;
-} varsStart{"v{", sBeautifier::pos::start},
-  iterStart{"{", sBeautifier::pos::start},
-  tupStart{"(", sBeautifier::pos::start},
-  varsStep{",", sBeautifier::pos::step},
-  varsEnd{"}v", sBeautifier::pos::end},
-  iterEnd{"}", sBeautifier::pos::end},
-  tupEnd{")", sBeautifier::pos::end};
-const sBeautifier& iterStep(varsStep), tupStep(varsStep);
-template <typename T = void> string GETSTR(const sBeautifier& a, const vector<bool>& b) {
-    string out = !b.at(0) && debugPrint ? a.a : "";
-    switch(a.type){
-    case sBeautifier::pos::start:
-        return out;
-    case sBeautifier::pos::step:
-        return out + (customPrint<T>::value ? '\n' : ' ');
-    case sBeautifier::pos::end:
-        return (!b.at(1) && customPrint<T>::value ? "\n" : "") + out;
-    }
+string operator "" _s(const char* str, size_t len)
+{
+    return string{str, len};
+}
+u16string operator "" _s(const char16_t* str, size_t len)
+{
+    return u16string{str, len};
 };
-template <typename T = void> string GETSTR(const sBeautifier& a){
-    return (debugPrint ? a.a : "") + (a.type == sBeautifier::pos::step ? " " : "");
+u32string operator "" _s(const char32_t* str, size_t len)
+{
+    return u32string{str, len};
+}
+wstring operator "" _s(const wchar_t* str, size_t len)
+{
+    return wstring{str, len};
+}
+
+template <class T> enable_if_t<is_tuple<T>::value, string> GET_START()
+{
+    return debugPrint ? "(" : "";
+}
+
+template <class T> enable_if_t<is_container<T>::value, string> GET_START()
+{
+    return debugPrint && holds<T, char>::value ? "{" : "";
+}
+
+string VARS_START()
+{
+    return debugPrint ? "v{" : "";
+}
+
+template <class T> enable_if_t<is_tuple<T>::value, string> GET_STEP()
+{
+    //scalar objects don't have an arbitrary length
+    return (debugPrint ? ","_s : ""_s) + (is_scalar<T>::value ? " " : "\n");
+}
+
+template <class T> enable_if_t<is_container<T>::value, string> GET_STEP()
+{
+    if (holds<T, bool>::value || holds<T, char>::value)
+    {
+        return "";
+    }
+    return (debugPrint ? ","_s : ""_s) + (shallow<T>::value ? "\n" : " ");
+}
+
+string VARS_STEP(){
+    return ", ";
+}
+
+template <class T> enable_if_t<is_tuple<T>::value &&
+        !is_container<T>::value, string> GET_END()
+{
+    return debugPrint ? ")" : "";
+}
+
+template <class T> enable_if_t<is_container<T>::value, string>
+        GET_END(bool atEnd = false)
+{
+    return (!atEnd && customPrint<T>::value ? "\n"_s : ""_s) +
+            (debugPrint && !holds<T, char>::value ? ")" : "");
+}
+
+string VARS_END()
+{
+    return debugPrint ? "}v" : "";
 }
 
 const string delChar = "\b \b";
@@ -466,26 +585,27 @@ const string delChar = "\b \b";
 
 ///after input/output with containers is properly fixed, these following macros will be unnecessary
 
-template <typename A, typename B = int> inline constexpr int sgn (const A& a, const B& b = 0) {
+template <typename A, typename B = int> inline constexpr int sgn (A a, B b = 0)
+{
     return int ((a > b) - (a < b)); //returns -1 if a < b, 0 if a == b, 1 if a > b
 }//C++20 spaceship operator alternative
-template <typename A, typename B, typename C> inline constexpr int sgn (const A& a, const B& b, const C& tol) {
+template <typename A, typename B, typename C> inline constexpr int sgn (A a, B b, C tol)
+{
     return int ((a > b + tol) - (a < b - tol)); //returns -1 if a < b, 0 if a == b, 1 if a > b
 }//C++20 spaceship operator alternative
 
 //in these for loop macros, the I character means inclusive and the E character means exclusive
 //a character before the "FOR" refers to the starting pos; after the "FOR" refers to the end pos
-#define FOR(i,n) IFORE(i,0,n) //most commonly used version of the for loop
-#define FORI(i,n) IFORI(i,0,n) //similar but also includes end position
-#define IFORI(i,s,n) for (int i = int(s); sgn(n,i) != sgn(s,n); i += n < s ? -1 : 1)
-#define IFORE(i,s,n) for (int i = int(s); sgn(n,i) == sgn(n,s); i += n < s ? -1 : 1)
-#define EFORI(i,s,n) \
-    for (int i = int(s) + (n < s ? -1 : 1); sgn(n,i) != sgn(s,n); i += n < s ? -1 : 1)
-#define EFORE(i,s,n) \
-    for (int i = int(s) + (n < s ? -1 : 1); sgn(n,i) == sgn(n,s); i += n < s ? -1 : 1)
+#define FOR(i,n) IUPE(i, 0, n) //most commonly used version of the for loop
+#define IUPI(i, s, e) for (int i = (s); i <= (e); ++i)
+#define IUPE(i, s, e) for (int i = (s); i < (e); ++i)
+#define EUPI(i, s, e) for (int i = (s); ++i <= (e);)
+#define EUPE(i, s, e) for (int i = (s); ++i < (e);)
+#define IDOWNI(i, s, e) for (int i = (s); i >= (e); --i)
+#define IDOWNE(i, s, e) for (int i = (s); i > (e); --i)
+#define EDOWNI(i, s, e) for (int i = (s); --i >= (e);)
+#define EDOWNE(i, s, e) for (int i = (s); --i > (e);)
 ///these macros of filling with infinity will be removed later on
-#define INF(type, a, n) type a[n]; fill(ALL(a), INT_MAX);
-#define NINF(type, a, n) type a[n]; fill(ALL(a), INT_MIN);
 
 #define ARR(type, a, n) type a[n]; FOR(a##_i, n) { cin >> a[a##_i]; }
 #define FARR(type, a, n, what) type a[n]; fill(a, a + n, what);
@@ -494,18 +614,23 @@ template <typename A, typename B, typename C> inline constexpr int sgn (const A&
                                                                 a[a##_i][a##_j] = what; } }
 
 
+//returns the unstored array size
 
-template <typename T, size_t S> inline constexpr int SIZE (const T (&t)[S]) {//returns the unstored array size
-    return int (S);//returns as integer to prevent confusing comparisons between signed and unsigned
+template <typename T, size_t S> inline constexpr int SIZE (const T (&t)[S]) 
+{
+    return int (S); //returns as integer to prevent confusing comparisons between signed and unsigned
 }
-template <class T> inline auto SIZE (const T& t) -> decltype(t.size(), int()) {
+template <class T> inline int SIZE (const T& t)
+{
     return int (t.size()); //also returned as integer
 }
 template <class T> inline typename
-    enable_if<!instant_size<T>() && forward_iter<T>(), int>::type SIZE (const T& t) {
+        enable_if<!instant_size<T>() && forward_iter<T>(), int>::type SIZE (const T& t)
+{
     return int (distance(t.begin(), t.end())); //also returned as integer
 }
-template <typename T> typename enable_if<is_arithmetic<T>::value, T>::type dist(const T& a, const T& b){
+template <typename T> enable_if_t<is_arithmetic<T>::value, T> dist(const T& a, const T& b)
+{
     return abs(a - b);
 }
 #define ASIZE(a) sizeof(a) / sizeof(a[0])
@@ -529,133 +654,230 @@ const double GR = 1.618033988749895;
 #define F first //accessing 1st element in pair
 #define S second //accessing 2nd element in pair
 
+//similar to python
+string operator * (string str, unsigned n)
+{
+    if (n == 0)
+    {
+        return "";
+    }
+    else if (n == 1 || str.empty())
+    {
+        return str;
+    }
 
-string operator * (const string& a, size_t n){ //similar to Python
-    string out;
-    for (; n--; out += a) {}
-    return out;
+    const unsigned period = str.size();
+    if (period == 1)
+    {
+        return string(n, str.front());
+    }
+    str.reserve(period * n);
+    unsigned m;
+    for (m = 2; m <= n; m *= 2)
+    {
+        str += str;
+    }
+    str.append(str.c_str(), (n - m / 2) * period);
+    return str;
 }
-string operator * (const size_t& n, const string& a){ //commutative property
+
+//commutative property
+string operator * (unsigned n, const string& a)
+{
     return a * n;
 }
-//Python string methods
 
-string capitalize(const string& a){
-    return !a.size() ? "" : string(1, toupper(a[0])) + a.substr(1);
+string capitalize(const string& a)
+{
+    return a.empty() ? "" : string(1, toupper(a[0])) + a.substr(1);
 }
 
-size_t count(const string& a, const string& substr, size_t start = 0,
-                                                                const size_t& end = string::npos){
-    size_t out;
+unsigned count(const string& a, const string& substr,
+        unsigned start = 0, unsigned end = string::npos)
+{
+    unsigned out;
     for (out = 0; (start = a.find(substr, start)) < end; ++out, ++start) {}
     return out;
 }
 
-bool endsw(const string& a, const string& b){
+bool endsw(const string& a, const string& b)
+{
     return SIZE(a) >= SIZE(b) && a.substr(SIZE(a) - SIZE(b)) == b;
 }
-string repl(const string& a, const string& old, const string& ne, size_t n = -1){
+string repl(const string& a, const string& old, const string& ne, unsigned n = string::npos)
+{
     string out;
-    int prev = 0;
-    for (int next = 0; n-- && (next = a.find(old, next)) != -1; prev = next) {
+    size_t prev = 0;
+    for (size_t next = 0; n-- && (next = a.find(old, next)) != -1; prev = next)
+    {
         out += a.substr(prev, next - prev) + ne;
-        next += SIZE(old);
+        next += old.size();
     }
     return out + a.substr(prev);
 }
-string repl(string a, const initializer_list<string>& old, const string& ne){
-    for_each(ALL(old), [&a, &ne] (const string& i) { a = repl(a, i, ne); } );
-    return a;
+template <class T> enable_if_t<iterable<T>::value, string>
+        repl(const string& a, const T& old,
+        const string& ne, unsigned n = string::npos)
+{
+    typedef pair<size_t, size_t> location;
+    auto comp = [](const location& a, const location& b){ return a.F + a.S <= b.F; };
+    set<location, decltype(comp)> to_replace(comp);
+    for (const auto& i : old)
+    {
+        for (size_t j = 0; (j = a.find(i, j)) != string::npos; j += i.size())
+        {
+            to_replace.emplace(j, i.size());
+        }
+    }
+    string out;
+    size_t prev = 0;
+    for (auto it = to_replace.begin(); n-- && it != to_replace.end(); ++it)
+    {
+        out += a.substr(prev, i->F - prev) + ne;
+        prev = i->F + i->S;
+    }
+    return out + a.substr(prev);
 }
-string expandtabs(const string& a, const size_t& tabsize = 4){
+string expandtabs(const string& a, unsigned tabsize = 4)
+{
     return repl(a, "\t", string(tabsize, ' '));
 }
-bool isalnum(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return isalnum(i); } ) && !a.size();
+bool isalnum(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), ::isalnum) && !a.empty();
 }
-bool isalpha(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return isalpha(i); } ) && !a.size();
+bool isalpha(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), ::isalpha) && !a.empty();
 }
-bool isdigit(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return isdigit(i); } ) && !a.size();
+bool isdigit(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), ::isdigit) && !a.empty();
 }
-bool islower(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return islower(i); } ) && !a.size();
+bool islower(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), ::islower) && !a.empty();
 }
-bool isspace(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return isspace(i); } ) && !a.size();
+bool isspace(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), ::isspace) && !a.empty();
 }
-bool istitle(const string& a) {
+bool istitle(const string& a)
+{
     bool anyUpper = false;
-    for (size_t i = 1; i < a.size(); ++i){
-        if (isupper(a[i]) && isalpha(a[i - 1]) || islower(a[i]) && !isalpha(a[i - 1])){
+    for (unsigned i = 1; i < a.size(); ++i)
+    {
+        if (isupper(a[i]) && isalpha(a[i - 1]) || islower(a[i]) && !isalpha(a[i - 1]))
+        {
             return false;
         }
         anyUpper |= isupper(a[i]);
     }
     return !a.empty() && (anyUpper || isupper(a[0]));
 }
-bool isupper(const string& a){
-    return all_of(a.cbegin(), a.cend(), [] (const char& i) { return isupper(i); } ) && !a.size();
+bool isupper(const string& a)
+{
+    return all_of(a.cbegin(), a.cend(), isupper) && !a.empty();
 }
 
-template <typename... T> string joins(const string& sep, const T&... t){
+template <typename T, typename... Ts> string joins(const string& sep, const T& t, const Ts&... t)
+{
     stringstream ss;
-    void(dummy {0, (void(ss << t << sep), 0)... } );
-    ss << sep.size() * delChar;
+    ss << t;
+    void(dummy {0, (void(ss << sep << t), 0)... } );
     return ss.str();
 }
-template <typename... T> string join(const T&... t){
+template <typename T, typename... Ts> string join(const T& t, const Ts&... t)
+{
     stringstream ss;
+    ss << t;
     void(dummy {0, (void(ss << t), 0)... } );
     return ss.str();
 }
-string strip(const string& a, const string& chars = " \t\n\v\f\r"){
+template <class... Ts> string joinstr(string t, const Ts& ts)
+{
+    void(dummy{0, (void(t += ts), 0)... } );
+    return t;
+}
+
+template <class... Ts> string joinstrs(const string& sep, string t, const Ts& ts)
+{
+    void(dummy{0, (void(t += sep + ts), 0)... } );
+    return t;
+}
+string strip(const string& a, const string& chars = " \t\n\v\f\r")
+{
     unordered_set<char> toRepl(CALL(chars));
-    size_t l, r;
+    unsigned l, r;
     for (l = 0; toRepl.count(a[l]) && l < a.size(); ++l) {}
     for (r = a.size(); toRepl.count(a[r - 1]) && r > 0; --r) {}
     return a.substr(l, r - l);
 }
+string std_strip(const string& a, const string& chars = " \t\n\v\f\r")
+{
+    //ttabt
+    unsigned l = a.find_first_not_of(chars);
+    return a.substr(l, a.find_last_not_of(chars) - l + 1);
+}
 
-string swapcase(string a){
-    for_each(a.begin(), a.end(), [] (char& i) { i = isupper(i) ? tolower(i) : toupper(i); } );
+string swapcase(string a)
+{
+    for (char& i : a)
+    {
+        i = isupper(i) ? tolower(i) : toupper(i);
+    }
     return a;
 }
 
-string title(string a){
-    for (int i = 1; i < SIZE(a); ++i){
+string title(string a)
+{
+    for (unsigned i = 1; i < a.size(); ++i){
         a[i] = isalnum(a[i - 1]) ? tolower(a[i]) : toupper(a[i]);
     }
     return a;
 }
-string tolower (string a){
-    for_each(ALL(a), [] (char& i) { i = tolower(i); } );
+string tolower (string a)
+{
+    transform(ALL(a), begin(a), ::tolower);
     return a;
 }
-string toupper (string a){
-    for_each(ALL(a), [] (char& i) { i = toupper(i); } );
+string toupper (string a)
+{
+    transform(ALL(a), begin(a), ::toupper);
     return a;
 }
-string zfill(const string& a, const size_t& width){
+string zfill(const string& a, unsigned width)
+{
     return string(width < a.size() ? 0 : width - a.size(), '0') + a;
 }
 
-template <typename T> string type_name() {
+template <typename T> string type_name()
+{
     typedef typename remove_reference<T>::type noref;
     int status;
     string tname = typeid (noref).name();
     string demangled_name = abi::__cxa_demangle (tname.c_str(), nullptr, nullptr, &status);
-    return regex_replace(regex_replace(status ? tname :
-                                repl(repl(demangled_name, {"std::", " "}, ""), ",", ", "),
-    regex(R"(\B(const(?=volatile\b)|(const|volatile)\b))"), " $&"),
-                         regex(R"((unsigned|long)(?=char|short|int|long))"), "$& ") +
-            (is_const<noref>::value ? " const" : "") +
-            (is_volatile<noref>::value ? " volatile" : "") +
-            (is_lvalue_reference<T>::value ? "&" : "") +
-            (is_rvalue_reference<T>::value ? "&&" : "");
+    string out;
+    if (status)
+    {
+        out = tname;
+    }
+    else
+    {
+        out = repl(repl(demangled_name, {"std::", " "}, ""), ",", ", ");
+    }
+    out = regex_replace(out, regex(R"(\B(const(?=volatile\b)|(const|volatile)\b))"), " $&");
+    out = regex_replace(out, regex(R"((unsigned|long)(?=char|short|int|long))"), "$& ");
+    if (is_const<noref>::value) { out += " const"; }
+    if (is_volatile<noref>::value) { out += " volatile"; }
+    if (is_lvalue_reference<T>::value) { out += "&"; }
+    else if (is_rvalue_reference<T>::value) {out += "&&"; }
+    return out;
 }
-template <typename T> string type_name (const T& t) {//prints out string form of input type
+
+//prints out string form of input type
+template <typename T> string type_name (const T& t)
+{
     return type_name<T>();
 }
 
@@ -663,72 +885,94 @@ template <typename T> string type_name (const T& t) {//prints out string form of
 #define eprintf(format, ...) fprintf(stderr, format, __VA_ARGS__);
 
 #define VARS(type, ...) type __VA_ARGS__; SCAN(__VA_ARGS__); //create and automatically scan them
-template <typename... T> istream& FSCAN(istream& is, T&... t){
+template <typename... T> istream& FSCAN(istream& is, T&... t)
+{
     void(dummy{0, (void(is >> t), 0)... });
     return is;
 }
-template <typename... T> istream& SCAN (T&... t) { //recursion
+template <typename... T> istream& SCAN (T&... t) 
+{
     return FSCAN(cin, t...);
 }
 
 #define SVARS(type, what, ...) type __VA_ARGS__; SET_TO(what, __VA_ARGS__);
 #define ZERO(type, ...) SVARS(type, 0, __VA_ARGS__) //create & automatically set them to 0
-template <typename T, typename F, typename... R> F& SET_TO (const T& what, F& f, R&... r) { //recursion
+
+template <typename T, typename F, typename... R> F& SET_TO (const T& what, F& f, R&... r)
+{
     f = what;
     void(dummy{0, (void(r = what), 0)... });
     return f;
 }
-template <typename F, typename... R> F& SET0 (F& f, R&... r) { //recursion
+template <typename F, typename... R> F& SET0 (F& f, R&... r)
+{ 
     return SET_TO(F(0), f, r...);
 }
 
 #define EL cout << '\n';
-template <typename F, typename... R> ostream& FOUT (ostream& os, const F& f, const R&... t) { //called for the last variable so it prints new line
-    os << GETSTR(varsStart) << f;
-    void (dummy{0, (void(os << GETSTR(varsStep) << t), 0)...});
-    return os << GETSTR(varsEnd) << '\n';
+template <typename F, typename... R> ostream& FOUT (ostream& os, const F& f, const R&... t)
+{
+    os << varsStart() << f;
+    void (dummy{0, (void(os << varsStep() << t), 0)...});
+    return os << varsEnd() << '\n';
 }
-template <typename... R> ostream& OUT (const R&...r) { //recursion
+template <typename... R> ostream& OUT (const R&...r)
+{ 
     return FOUT(cout, r...);
 }
 
 #define EXCEPTION(msg) throw join("Exception: ", msg, " [in ", __PRETTY_FUNCTION__,\
-                                                                    " of line #", __LINE__, "]\n");
+        " of line #", __LINE__, "]\n");
 //if condition succeeds OR error occurs -> message of exception is printed
-#define TRY(cond, msg) try { if (!(cond)) { EXCEPTION(msg); } } catch(string s) {\
-                                                                                cerr << s << '\n'; }
+#define ASSERT(cond, msg) if (!(cond))\
+{\
+    EXCEPTION(msg);\
+}\
 
-template <typename T> inline T sMax (T& a, const T& b){//only sets a to b if b > a - commonly used
+//only sets a to b if b > a - commonly used
+template <typename T> inline T sMax (T& a, const T& b)
+{    
     return a = max (a, b);
 }
-template <typename T> inline T sMin (T& a, const T& b){//only sets a to b if b < a - commonly used
+
+//only sets a to b if b < a - commonly used
+template <typename T> inline T sMin (T& a, const T& b)
+{
     return a = min (a, b);
 }
 
-bool isPowOf2(const uint& v){
+//Rework many of these 
+bool isPowOf2(uint v)
+{
     return v && !(v & (v - 1));
 }
 
-inline int log2(const int& x) {
-    TRY(x > 0, "Input must be positive");
+uint log2(uint x){
     return x ? 31 - __builtin_clz(x) : 0;
 }
-inline unsigned log2(const unsigned& x){
-    return x ? 31 - __builtin_clz(x) : 0;
+ullng log2(ullng x){
+    return x ? 63 - __builtin_clzll(x) : 0;
 }
-int log10(const int& v) {
-    TRY(v > 0, "Input must be positive");
-    return (v >= 1000000000) ? 9 : (v >= 100000000) ? 8 : (v >= 10000000) ? 7 :
-    (v >= 1000000) ? 6 : (v >= 100000) ? 5 : (v >= 10000) ? 4 :
-    (v >= 1000) ? 3 : (v >= 100) ? 2 : (v >= 10) ? 1 : 0;
+template <typename T> enable_if_t<is_signed<T>::value && > log2(int x)
+unsigned log10(unsigned v) {
+    if (v >= 1000000000) { return 9; }
+    if (v >= 100000000) { return 8; }
+    if (v >= 10000000) { return 7; }
+    if (v >= 1000000) { return 6; }
+    if (v >= 100000) { return 5; }
+    if (v >= 10000) { return 4; }
+    if (v >= 1000) { return 3; }
+    if (v >= 100) { return 2; }
+    if (v >= 10) { return 1; }
+    if (v >= 1) { return 0; }
+
 }
-unsigned log10 (const unsigned& v){
-    return (v >= 1000000000u) ? 9u : (v >= 100000000u) ? 8u : (v >= 10000000u) ? 7u :
-    (v >= 1000000u) ? 6u : (v >= 100000u) ? 5u : (v >= 10000u) ? 4u :
-    (v >= 1000u) ? 3u : (v >= 100u) ? 2u : (v >= 10u) ? 1u : 0u;
+int log10 (int v){
+    ASSERT(v > 0, "Input must be positive");
+    return log10(unsigned(v))
 }
 
-bool negIf(const int& v, const bool& fDontNegate){
+int negIf(int v, bool fDontNegate){
     return (!fDontNegate ^ (!fDontNegate - 1)) * v;
 }
 
@@ -741,30 +985,32 @@ unsigned nextPowOf2(unsigned v){
     v |= v >> 16;
     return ++v;
 }
-ullng interleave(const uint& x, const uint& y){
+ullng interleave(uint x, uint y){
     ullng z = 0ull;
     for (int i = 0; i < numeric_limits<uint>::digits; ++i) {
         z |= (x & 1u << i) << i | (y & 1u << i) << (i + 1);
     }
     return z;
 }
-uint bitPermutation(const uint& v){
+uint bitPermutation(uint v){
     uint t = v | (v - 1u); // t gets v's least significant 0 bits set to 1
     // Next set to 1 the most significant bit to change,
     // set to 0 the least significant ones, and add the necessary 1 bits.
     return (t + 1u) | (((~t & -~t) - 1u) >> (__builtin_ctz(v) + 1u));
 }
 
-
-int sqrt(int num){
-    TRY(num >= 0 && num <= INT_MAX / 2, "Input must be nonnegative and at most 1073741823")
-    int place = 1 << sizeof(int) * 8 - 2;
-    while (place > num) {
+template <typename T> enable_if_t<is_unsigned<T>::value, T> sqrt(T num)
+{
+    T place = T(1) << sizeof(T) * 8 - 2;
+    while (place > num)
+    {
         place /= 4;
     }
-    int root = 0;
-    while (place){
-        if (num >= root + place){
+    T root = 0;
+    while (place)
+    {
+        if (num >= root + place)
+        {
             num -= root + place;
             root += place * 2;
         }
@@ -773,96 +1019,80 @@ int sqrt(int num){
     }
     return root;
 }
-unsigned sqrt(unsigned num){
-    unsigned place = 1 << sizeof(int) * 8 - 2;
-    while (place > num) {
-        place /= 4;
-    }
-    unsigned root = 0;
-    while (place){
-        if (num >= root + place){
-            num -= root + place;
-            root += place * 2;
-        }
-        root /= 2;
-        place /= 4;
-    }
-    return root;
+template <typename T> enable_if_t<is_signed<T>::value, T> sqrt(T num)
+{
+    typedef typename make_unsigned<T>::type uT;
+    ASSERT(x >= 0, "Input must be nonnegative.")
+    return sqrt(uT(num));
 }
-int cbrt(int x) {
-    bool neg = false;
-    if (x < 0){
-        neg = true;
-        x = -x;
-    }
+unsigned cbrt(unsigned x)
+{
     unsigned y = 0, b;
-    for (int s = 30; s >= 0; s -= 3) {
+    for (int s = 30; s >= 0; s -= 3) 
+    {
         y *= 2;
         b = 3 * y * (y + 1) + 1 << s;
-        if (x >= b) {
-            x -= b;
-            ++y;
-        }
-    }
-    return neg ? -y : y;
-}
-unsigned cbrt(unsigned x){
-    unsigned y = 0, b;
-    for (int s = 30; s >= 0; s -= 3) {
-        y *= 2;
-        b = 3 * y * (y + 1) + 1 << s;
-        if (x >= b) {
+        if (x >= b) 
+        {
             x -= b;
             ++y;
         }
     }
     return y;
 }
+int cbrt(int x)
+{
+    if (x < 0) { return -int(cbrt(unsigned(-x))); }
+    return cbrt(unsigned(x));
+}
 
-inline int dig (const int& a, const int& i, const int& base = 10) {//get digit of a number
+//REMOVE?
+inline int dig (int a, int i, int base = 10) {//get digit of a number
     return int(double(a) / pow (base, i)) % base;
 }
-inline bool bit (const llng& a, const size_t& i) {//get bit in the binary form of a number
+inline bool bit (llng a, size_t i) {//get bit in the binary form of a number
     return (a >> i) & 1;
 }
-template <typename T = int> inline T mask(const int& end, const int& start){
+template <typename T = int> inline T mask(int start, int end = numeric_limits<T>::digits()){
     return (1 << end - start) - 1 << start;
 }
-template <typename T = int> inline T mask(const int& start){
-    return mask(numeric_limits<T>::digits(), start);
-}
 
 
-template <class T> typename enable_if<changes_front<T>::value,
-                                                typename T::value_type>::type pop(T& t){
+template <class T> enable_if_t<changes_front<T>::value,
+        typename T::value_type> pop(T& t)
+{
     typename T::value_type v = t.front();
     t.popf();
     return v;
 }
-template <class T> typename enable_if<can_change_back<T>::value,
-                                                typename T::value_type>::type pop(T& t){
+template <class T> enable_if_t<can_change_back<T>::value,
+        typename T::value_type> pop(T& t)
+{
     typename T::value_type v = t.back();
     t.popb();
     return v;
 }
-template <class T> typename enable_if<is_adaptor<T>::value &&
-                is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
-                                                    typename T::value_type>::type pop(T& t){
+template <class T> enable_if_t<is_adaptor<T>::value &&
+        is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
+                typename T::value_type> pop(T& t)
+{
     typename T::value_type v = t.front();
     t.pop();
     return v;
 }
-template <class T> typename enable_if<is_adaptor<T>::value &&
-                !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
-                                                    typename T::value_type>::type pop(T& t){
+template <class T> enable_if_t<is_adaptor<T>::value &&
+        !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
+                typename T::value_type> pop(T& t)
+{
     typename T::value_type v = t.top();
     t.pop();
     return v;
 }
 
 ///debugging macros
-template <typename T> string sepNum (const T& value, const int& amt = 3,
-                                        const string& sep = "\'"){
+template <typename T> enable_if_t<is_arithmetic<T>::value, string>
+        sepNum (T value, int amt = 3, const string& sep = "\'")
+{
     stringstream ss; //formats a string of a number to have comma separators
     ss << fixed << value;
     return regex_replace (ss.str(), regex (join(R"(\B(?=(\d{)", amt, R"(})+(?!\d)\.?))")), sep);
@@ -870,138 +1100,191 @@ template <typename T> string sepNum (const T& value, const int& amt = 3,
 
 
 
-template <typename T> typename enable_if<!customPrint<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b){
+template <typename T> enable_if_t<!customPrint<T>::value, ostream&>
+        INSERT(ostream& os, const T& t, bool b)
+{
     return os << t;
 }
 
-template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-            && N == tuple_size<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
-    return os << GETSTR<typename conditional<N, typename tuple_element<N - 1, T>::type,
-                                                            void>::type>(tupEnd, {false, !!N});
+//
+template <class T> enable_if_t<is_tuple<T>::value
+        && !tuple_size<T>::value, ostream&> INSERT(ostream& os, const T&, bool)
+{
+    return os << GET_START<T>() << GET_END<T>();
 }
 
-template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-                && N < tuple_size<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
-    return INSERT <N + 1, T> (INSERT(os << GETSTR<typename tuple_element<N, T>::type>(N ? tupStep :
-                                        tupStart), get<N>(t), N >= tuple_size<T>::value - 1), t, b);
+template <size_t N, class T> enable_if_t<is_tuple<T>::value
+            && N == tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
+{
+    return INSERT(os, get<N>(t), b) << GET_END<T>(b);
 }
 
-template <typename T, size_t S> typename enable_if<!is_same<T, char>::value, ostream&>::type
-                                                    INSERT(ostream& os, const T (&t)[S], const bool& b){
-    if (b){
-        for (auto next = begin(t), it = next++; it != end(t); ++next, ++it){
-            INSERT(os << (it == begin(t) ? GETSTR(iterStart) : GETSTR<T>(iterStep, {is_same<T, bool>::value})), *it, next == end(t));
+template <size_t N, class T> enable_if_t<is_tuple<T>::value && !is_container<T>::value
+                && N < tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b) {
+    return INSERT <N + 1> (INSERT(os, get<N>(t), false) << tupStep(), t, b);
+}
+template <class T> enable_if_t<is_tuple<T>::value, !is_container<T>::value && is_container<T>::value, ostream&> INSERT(ostream& os, const T& t, bool b){
+    return INSERT<0>(os << tupStart(), t, b);
+}
+
+
+template <class T> enable_if_t<iterable<T>::value && two_way_iter<T>::value && !is_bounded_array<T>::value &&
+!is_str<T>::value || is_bounded_array<T>::value && !holds<T, char>::value, ostream&> INSERT(ostream& os, const T& t, bool b) {
+    os << GETSTR(iterStart);
+    if (!t.empty()){
+        const auto e = prev(end(t));
+        constexpr bool step = is_same<T, bool>::value;
+        for (auto it = begin(t); it != e; ++it){
+            INSERT(os, *it, false) << iterStep(shallow.test<holds<char>::value<T>>(iterStep, step));
         }
-    } else {
-        for (auto it = begin(t); it != end(t); ++it){
-            INSERT(os << (it == begin(t) ? GETSTR(iterStart) : GETSTR<T>(iterStep, {is_same<T, bool>::value})), *it, false);
+        INSERT(os, *e, b);
+    }
+    return os << iterEnd(shallow.test<val_type_t<T>>(b));
+}
+
+template <class T> enable_if_t<iterable<T>::value &&
+            !two_way_iter<T>::value, ostream&> INSERT(ostream& os, const T& t, bool b) {
+    constexpr bool bounds = holds<T, char>::value, step = bounds || holds<T, bool>::value;
+    os << GETSTR(iterStart, bounds);
+    if (!t.empty()){
+        const auto e = t.end();
+        if (b) {
+            auto it = t.begin();
+            for (auto next = it; ++next != e; ++it){
+                INSERT(os, *it, false) << GETSTR<val_type_t<T>>(iterStep, step);
+            }
+            INSERT(os, *it, true);
+        } else {
+            INSERT(os, *t.begin(), false);
+            for (auto it = t.begin(); ++it != e; ){
+                INSERT(os << GETSTR<val_type_t<T>>(iterStep, step), *it, false);
+            }
         }
     }
-    return os << GETSTR<T>(iterEnd, {false, b});
+    return os << GETSTR<val_type_t<T>>(iterEnd, bounds, b);
 }
 
-template <class T> typename enable_if<iterable<T>::value && !is_array<T>::value &&
-            !is_str<T>::value, ostream&>::type INSERT(ostream& os, const T& t, const bool& b) {
-    if (b){
-        for (auto next = t.begin(), it = next++; it != t.end(); ++next, ++it){
-            INSERT(os << (it == t.begin() ? GETSTR(iterStart) : GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), *it, next == end(t));
-        }
-    } else {
-        for (auto it = t.begin(); it != t.end(); ++it){
-            INSERT(os << (it == t.begin() ? GETSTR(iterStart, holds<T, char>::value) :
-            GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), *it, false);
-        }
-    }
-    return os << GETSTR<val_type_t<T>>(iterEnd, {holds<T, char>::value, b});
-}
-
-template <class T> typename enable_if <is_adaptor<T>::value &&
+template <class T> enable_if_t<is_adaptor<T>::value &&
                     is_base_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
-                                                    ostream&>::type INSERT (ostream& os, T t, const bool& b){
+                                                    ostream&> INSERT (ostream& os, T t, bool b){
+    constexpr bool bounds = holds<T, char>::value, step = bounds || holds<T, bool>::value;
     if (b){
         for (bool a = true; !t.empty(); a = false){
             val_type_t<T> v = pop(t);
-            INSERT(os << (a ? GETSTR(iterStart, {holds<T, char>::value}) :
-               GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), v, t.empty());
+            INSERT(os << (a ? GETSTR(iterStart, bounds) :
+               GETSTR<val_type_t<T>>(iterStep, step)), v, t.empty());
         }
     } else {
         for (bool a = true; !t.empty(); a = false){
-            INSERT(os << (a ? GETSTR(iterStart, {holds<T, char>::value}) :
-               GETSTR<val_type_t<T>>(iterStep, {holds<T, char>::value || holds<T, bool>::value})), pop(t), false);
+            INSERT(os << (a ? GETSTR(iterStart, bounds) :
+               GETSTR<val_type_t<T>>(iterStep, step)), pop(t), false);
         }
     }
-    return os << GETSTR<val_type_t<T>>(iterEnd, {holds<T, char>::value, b});
+    return os << GETSTR<val_type_t<T>>(iterEnd, bounds, b);
 }
-template <class T> typename enable_if <is_adaptor<T>::value &&
+template <class T> enable_if_t <is_adaptor<T>::value &&
                 !is_base_of<queue<typename T::value_type, typename T::container_type>, T>::value,
-                                                    ostream&>::type INSERT (ostream& os, T t, const bool& b){
+                                                    ostream&> INSERT (ostream& os, T t, bool b){
     typename T::container_type a;
     while (!t.empty()){
         a.pf(pop(t));
     }
     return INSERT(os, a, b);
 }
-template <class T> typename enable_if<customPrint<T>::value, ostream&>::type operator << (ostream& os, const T& t){
+template <class T> enable_if_t<customPrint<T>::value, ostream&> operator << (ostream& os, const T& t){
     return INSERT(os, t, printLN);
 }
 
 
-template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-            && N == tuple_size<T>::value, istream&>::type operator >> (istream& is, T& t) {
+template <size_t N = 0, typename T> enable_if_t<is_tuple<T>::value && !is_container<T>::value
+            && N == tuple_size<T>::value, istream&> operator >> (istream& is, T& t) {
     return is;
 }
 
-template <size_t N = 0, typename T> typename enable_if<is_tuple<T>::value && !is_container<T>::value
-                && N < tuple_size<T>::value, istream&>::type operator >> (istream& is, T& t) {
+template <size_t N = 0, typename T> enable_if_t<is_tuple<T>::value && !is_container<T>::value
+                && N < tuple_size<T>::value, istream&> operator >> (istream& is, T& t) {
     return operator >> <N + 1, T> (is >> get<N>(t), t);
 }
 
-template <class T> typename enable_if<changes_front<T>::value && (holds<T, char>::value ||
-                            holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
+template <class T> enable_if<changes_front<T>::value && (holds<T, char>::value ||
+                            holds<T, bool>::value), istream&> operator >> (istream& is, T& t){
     if (t.empty()){
-        string a;
+        basic_string<val_type_t<T>> a;
         is >> a;
-        for_each(CRALL(a), [&t] (const char& i) { t.pf(holds<T, bool>::value ? i != '0' : i); } );
+        if (holds<T, char>::value){
+            copy(CRALL(a), front_inserter(t));
+        } else {
+            for (auto it = a.crbegin(); it != a.rend(); ++it){
+                t.pf(*it != '0');
+            }
+        }
     } else {
-        for_each(ALL(t), [&is] (typename T::reference i) { is >> i; } );
+        for (auto& i : t){
+            is >> i;
+        }
     }
     return is;
 }
-template <class T> typename enable_if<can_change_back<T>::value && (holds<T, char>::value ||
-                        holds<T, bool>::value) && !is_base_of<string, T>::value, istream&>::type
+template <class T> enable_if_t<can_change_back<T>::value && (holds<T, char>::value ||
+                        holds<T, bool>::value) && !is_str<T>::value, istream&>
                                                                     operator >> (istream& is, T& t){
     if (t.empty()){
         string a;
         is >> a;
-        for_each(CALL(a), [&t] (const char& i) { t.pb(holds<T, bool>::value ? i != '0' : i); } );
+        if (holds<T, char>::value){
+            copy(CRALL(a), back_inserter(t));
+        } else {
+            for (auto it = a.crbegin(); it != a.rend(); ++it){
+                t.pb(*it != '0');
+            }
+        }
     } else {
-        for_each(ALL(t), [&is] (typename T::reference i) { is >> i; } );
+        for (auto& i : t){
+            is >> i;
+        }
     }
     return is;
 }
-template <class T> typename enable_if<iterable<T>::value && !changes_front<T>::value &&
-                        !can_change_back<T>::value, istream&>::type operator >> (istream& is, T& t){
-    for_each(ALL(t), [&is] (val_type_t<T>& i) { is >> i; } );
+template <class T> enable_if_t<iterable<T>::value && !changes_front<T>::value &&
+                        !can_change_back<T>::value, istream&> operator >> (istream& is, T& t){
+    for (auto& i : t){
+        is >> i;
+    }
     return is;
 }
 
-template <class T> typename enable_if<is_map<T>::value, istream&>::type
-                                                                    operator >> (istream& is, T& t){
-    for_each(ALL(t), [&is] (typename T::reference i) { is >> i.S; } );
+template <class T> enable_if_t<is_map<T>::value, istream&> operator >> (istream& is, T& t){
+    for (auto& i : t){
+        is >> i.S;
+    }
     return is;
 }
-template <class T> typename enable_if<is_associative<T>::value && !is_map<T>::value &&
-(holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
+template <class T> enable_if_t<is_associative<T>::value && !is_map<T>::value &&
+(holds<T, char>::value || holds<T, bool>::value), istream&> operator >> (istream& is, T& t){
     string a;
     is >> a;
-    for_each(CALL(a), [&t] (const char& i) { t.insert(holds<T, bool>::value ? i != '0' : i); } );
+    if (holds<T, char>::value){
+        copy(CALL(a), inserter(t));
+    } else {
+        for (auto i : t){
+            t.insert(i != '0');
+        }
+    }
     return is;
 }
-template <class T> typename enable_if<is_adaptor<T>::value &&
-(holds<T, char>::value || holds<T, bool>::value), istream&>::type operator >> (istream& is, T& t){
+template <class T> enable_if_t<is_adaptor<T>::value &&
+(holds<T, char>::value || holds<T, bool>::value), istream&> operator >> (istream& is, T& t){
     string a;
     is >> a;
-    for_each(CALL(a), [&t] (const char& i) { t.push(holds<T, bool>::value ? i != '0' : i); } );
+    if (holds<T, char>::value){
+        for (auto i : t){
+            t.push(i);
+        }
+    } else {
+        for (auto i : t){
+            t.push(i != '0');
+        }
+    }
     return is;
 }
 
@@ -1009,9 +1292,10 @@ template <class T> typename enable_if<is_adaptor<T>::value &&
 
 //prints as much details of a variable
 #define SHOW(a) eprintf("[%s %s called at line #%d in %s: ", type_name(a).c_str(), #a, __LINE__,\
-__PRETTY_FUNCTION__); debugPrint = true; cerr << a << "]\n"; debugPrint = false;
+    __PRETTY_FUNCTION__); debugPrint = true; cerr << a << "]\n"; debugPrint = false;
 //makes stdin an input file and stdout an output file
-#define TOFILE(name) freopen(#name ".out", "w", stdout); freopen(#name ".in", "r", stdin);
+#define TOFILE string name = argv[0]; name = name.substr(0, name.find_last_of(".")); \
+    freopen(name + ".out", "w", stdout); freopen(name + ".in", "r", stdin);
 //prints out details and nanosecond timing of a function and its arguments after execution
 #define TIME(f) GET_TIME(f, type_name(f).c_str(), #f, __LINE__, __PRETTY_FUNCTION__);
 //does the real timing; the macros just provide the details
@@ -1050,8 +1334,8 @@ string asRaw(const string& a){
 
 //consecutive values must be increasing or equal
 
-template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
-                must_sorted(const I& first, const I& last, const C& c, const bool& canEqual = 0){
+template <class I, class C> enable_if_t<in_iter<I>::value, bool>
+                must_sorted(I first, I last, C c, bool canEqual = false){
     I n = first, p = first;
     for (++n; n != last && p != last; ++n, ++p){
         if (!c(*p, *n)){
@@ -1061,105 +1345,93 @@ template <class I, class C> typename enable_if<in_iter<I>::value, bool>::type
     return canEqual || *p != *first;
 }
 
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                        uphill(const I& first, const I& last, bool canEqual = 0){
+template <class I> enable_if_t<in_iter<I>::value, bool>
+                                        uphill(I first, I last, bool canEqual = false){
     return must_sorted(first, last, less<val_type_t<I>>(), canEqual);
 }
 
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                        ascending(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, bool>
+                                                        ascending(I first, I last){
     return is_sorted(first, last, less_equal<val_type_t<I>>());
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                        downhill(const I& first, const I& last, bool canEqual = 0){
+template <class I> enable_if_t<in_iter<I>::value, bool>
+                                        downhill(I first, I last, bool canEqual = false){
     return must_sorted(first, last, greater<val_type_t<I> >(), canEqual);
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                        descending(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, bool> descending(I first, I last){
     return is_sorted(first, last, greater_equal<val_type_t<I> >());
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                                flat(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, bool> flat(I first, I last){
     return is_sorted(first, last, equal_to<val_type_t<I> >());
 }
-template <class T> typename enable_if<in_iter<T>::value, bool>::type distinct(const T& t){
+template <class T> enable_if_t<in_iter<T>::value, bool> distinct(const T& t){
     return t.size() == uset<val_type_t<T, 1>>(ALL(t)).size();
 }
-template <class I> typename enable_if<in_iter<I>::value, bool>::type
-                                                            distinct(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, bool>
+                                                            distinct(I first, I last){
     return distance(first, last) == uset<val_type_t<I>>(first, last).size();
 }
 
 /*these functions replace <cmath>'s because instead of inputting an int pointer for a 2nd output,
 the output comes as a pair*/
 template <typename T> typename conditional<is_floating_point<T>::value, pair<T, T>, pd>::type
-                                                                                modf(const T& t){
+                                                                                modf(T t){
     typename conditional<is_floating_point<T>::value, T, double>::type param;
     typename conditional<is_floating_point<T>::value, T, double>::type result = modf(t, &param);
     return mp(result, param);
 }
 #define ln log
 template <typename T>  pair<typename conditional<is_floating_point<T>::value, T, double>::type, int>
-                                                                                frexp(const T& t){
+                                                                                frexp(T t){
     int param;
     typename conditional<is_floating_point<T>::value, T, double>::type result = frexp(t, &param);
     return mp(result, param);
 }
-template <class T> pair<double, int> frexp(const T& t){
+template <class T> pair<double, int> frexp(T t){
     int param;
     double result = frexp(t, &param);
     return mp(result, param);
 }
 //this isn't a replacement function; this is a logarithm function with a custom base
 template <typename T> typename conditional<is_floating_point<T>::value, T, double>::type
-                                                                    log(const T& b, const T& x){
+                                                                    log(T b, T x){
     return log(x) / log(b);
 }
 
 //Python's floating point modulus
-template <typename T> inline typename enable_if<is_floating_point<T>::value, T>::type
-                                                                operator % (const T& a, const T& b){
+template <typename T> inline enable_if_t<is_floating_point<T>::value, T>
+                                                                operator % (T a, T b){
     return fmod(a, b);
 }
 template <typename T> pair<typename conditional<is_floating_point<T>::value, T, double>::type, int>
-                                                                    remquo(const T& n, const T& d){
+                                                                    remquo(T n, T d){
     int param;
     typename conditional<is_floating_point<T>::value, T, double>::type r = remquo(n, d, &param);
     return mp(r, param);
 }
 
-template <class I> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
-                                            min_e(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, val_type_t<I>&>
+                                            min_e(I first, I last){
     return *min_element(first, last);
 }
-template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
-                                                min_e(const I& first, const I& last, const C& c){
+template <class I, class C> enable_if_t<in_iter<I>::value, val_type_t<I>&>
+                                                min_e(I first, I last, C c){
     return *min_element(first, last, c);
 }
-template <class I> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
-                                            max_e(const I& first, const I& last){
+template <class I> enable_if_t<in_iter<I>::value, val_type_t<I>&>
+                                            max_e(I first, I last){
     return *max_element(first, last);
 }
-template <class I, class C> typename enable_if<in_iter<I>::value, val_type_t<I>&>::type
-                                            max_e(const I& first, const I& last, const C& c){
+template <class I, class C> enable_if_t<in_iter<I>::value, val_type_t<I>&>
+                                            max_e(I first, I last, C c){
     return *max_element(first, last, c);
 }
-
-template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type
-                                                                                    rbegin(T& t) {
-    return reverse_iterator<iter_t<T> >(end(t));
-}
-template <class T> typename enable_if<two_way_iter<T>::value, reverse_iterator<iter_t<T> > >::type
-                                                                                        rend(T& t) {
-    return reverse_iterator<iter_t<T> >(begin(t));
-}
-
 
 
 template <class T, typename I> auto at(T& t, const I& i) -> decltype(t.at(i)) {
     return t.at(i);
 }
-template <class T, size_t S> T& at(T (&t) [S], const size_t& i){
+template <class T, size_t S> T& at(T (&t) [S], size_t i){
     if (i >= S) {
         throw out_of_range(join("what(): ", type_name(t), "::operator[]: __n (which is ",
                                                 int(i), " or ", i, ") >= _Nm (which is ", S, ")"));
@@ -1167,48 +1439,52 @@ template <class T, size_t S> T& at(T (&t) [S], const size_t& i){
     return t[i];
 }
 
-template <class T, typename I, typename I2, typename... Is>
-            val_type_t<T, sizeof...(Is) + 2>& at(T& t, const I& i, const I2& i2, const Is&... is) {
-    return at(at(t, i), i2, is...);
+template <class T, typename I, typename... Is> val_type_t<T, sizeof...(Is) + 1>&
+                                                            at(T& t, const I& i, const Is&... is) {
+    return at(at(t, i), is...);
 }
-template <class T> val_type_t<T>& to(T& t, const int& i) {
+template <class T> val_type_t<T>& to(T& t, int i) {
     return t[(i % SIZE(t) + SIZE(t)) % SIZE(t)];
 }
-template <class T, typename... Is> val_type_t<T, sizeof...(Is) + 2>&
-                                        to(T& t, const int& i, const int& i2, const Is&... is) {
-    return to(to(t, i), i2, is...);
+template <class T, typename... Is> val_type_t<T, sizeof...(Is) + 1>&
+                                        to(T& t, int i, Is... is) {
+    return to(to(t, i), is...);
 }
 
-template <class T> typename enable_if<is_sequential<T>::value && access<T, int>::value, bool>::type
-                                                                            val(T& t, const int& i){
+template <class T> enable_if_t<is_sequential<T>::value && access<T, unsigned>::value,
+                                                                        bool> val(T& t, unsigned i){
     return i < SIZE(t);
 }
-template <class T, typename I>
-    typename enable_if<is_map<T>::value && access<T, I>::value, bool>::type val(T& t, const I& i){
-    return t.count(i);
+
+template <class T, typename... Is>
+                                enable_if_t<is_sequential<T>::value,
+                                                    bool> val(T& t, unsigned i, const Is&... is){
+    return i < SIZE(t) && val(*next(t, i), is...);
 }
 
-template <class T, typename I, typename I2, typename... Is>
-            bool val(T& t, const I& i, const I2& i2, const Is&... is) {
-    if (!val(t, i)){
-        return false;
-    }
-    return val(at(t, i), i2, is...);
+
+template <class T, typename I> enable_if_t<is_map<T>::value && access<T, I>::value,
+                                                                bool> val(const T& t, const I& i) {
+    return t.count(i);
+}
+template <class T, typename I, typename... Is> enable_if_t<is_map<T>::value && access<T, I>::value,
+                                                bool> val(const T& t, const I& i, const Is&... is) {
+    const auto it = t.find(i);
+    return it != end(t) && val(*it, is...);
 }
 
 #define INARR(a) FOR(a##i, sizeof(a) / sizeof(a[0])) { cin >> a[a##i]; }
 #define INARR2(a) FOR(a##i, sizeof(a) / sizeof(a[0])) {\
             FOR(a##j, sizeof(a[0]) / sizeof(a[0][0])) { cin >> a[a##i][a##j]; } }
 
-#define PARR(a) cout << GETSTR(iterStart, is_same<char, decay<decltype(a[0])>::type>::value);\
-    bool a##step = is_same<bool, decay<decltype(a[0])>::type>::value || is_same<char, decay<decltype(a[0])>::type>::value;\
+#define PARR(a) cout << GETSTR(iterStart, is_same<char, remove_cvref<decltype(a[0])>::type>::value);\
     FOR(a##i, sizeof(a) / sizeof(a[0])) {\
-        cout << a[a##i] << GETSTR(iterStep, a##step); }\
-    cout << GETSTR(iterStep, a##step).size() * delChar << GETSTR(iterEnd, is_same<char, decay<decltype(a[0])>::type>::value);
+        cout << (a##i ? GETSTR(iterStart) : GETSTR(iterStep, is_same<bool, remove_cvref<decltype(a[0])>::type>::value || is_same<char, remove_cvref<decltype(a[0])>::type>::value)) << a[a##i];  }\
+    cout << GETSTR(iterEnd, is_same<char, remove_cvref<decltype(a[0])>::type>::value);
 
 #define PARR2(a) \
-    bool a##ends = is_same<char, decay<decltype(a[0][0])>::type>::value; \
-    bool a##step = is_same<bool, decay<decltype(a[0][0])>::type>::value || a##ends;\
+    bool a##ends = is_same<char, remove_cvref<decltype(a[0][0])>::type>::value; \
+    bool a##step = is_same<bool, remove_cvref<decltype(a[0][0])>::type>::value || a##ends;\
     cout << GETSTR(iterStart, a##ends);\
     FOR(a##i, sizeof(a) / sizeof(a[0])) {\
         cout << GETSTR(iterStart, a##ends);\
@@ -1255,17 +1531,112 @@ template <class T, typename I, typename I2, typename... Is>
 
 #define type_ind(type) type_index(typeid(type))
 
+#define STATS(n, f) GET_STATS(n, f, type_name(f).c_str(), #f, __LINE__, __PRETTY_FUNCTION__);
+template <typename T, typename... Ts> void GET_STATS (size_t tests, const T& f, const Ts&... args) {
+    typedef typename conditional<chrono::high_resolution_clock::is_steady,
+                                chrono::high_resolution_clock, chrono::steady_clock>::type clock;
+    llng times[tests];
+    FOR(i, tests){
+        auto s = clock::now();
+        f();
+        auto e = clock::now();
+        times[i] = (e - s).count();
+        //eprintf("Test #%d: %d ns\n", i, times[i]);
+    }
+    llng mean = accumulate(times, times + tests, 0) / tests, std_dev = 0;
+    FOR(i, tests){
+        std_dev += pow(times[i] - mean, 2);
+    }
+    std_dev = sqrt(std_dev / (tests - 1));
+    eprintf("[%s %s called at line #%d in %s with mean %s ns and std deviation %s ns]\n", args...,
+                        sepNum(mean).c_str(), sepNum(std_dev).c_str());
+}
+
+#define ARROFBOUNDS2(name, arr) int name[2] = {sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]) / sizeof(arr[0][0])};
+#define ARROFBOUNDS3(name, arr) int name[3] = {sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]) / sizeof(arr[0][0]), sizeof(arr[0][0]) / sizeof(arr[0][0][0])};
+#define ARROFBOUNDS4(name, arr) int name[4] = {sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]) / sizeof(arr[0][0]), sizeof(arr[0][0]) / sizeof(arr[0][0][0]), sizeof(arr[0][0][0]) / sizeof(arr[0][0][0][0])};
+#define ARROFBOUNDS5(name, arr) int name[5] = {sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]) / sizeof(arr[0][0]), sizeof(arr[0][0]) / sizeof(arr[0][0][0]), sizeof(arr[0][0][0]) / sizeof(arr[0][0][0][0]), sizeof(arr[0][0][0][0]) / sizeof(arr[0][0][0][0][0])};
+#define ARROFBOUNDS6(name, arr) int name[6] = {sizeof(arr) / sizeof(arr[0]), sizeof(arr[0]) / sizeof(arr[0][0]), sizeof(arr[0][0]) / sizeof(arr[0][0][0]), sizeof(arr[0][0][0]) / sizeof(arr[0][0][0][0]), sizeof(arr[0][0][0][0]) / sizeof(arr[0][0][0][0][0]), sizeof(arr[0][0][0][0][0]) / sizeof(arr[0][0][0][0][0][0])};
+
+#define TIE(t, type, ...) type __VA_ARGS__; tie(__VA_ARGS__) <<= t;
+#define ignore2 ignore, ignore
+#define ignore3 ignore, ignore, ignore
+#define ignore4 ignore, ignore, ignore, ignore
+#define ignore5 ignore, ignore, ignore, ignore, ignore
+#define ignore6 ignore, ignore, ignore, ignore, ignore, ignore
+template <size_t N = 0, class A, class B> enable_if_t<N >= tuple_size<A>::value ||
+                        N >= tuple_size<B>::value, A&> operator <<= (A& a, const B& b){
+    return a;
+}
+
+template <size_t N = 0, class A, class B> enable_if_t<N < tuple_size<A>::value &&
+                        N < tuple_size<B>::value, A&> operator <<= (A& a, const B& b){
+    get<N>(a) = get<N>(b);
+    return operator <<= <N + 1> (a, b);
+}
+
+template <size_t N, class A, class I> enable_if_t<N >= tuple_size<A>::value && is_iter<B>::value, A&> tupCopy(A& a, I it, I end){
+    return a;
+}
+template <size_t N, class A, class I> enable_if_t<N < tuple_size<A>::value && is_iter<I>::value, A&> tupCopy(A& a, I it, I end){
+    if (it != end) {
+        get<N>(a) = *it;
+        return tupCopy<N + 1>(a, ++it);
+    }
+    return a;
+}
+template <size_t N, class I, class B> enable_if_t<N >= tuple_size<A>::value && is_iter<B>::value> tupCopy(I it, I end, const B& b){}
+template <size_t N, class I, class B> enable_if_t<N < tuple_size<A>::value && is_iter<B>::value> tupCopy(I it, I end, const B& b){
+    if (it != end) {
+        *it = get<N>(b);
+        return tupCopy<N + 1>(++it, b);
+    }
+}
+
+template <class A, class B> enable_if_t<is_tuple<A>::value && iterable<B>::value, A&> operator <<= (A& a, const B& b){
+    return tupCopy<0>(a, begin(b), end(b));
+}
+template <class A, class B> enable_if_t<iterable<A>::value && is_tuple<B>::value> operator <<= (A& a, const B& b){
+    return tupCopy<0>(begin(a), end(a), b);
+}
+
+#define delf(c) c.erase(begin(c))
+#define delb(c) c.erase(c.rbegin())
+
+template <class T> auto cbegin(const T& t) -> decltype(t.cbegin()){
+    return t.cbegin();
+}
+template <typename T, size_t S> const T* cbegin( const T (&t) [S] ) {
+    return t;
+}
+template <class T> auto cend(const T& t) -> decltype(t.cend()){
+    return t.cend();
+}
+template <typename T, size_t S> const T* cend( const T (&t) [S] ) {
+    return t + S;
+}
+template <class T> auto crbegin(const T& t) -> decltype(t.crbegin()){
+    return t.crbegin();
+}
+template <typename T, size_t S> reverse_iterator<const T*> cbegin(const T (&t) [S] ) {
+    return t + S;
+}
+template <class T> auto crend(const T& t) -> decltype(t.crend()){
+    return t.crend();
+}
+template <typename T, size_t S> reverse_iterator<const T*> cend(const T (&t) [S] ) {
+    return t;
+}
 
 
-
-
-int main() {
+int main(int argc, char* argv[]) {
 	//TOFILE( )
     debugPrint = 1;
     printLN = 1;
-
-
-
+    int a[2][2] = {};
+    ARROFBOUNDS2(i, a)
+    cout << i;
+    //cout << type_name<decltype(a)>();
 
 
 
@@ -1275,4 +1646,3 @@ int main() {
 	fclose(stdout);
 	return 0;
 }
-
