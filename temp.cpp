@@ -266,19 +266,19 @@ typedef pqueue<pld> pqpld;
 typedef pqueue<pui> pqpui;
 typedef pqueue<pul> pqpul;
 
-typedef min_heap<pint> minhi;
-typedef min_heap<pllng> minhl;
-typedef min_heap<pdbl> minhd;
-typedef min_heap<pldbl> minhld;
-typedef min_heap<puint> minhui;
-typedef min_heap<pullng> minhul;
+typedef min_heap<pi> minhpi;
+typedef min_heap<pl> minhpl;
+typedef min_heap<pd> minhpd;
+typedef min_heap<pld> minhpld;
+typedef min_heap<pui> minhpui;
+typedef min_heap<pul> minhpul;
 
-typedef max_heap<pint> maxhi;
-typedef max_heap<pllng> maxhl;
-typedef max_heap<pdbl> maxhd;
-typedef max_heap<pldbl> maxhld;
-typedef max_heap<puint> maxhui;
-typedef max_heap<pullng> maxhul;
+typedef max_heap<pi> maxhpi;
+typedef max_heap<pl> maxhpl;
+typedef max_heap<pd> maxhpd;
+typedef max_heap<pld> maxhpld;
+typedef max_heap<pui> maxhpui;
+typedef max_heap<pul> maxhpul;
 
 #define int2 int, int
 #define int3 int2, int
@@ -405,7 +405,7 @@ template <class T> struct is_tuple<T, void_t<
             decltype(T(declval<T>())),
             decltype(declval<T>() == declval<T>()),
             decltype(declval<T>() < declval<T>()),
-            decltype(tuple_size<T>::value)> > : public integral_constant<bool !is_container<T>::value> {};
+            decltype(tuple_size<T>::value)> > : public integral_constant<bool, !is_container<T>::value> {};
 
 //test if is associative (set)
 template <class, typename = void> struct is_associative : public false_type {};
@@ -481,6 +481,15 @@ template <typename T> struct remove_cvref
 };
 template <typename T> using remove_cvref_t = typename remove_cvref<T>::type;
 
+//test if A equals at least one type of the following
+template <typename A, typename T, typename... Ts> struct is_one_of :
+        public integral_constant<bool, is_one_of<A, T>::value || is_one_of<A, Ts...>::value> {}; 
+
+template <typename A, typename T> struct is_one_of<A, T> :
+        public is_same<remove_cvref_t<A>, remove_cvref_t<T>> {};
+
+template <class A, typename... Ts> using holds = is_one_of<val_type_t<A>, Ts...>;
+
 //test if my overloaded print operators would be used
 template <class, typename = void> struct customPrint : public false_type {};
 template <class T> struct customPrint<T, enable_if_t<is_tuple<T>::value>> : public true_type {};
@@ -493,18 +502,10 @@ template <class T> struct customPrint<T, enable_if_t<is_adaptor<T>::value>> : pu
 //test if value type needs to have a custom print
 template <class, typename = void> struct shallow : public false_type {};
 template <class T> struct customPrint<T, enable_if_t<customPrint<T>::value>> :
-        public integral_constant<bool, !customPrint<val_type_t<T>>> {};
+        public integral_constant<bool, !customPrint<val_type_t<T>>::value> {};
 
 using dummy = int[];
 
-//test if A equals at least one type of the following
-template <typename A, typename T, typename... Ts> struct is_one_of :
-        public integral_constant<bool, is_one_of<A, T>::value || is_one_of<A, Ts...>::value> {}; 
-
-template <typename A, typename T> struct is_one_of<A, T> :
-        public is_same<remove_cv_ref_t<A>, remove_cv_ref_t<T>> {};
-
-template <class A, typename... Ts> using holds = is_one_of<val_type_t<A>, Ts...>;
 
 //REMOVE?
 template <class, typename, typename = void> struct access : public false_type {};
@@ -527,6 +528,8 @@ wstring operator "" _s(const wchar_t* str, size_t len)
 {
     return wstring{str, len};
 }
+
+bool debugPrint = false;
 
 template <class T> enable_if_t<is_tuple<T>::value, string> GET_START()
 {
@@ -724,17 +727,18 @@ template <class T> enable_if_t<iterable<T>::value, string>
     set<location, decltype(comp)> to_replace(comp);
     for (const auto& i : old)
     {
-        for (size_t j = 0; (j = a.find(i, j)) != string::npos; j += i.size())
+        size_t size = string(move(i)).size();
+        for (size_t j = 0; (j = a.find(i, j)) != string::npos; j += size)
         {
-            to_replace.emplace(j, i.size());
+            to_replace.emplace(j, size);
         }
     }
     string out;
     size_t prev = 0;
     for (auto it = to_replace.begin(); n-- && it != to_replace.end(); ++it)
     {
-        out += a.substr(prev, i->F - prev) + ne;
-        prev = i->F + i->S;
+        out += a.substr(prev, it->F - prev) + ne;
+        prev = it->F + it->S;
     }
     return out + a.substr(prev);
 }
@@ -742,23 +746,23 @@ string expandtabs(const string& a, unsigned tabsize = 4)
 {
     return repl(a, "\t", string(tabsize, ' '));
 }
-bool isalnum(const string& a)
+bool isalnums(const string& a)
 {
     return all_of(a.cbegin(), a.cend(), ::isalnum) && !a.empty();
 }
-bool isalpha(const string& a)
+bool isalphas(const string& a)
 {
     return all_of(a.cbegin(), a.cend(), ::isalpha) && !a.empty();
 }
-bool isdigit(const string& a)
+bool isdigits(const string& a)
 {
     return all_of(a.cbegin(), a.cend(), ::isdigit) && !a.empty();
 }
-bool islower(const string& a)
+bool islowers(const string& a)
 {
     return all_of(a.cbegin(), a.cend(), ::islower) && !a.empty();
 }
-bool isspace(const string& a)
+bool isspaces(const string& a)
 {
     return all_of(a.cbegin(), a.cend(), ::isspace) && !a.empty();
 }
@@ -775,32 +779,32 @@ bool istitle(const string& a)
     }
     return !a.empty() && (anyUpper || isupper(a[0]));
 }
-bool isupper(const string& a)
+bool isuppers(const string& a)
 {
-    return all_of(a.cbegin(), a.cend(), isupper) && !a.empty();
+    return all_of(a.cbegin(), a.cend(), ::isupper) && !a.empty();
 }
 
-template <typename T, typename... Ts> string joins(const string& sep, const T& t, const Ts&... t)
+template <typename T, typename... Ts> string joins(const string& sep, const T& t, const Ts&... ts)
 {
     stringstream ss;
     ss << t;
-    void(dummy {0, (void(ss << sep << t), 0)... } );
+    void(dummy {0, (void(ss << sep << ts), 0)... } );
     return ss.str();
 }
-template <typename T, typename... Ts> string join(const T& t, const Ts&... t)
+template <typename T, typename... Ts> string join(const T& t, const Ts&... ts)
 {
     stringstream ss;
     ss << t;
-    void(dummy {0, (void(ss << t), 0)... } );
+    void(dummy {0, (void(ss << ts), 0)... } );
     return ss.str();
 }
-template <class... Ts> string joinstr(string t, const Ts& ts)
+template <class... Ts> string joinstr(string t, const Ts&... ts)
 {
     void(dummy{0, (void(t += ts), 0)... } );
     return t;
 }
 
-template <class... Ts> string joinstrs(const string& sep, string t, const Ts& ts)
+template <class... Ts> string joinstrs(const string& sep, string t, const Ts&... ts)
 {
     void(dummy{0, (void(t += sep + ts), 0)... } );
     return t;
@@ -836,12 +840,12 @@ string title(string a)
     }
     return a;
 }
-string tolower (string a)
+string tolowers (string a)
 {
     transform(ALL(a), begin(a), ::tolower);
     return a;
 }
-string toupper (string a)
+string touppers (string a)
 {
     transform(ALL(a), begin(a), ::toupper);
     return a;
@@ -912,9 +916,9 @@ template <typename F, typename... R> F& SET0 (F& f, R&... r)
 #define EL cout << '\n';
 template <typename F, typename... R> ostream& FOUT (ostream& os, const F& f, const R&... t)
 {
-    os << varsStart() << f;
-    void (dummy{0, (void(os << varsStep() << t), 0)...});
-    return os << varsEnd() << '\n';
+    os << VARS_START() << f;
+    void (dummy{0, (void(os << VARS_STEP() << t), 0)...});
+    return os << VARS_END() << '\n';
 }
 template <typename... R> ostream& OUT (const R&...r)
 { 
@@ -941,62 +945,83 @@ template <typename T> inline T sMin (T& a, const T& b)
     return a = min (a, b);
 }
 
-//Rework many of these 
-bool isPowOf2(uint v)
+template <typename T> enable_if_t<is_unsigned<T>::value, bool> isPowOf2(T v)
 {
     return v && !(v & (v - 1));
 }
+template <typename T> enable_if_t<is_signed<T>::value, bool> isPowOf2(T v)
+{
+    T a = v > 0 ? v : ~v;
+    return !(a & (a - sgn(v)));
+}
 
 uint log2(uint x){
-    return x ? 31 - __builtin_clz(x) : 0;
+    ASSERT(x != 0, "Input must be positive.")
+    return 31 - __builtin_clz(x);
 }
 ullng log2(ullng x){
-    return x ? 63 - __builtin_clzll(x) : 0;
+    ASSERT(x != 0, "Input must be positive.")
+    return 63 - __builtin_clzll(x);
 }
-template <typename T> enable_if_t<is_signed<T>::value && > log2(int x)
-unsigned log10(unsigned v) {
-    if (v >= 1000000000) { return 9; }
-    if (v >= 100000000) { return 8; }
-    if (v >= 10000000) { return 7; }
-    if (v >= 1000000) { return 6; }
-    if (v >= 100000) { return 5; }
-    if (v >= 10000) { return 4; }
-    if (v >= 1000) { return 3; }
-    if (v >= 100) { return 2; }
-    if (v >= 10) { return 1; }
-    if (v >= 1) { return 0; }
-
-}
-int log10 (int v){
-    ASSERT(v > 0, "Input must be positive");
-    return log10(unsigned(v))
+template <typename T> enable_if_t<is_one_of<T, int, llng>::value> log2(T x)
+{
+    ASSERT(x > 0, "Input must be positive.")
+    return log2(typename make_unsigned<T>::type(x));
 }
 
-int negIf(int v, bool fDontNegate){
-    return (!fDontNegate ^ (!fDontNegate - 1)) * v;
+const ullng powsOf10[] = {1, 10, 100, 1000,
+        10000,  100000, 1000000, 10000000,
+        100000000, 1000000000, 10000000000LL, 100000000000LL,
+        1000000000000LL, 10000000000000LL, 100000000000000LL, 1000000000000000LL,
+        10000000000000000LL, 100000000000000000LL, 1000000000000000000LL, 1000000000000000000LL};
+
+template <typename T> enable_if_t<is_integral<T>::value, int> log10(T v)
+{
+    ASSERT(v > 0, "Input must be positive.")
+    typedef typename conditional<numeric_limits<T>::digits < 31,
+            uint, typename make_unsigned<T>::type>::type properInput;
+    int t = (log2(properInput(v)) + 1) * 1233 >> 12;
+    return t - (v < powsOf10[t]);
 }
 
-unsigned nextPowOf2(unsigned v){
+template <typename T> enable_if_t<is_unsigned<T>::value> nextPowOf2(T v){
     --v;
-    v |= v >> 1;
-    v |= v >> 2;
-    v |= v >> 4;
-    v |= v >> 8;
-    v |= v >> 16;
+    for (int i = 1; i < numeric_limits<T>::digits; i <<= 1)
+    {
+        v |= v >> i;
+    }
     return ++v;
 }
+
 ullng interleave(uint x, uint y){
-    ullng z = 0ull;
+    ullng z = 0;
     for (int i = 0; i < numeric_limits<uint>::digits; ++i) {
-        z |= (x & 1u << i) << i | (y & 1u << i) << (i + 1);
+        z |= (x & 1uLL << i) << i | (y & 1uLL << i) << (i + 1);
     }
     return z;
 }
-uint bitPermutation(uint v){
-    uint t = v | (v - 1u); // t gets v's least significant 0 bits set to 1
+llng interleave(int x, int y){
+    llng z = 0;
+    for (int i = 0; i < numeric_limits<uint>::digits; ++i) {
+        z |= (x & 1LL << i) << i | (y & 1LL << i) << (i + 1);
+    }
+    return z;
+}
+
+template <typename T> enable_if_t<is_one_of<T, int, uint>::value, T> bitPermutation(T v){
+    typedef typename make_unsigned<T>::type uT;
+    T t = v | (v - T(1)); // t gets v's least significant 0 bits set to 1
     // Next set to 1 the most significant bit to change,
     // set to 0 the least significant ones, and add the necessary 1 bits.
-    return (t + 1u) | (((~t & -~t) - 1u) >> (__builtin_ctz(v) + 1u));
+    return (t + T(1)) | (((~t & -~t) - uT(1)) >> (__builtin_ctz(v) + 1));
+}
+
+template <typename T> enable_if_t<is_one_of<T, llng, ullng>::value, T> bitPermutation(T v){
+    typedef typename make_unsigned<T>::type uT;
+    T t = v | (v - T(1)); // t gets v's least significant 0 bits set to 1
+    // Next set to 1 the most significant bit to change,
+    // set to 0 the least significant ones, and add the necessary 1 bits.
+    return (t + T(1)) | (((~t & -~t) - uT(1)) >> (__builtin_ctzll(v) + 1));
 }
 
 template <typename T> enable_if_t<is_unsigned<T>::value, T> sqrt(T num)
@@ -1022,7 +1047,7 @@ template <typename T> enable_if_t<is_unsigned<T>::value, T> sqrt(T num)
 template <typename T> enable_if_t<is_signed<T>::value, T> sqrt(T num)
 {
     typedef typename make_unsigned<T>::type uT;
-    ASSERT(x >= 0, "Input must be nonnegative.")
+    ASSERT(num >= 0, "Input must be nonnegative.")
     return sqrt(uT(num));
 }
 unsigned cbrt(unsigned x)
@@ -1046,14 +1071,78 @@ int cbrt(int x)
     return cbrt(unsigned(x));
 }
 
-//REMOVE?
-inline int dig (int a, int i, int base = 10) {//get digit of a number
-    return int(double(a) / pow (base, i)) % base;
+template <typename B, typename E> enable_if_t<is_integral<B>::value && is_unsigned<E>::value, B>
+        ipow(B x, E n)
+{
+    B value = 1;
+    do
+    {
+        if (n & 1) { value *= x; }
+        n >>= 1;
+        x *= x;
+    }
+    while (n);
+    return value;
 }
-inline bool bit (llng a, size_t i) {//get bit in the binary form of a number
+
+template <typename B, typename E> enable_if_t<is_integral<B>::value && is_signed<E>::value, B>
+        ipow(B x, E n)
+{
+    ASSERT(x >= 0, "Input must be nonnegative")
+    return ipow(x, typename make_unsigned<E>::type(n));
+}
+//get digit of a number (in base 10)
+template <typename T> enable_if_t<is_signed<T>::value, int> dig(T a, int i)
+{
+    ASSERT(i >= 0, "Digit # must be nonnegative")
+    ASSERT(i <= log10(a), "Digit # is too large")
+    return abs(a) / powsOf10[i] % 10;
+}
+template <typename T> enable_if_t<is_unsigned<T>::value, int> dig(T a, int i)
+{
+    ASSERT(i >= 0, "Digit # must be nonnegative")
+    ASSERT(i <= log10(a), "Digit # is too large")
+    return a / powsOf10[i] % 10;
+}
+
+//get digit of a number of certain base
+template <typename T> enable_if_t<is_unsigned<T>::value, int> dig (T a, int i, int base)
+{
+    ASSERT(i >= 0, "Digit # must be nonnegative")
+    ASSERT(base > 1, "Base must be greater than 2")
+    return a / ipow(base, i) % base;
+}
+template <typename T> enable_if_t<is_signed<T>::value, int> dig (T a, int i, int base)
+{
+    return dig(typename make_signed<T>::type(abs(a)), i, base);
+}
+template <typename T> enable_if_t<is_floating_point<T>::value, int> dig(T a, int i)
+{
+    if (i < 0)
+    {
+        a = modf(abs(a), nullptr);
+        for (int j = 0; j < -i; ++j)
+        {
+            int integral;
+            a *= 10;
+            a = modf(a, &integral);
+            a += integral % 10;
+        }
+        return a;
+    }
+    return int(abs(a) / powsOf10[i]) % 10;
+}
+
+//get bit in the binary form of a number
+template <typename T> enable_if_t<is_integral<T>::value, bool> bit (T a, int i) 
+{
+    ASSERT(i >= 0, "Bit # must be nonnegative")
+    ASSERT(i < numeric_limits<typename make_unsigned<T>::type>::digits, "Bit # is too large")
     return (a >> i) & 1;
 }
-template <typename T = int> inline T mask(int start, int end = numeric_limits<T>::digits()){
+
+//get bit mask from start to end
+template <typename T = uint> inline T mask(int start, int end = numeric_limits<T>::digits()){
     return (1 << end - start) - 1 << start;
 }
 
@@ -1114,23 +1203,28 @@ template <class T> enable_if_t<is_tuple<T>::value
 }
 
 template <size_t N, class T> enable_if_t<is_tuple<T>::value
-            && N == tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
+        && N == tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
 {
     return INSERT(os, get<N>(t), b) << GET_END<T>(b);
 }
 
-template <size_t N, class T> enable_if_t<is_tuple<T>::value && !is_container<T>::value
-                && N < tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b) {
-    return INSERT <N + 1> (INSERT(os, get<N>(t), false) << tupStep(), t, b);
+template <size_t N, class T> enable_if_t<is_tuple<T>::value
+        && N < tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
+{
+    return INSERT <N + 1> (INSERT(os, get<N>(t), false) << GET_STEP<T>(), t, b);
 }
-template <class T> enable_if_t<is_tuple<T>::value, !is_container<T>::value && is_container<T>::value, ostream&> INSERT(ostream& os, const T& t, bool b){
-    return INSERT<0>(os << tupStart(), t, b);
+template <class T> enable_if_t<is_tuple<T>::value, ostream&> INSERT(ostream& os, const T& t, bool b)
+{
+    return INSERT<0>(os << GET_START<T>(), t, b);
 }
 
 
-template <class T> enable_if_t<iterable<T>::value && two_way_iter<T>::value && !is_bounded_array<T>::value &&
-!is_str<T>::value || is_bounded_array<T>::value && !holds<T, char>::value, ostream&> INSERT(ostream& os, const T& t, bool b) {
-    os << GETSTR(iterStart);
+template <class T> enable_if_t<iterable<T>::value && two_way_iter<T>::value
+        && !is_bounded_array<T>::value && !is_str<T>::value
+        || is_bounded_array<T>::value && !holds<T, char>::value, ostream&>
+        INSERT(ostream& os, const T& t, bool b)
+{
+    os << GET_START<T>();
     if (!t.empty()){
         const auto e = prev(end(t));
         constexpr bool step = is_same<T, bool>::value;
