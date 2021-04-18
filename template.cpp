@@ -69,21 +69,21 @@ template <typename T> using min_heap = pqueue<T, vector<T>, greater<T> >;
 #define CALL(c) (c).cbegin(), (c).cend()
 #define CRALL(c) (c).crbegin(), (c).crend()
 
-#define FOR(i,n) IUPE(i, 0, n)
-#define IUPI(i, s, e) for (int i = (s); i <= (e); ++i)
-#define IUPE(i, s, e) for (int i = (s); i < (e); ++i)
-#define EUPI(i, s, e) for (int i = (s); ++i <= (e);)
-#define EUPE(i, s, e) for (int i = (s); ++i < (e);)
-#define IDOWNI(i, s, e) for (int i = (s); i >= (e); --i)
-#define IDOWNE(i, s, e) for (int i = (s); i > (e); --i)
-#define EDOWNI(i, s, e) for (int i = (s); --i >= (e);)
-#define EDOWNE(i, s, e) for (int i = (s); --i > (e);)
+#define UI(i, n) IUI(i, 0, n)
+#define UE(i, n) IUE(i, 0, n)
+#define DI(i, n) IDI(i, n, 0)
+#define DE(i, n) EDI(i, n, 0)
+#define IUI(i, s, e) for (int i = (s); i <= (e); ++i)
+#define IUE(i, s, e) for (int i = (s); i < (e); ++i)
+#define EUI(i, s, e) for (int i = (s); ++i <= (e);)
+#define EUE(i, s, e) for (int i = (s); ++i < (e);)
+#define IDI(i, s, e) for (int i = (s); i >= (e); --i)
+#define IDE(i, s, e) for (int i = (s); i > (e); --i)
+#define EDI(i, s, e) for (int i = (s); --i >= (e);)
+#define EDE(i, s, e) for (int i = (s); --i > (e);)
 
 #define STRUCT(name) struct name { name() = default;
 #define ENDSTRUCT };
-#define MITER(marr, i, ...) for (int i = 0; i < SZ(marr); ++i) {\
-        auto& marr##_n = at(marr, i, __VA_ARGS__);
-#define MEND }
 
 #define ins insert
 #define empl emplace
@@ -104,7 +104,8 @@ template <typename T> using min_heap = pqueue<T, vector<T>, greater<T> >;
 
 #define eprintf(format, ...) fprintf(stderr, format, __VA_ARGS__);
 #define SHOW(a) eprintf("[%s %s called at line #%d in %s: ", type_name(a).c_str(), #a, __LINE__,\
-    __PRETTY_FUNCTION__); debugPrint = true; cerr << a << "]\n"; debugPrint = false;
+    __PRETTY_FUNCTION__); a##_d = debugPrint; debugPrint = true; cerr << a << "]\n";\
+    debugPrint = a##_d;
 
 #define scast static_cast
 
@@ -124,10 +125,18 @@ template <typename T> using min_heap = pqueue<T, vector<T>, greater<T> >;
 
 #define type_ind(type) type_index(typeid(type))
 
+
 template <typename...> struct make_void { typedef void type; };
 template <typename... Ts> using void_t = typename make_void<Ts...>::type;
 
 template <bool B, typename T = void> using enable_if_t = typename enable_if<B, T>::type;
+
+template <typename T, typename... Args, typename C = T>
+        enable_if_t<has_virtual_destructor<T>::value> RECON(T& x, Args&&... args)
+{
+    x.~T();
+    new (&x) C(forward<Args>(args)...);
+}
 
 template <typename T> struct remove_cvref
 {
@@ -135,8 +144,6 @@ template <typename T> struct remove_cvref
 };
 template <typename T> using remove_cvref_t = typename remove_cvref<T>::type;
 
-#define REIN(var, ...) var.~remove_cvref_t<decltype(var)>(); \
-        new (&var) remove_cvref_t<decltype(var)>(__VA_ARGS__);
 
 template <typename, class, typename = void> struct is_callable : false_type {};
 template <typename F, typename... Args> struct is_callable<F, tuple<Args...>, void_t<
@@ -160,8 +167,8 @@ template <class T> struct safe_tuple_size<T, enable_if_t<!is_tuple<T>::value> >
 template <class T> struct safe_tuple_size<T, enable_if_t<is_tuple<T>::value> >
         : tuple_size<T> {};
 
-template <class, typename = void> struct instant_size : false_type {};
-template <class T> struct instant_size<T, void_t<decltype(declval<T>().size())> > : true_type {};
+template <class, typename = void> struct has_size : false_type {};
+template <class T> struct has_size<T, void_t<decltype(declval<T>().size())> > : true_type {};
 
 template <class, typename = void> struct is_iterator : false_type {};
 template <class T> struct is_iterator<T, void_t<
@@ -216,8 +223,8 @@ template <class T> struct std_container<T, void_t<
         > > : true_type {};
 
 template <class T, typename = void> struct can_reserve : false_type {};
-template <class T> struct can_reserve<T, void_t<decltype(declval<T&>().reserve())> > :
-        std_container<T> {};
+template <class T> struct can_reserve<T, void_t<decltype(declval<T>().reserve(
+        declval<size_t>()))> > : std_container<T> {};
 
 template <class, typename = void, typename = void> struct is_container : false_type {};
 template <class T> struct is_container<T, void_t<
@@ -307,20 +314,21 @@ template <class, typename = void> struct is_sequential : false_type {};
 template <class T> struct is_sequential<T, void_t<
         decltype(declval<T>().front())> > : is_container<T> {};
 
-template <class, typename = void> struct can_change_back : false_type {};
-template <class T> struct can_change_back<T, void_t<
+template <class, typename = void> struct can_push_back : false_type {};
+template <class T> struct can_push_back<T, void_t<
         decltype(declval<T&>().push_back(declval<val_type_t<T> >()))> > : is_sequential<T> {};
 
-template <class T> struct custom_arith : integral_constant<bool, can_change_back<T>::value
-        && two_way_iter<T>::value || is_multi_assoc<T>::value || is_adaptor<T>::value> {};
+template <class T> struct custom_arith : integral_constant<bool, can_push_back<T>::value ||
+        is_associative<T>::value || is_adaptor<T>::value> {};
 
 
-template <class, typename = void> struct is_str : false_type {};
-template <class T> struct is_str<T, enable_if_t<is_one_of<basic_string<typename T::value_type>,
+template <class, typename = void> struct is_flexible_str : false_type {};
+template <class T> struct is_flexible_str<T, enable_if_t<is_one_of<
+        basic_string<typename T::value_type>,
         typename remove_reference<T>::type >::value> > : true_type {};
-template <class T> struct is_str<T, enable_if_t<is_pointer<T>::value && is_same<
+template <class T> struct is_flexible_str<T, enable_if_t<is_pointer<T>::value && is_same<
         remove_cvref_t<typename remove_pointer<T>::type>, char>::value> > : true_type {};
-template <class T> struct is_str<T, enable_if_t<is_array<T>::value && is_same<
+template <class T> struct is_flexible_str<T, enable_if_t<is_array<T>::value && is_same<
         remove_cvref_t<typename remove_extent<T>::type>, char>::value> > : true_type {};
 
 template <typename T> struct is_bounded_array : false_type {};
@@ -329,8 +337,8 @@ template <typename T, size_t N> struct is_bounded_array<T[N]> : true_type {};
 
 template <class, typename = void> struct custom_print : false_type {};
 template <class T> struct custom_print<T, enable_if_t<is_tuple<T>::value> > : true_type {};
-template <class T> struct custom_print<T, enable_if_t<(iterable<T>::value || std_container<T>::value)
-        && !is_str<T>::value> > : true_type {};
+template <class T> struct custom_print<T, enable_if_t<(iterable<T>::value ||
+        std_container<T>::value) && !is_flexible_str<T>::value> > : true_type {};
 
 
 template <class, typename = void> struct shallow : false_type {};
@@ -351,19 +359,23 @@ string operator "" _s(const char* str, size_t len) { return string(str, len); }
 
 template <typename T, size_t N> enable_if_t<!is_one_of<T, char>::value || N == 0, int>
         SZ (const T (&t)[N]) { return N; }
-template <class T> enable_if_t<instant_size<T>::value, int> SZ (const T& t)
+template <class T> enable_if_t<has_size<T>::value, int> SZ (const T& t)
 {
     return t.size();
 }
-template <class T> enable_if_t<!instant_size<T>::value && in_iter<T>::value
-        && !is_str<T>::value, int> SZ (const T& t)
+template <class T> enable_if_t<!has_size<T>::value && in_iter<T>::value
+        && !is_flexible_str<T>::value, int> SZ (const T& t)
 {
     return distance(ALL(t));
 }
-template <class T> enable_if_t<is_str<T>::value
+template <class T> enable_if_t<is_flexible_str<T>::value
         && (is_pointer<T>::value || is_array<T>::value), int> SZ (const T& t)
 {
     return strlen(t);
+}
+template <class T> enable_if_t<is_tuple<T>::value, int> SZ(const T&)
+{
+    return tuple_size<T>::value;
 }
 
 template <class T> enable_if_t<is_tuple<T>::value, string> GET_START()
@@ -415,52 +427,79 @@ string extract()
     return o;
 }
 
+
+template <class T> enable_if_t<can_push_back<T>::value, val_type_t<T> > pop(T& t)
+{
+    val_type_t<T> v = t.back();
+    t.popb();
+    return v;
+}
+template <class T> enable_if_t<is_adaptor<T>::value &&
+        is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
+        val_type_t<T> > pop(T& t)
+{
+    val_type_t<T> v = t.front();
+    t.pop();
+    return v;
+}
+template <class T> enable_if_t<is_adaptor<T>::value &&
+        !is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
+        val_type_t<T> > pop(T& t)
+{
+    val_type_t<T> v = t.top();
+    t.pop();
+    return v;
+}
+
+
 template <typename T> enable_if_t<!custom_print<T>::value, ostream&>
         INSERT(ostream& os, const T& t, bool = false) { return os << t; }
 
 template <class T> enable_if_t<is_tuple<T>::value
         && !safe_tuple_size<T>::value, ostream&> INSERT(ostream& os, const T&, bool)
 {
-    return INSERT(INSERT(os, GET_START<T>()), GET_END<T>(false));
+    return os << GET_START<T>() << GET_END<T>(false);
 }
 
 template <size_t N, class T> enable_if_t<is_tuple<T>::value
         && N == safe_tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
 {
-    return INSERT(INSERT(os, get<N>(t), b), GET_END<T>());
+    return INSERT(os, get<N>(t), b) << GET_END<T>();
 }
 
 template <size_t N, class T> enable_if_t<is_tuple<T>::value
         && N < safe_tuple_size<T>::value - 1, ostream&> INSERT(ostream& os, const T& t, bool b)
 {
-    return INSERT <N + 1> (INSERT(INSERT(os, get<N>(t), false), GET_STEP<T, N>()), t, b);
+    return INSERT<N + 1>(INSERT(os, get<N>(t), false) << GET_STEP<T, N>(), t, b);
 }
 template <class T> enable_if_t<is_tuple<T>::value && safe_tuple_size<T>::value, ostream&>
         INSERT(ostream& os, const T& t, bool b)
 {
-    return INSERT<0>(INSERT(os, GET_START<T>()), t, b);
+    return INSERT<0>(os << GET_START<T>(), t, b);
 }
 
-
+template <typename T, class C> ostream& INSERT(ostream& os, T it, T e, bool b)
+{
+    os << GET_START<C>();
+    if (it != e)
+    {
+        const auto stop = prev(e);
+        for (; it != stop; ++it) { INSERT(os, *it, false) << GET_STEP<C>(); }
+        INSERT(os, *stop, b);
+    }
+    return os << GET_END<C>(b);
+}
 template <class T> enable_if_t<iterable<T>::value && two_way_iter<T>::value
-        && !is_bounded_array<T>::value && !is_str<T>::value
+        && !is_bounded_array<T>::value && !is_flexible_str<T>::value
         || is_bounded_array<T>::value && !holds<T, char>::value, ostream&>
         INSERT(ostream& os, const T& t, bool b)
 {
-    INSERT(os, GET_START<T>());
-    if (SZ(t))
-    {
-        const auto e = prev(end(t));
-        for (auto it = begin(t); it != e; ++it) { INSERT(INSERT(os, *it, false), GET_STEP<T>()); }
-        INSERT(os, *e, b);
-    }
-    return INSERT(os, GET_END<T>(b));
+    return INSERT<typename T::const_iterator, T>(os, CALL(t), b);
 }
-
 template <class T> enable_if_t<iterable<T>::value &&
         !two_way_iter<T>::value, ostream&> INSERT(ostream& os, const T& t, bool b)
 {
-    INSERT(os, GET_START<T>());
+    os << GET_START<T>();
     if (!t.empty())
     {
         auto it = begin(t);
@@ -469,44 +508,47 @@ template <class T> enable_if_t<iterable<T>::value &&
         {
             for (auto next = it; ++next != e; ++it)
             {
-                INSERT(INSERT(os, *it, false), GET_STEP<T>());
+                INSERT(os, *it, false) << GET_STEP<T>();
             }
             INSERT(os, *it, true);
         }
         else
         {
             INSERT(os, *it, false);
-            while (++it != e) { INSERT(INSERT(os, GET_STEP<T>()), *it, false); }
+            while (++it != e) { INSERT(os << GET_STEP<T>(), *it, false); }
         }
     }
-    return INSERT(os, GET_END<T>(b));
+    return os << GET_END<T>(b);
 }
 
 template <class T> enable_if_t<is_adaptor<T>::value &&
         is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value, ostream&>
         INSERT (ostream& os, T t, bool b)
 {
-    INSERT(os, GET_START<T>());
+    os << GET_START<T>();
     for (bool a = true; !t.empty(); a = false)
     {
         auto i = pop(t);
-        INSERT(a ? os : INSERT(os, GET_STEP<T>()), i, b && t.empty());
+        INSERT(a ? os : os << GET_STEP<T>(), i, b && t.empty());
     }
-    return INSERT(os, GET_END<T>(b));
+    return os << GET_END<T>(b);
 }
 template <class T> enable_if_t<is_adaptor<T>::value &&
         !is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value, ostream&>
         INSERT (ostream& os, T t, bool b)
 {
     typename T::container_type a;
-    while (!t.empty()) { a.pf(pop(t)); }
-    return INSERT(os, a, b);
+    while (!t.empty()) { a.pb(pop(t)); }
+    return INSERT<typename T::container_type::const_reverse_iterator, typename T::container_type>(
+            os, CRALL(a), b);
 }
 template <class T> enable_if_t<custom_print<T>::value,
         ostream&> operator << (ostream& os, const T& t)
 {
     return INSERT(os, t, printLN);
 }
+
+
 template <class T> enable_if_t<custom_print<T>::value, string&> operator += (string& s, const T& t)
 {
     INSERT(str_buffer, t, printLN);
@@ -534,8 +576,8 @@ template <size_t N = 0, typename T> enable_if_t<is_tuple<T>::value
     return operator >> <N + 1, T> (is >> get<N>(t), t);
 }
 
-template <class T> enable_if_t<can_change_back<T>::value && holds<T, char>::value
-        && !is_str<T>::value, istream&> operator >> (istream& is, T& t)
+template <class T> enable_if_t<can_push_back<T>::value && holds<T, char>::value
+        && !is_flexible_str<T>::value, istream&> operator >> (istream& is, T& t)
 {
     if (t.empty())
     {
@@ -546,7 +588,7 @@ template <class T> enable_if_t<can_change_back<T>::value && holds<T, char>::valu
     else { for (auto& i : t) { is >> i; } }
     return is;
 }
-template <class T> enable_if_t<can_change_back<T>::value && holds<T, bool>::value,
+template <class T> enable_if_t<can_push_back<T>::value && holds<T, bool>::value,
         istream&> operator >> (istream& is, T& t)
 {
     if (t.empty())
@@ -566,7 +608,7 @@ template <class T> enable_if_t<can_change_back<T>::value && holds<T, bool>::valu
     }
     return is;
 }
-template <class T> enable_if_t<iterable<T>::value && !(can_change_back<T>::value
+template <class T> enable_if_t<iterable<T>::value && !(can_push_back<T>::value
         && holds<T, char, bool>::value || is_map<T>::value || is_associative<T>::value
         && holds<T, char, bool>::value) && !holds<T, bool>::value, istream&>
         operator >> (istream& is, T& t)
@@ -574,7 +616,7 @@ template <class T> enable_if_t<iterable<T>::value && !(can_change_back<T>::value
     for (auto& i : t) { is >> i; }
     return is;
 }
-template <class T> enable_if_t<iterable<T>::value && !(can_change_back<T>::value
+template <class T> enable_if_t<iterable<T>::value && !(can_push_back<T>::value
         && holds<T, char, bool>::value || is_map<T>::value || is_associative<T>::value
         && holds<T, char, bool>::value) && holds<T, bool>::value, istream&>
         operator >> (istream& is, T& t)
@@ -661,7 +703,7 @@ template <class T, typename = void> struct myhash
 template <typename T> size_t& hash_combine(size_t&, const T&);
 
 template <class T> struct myhash<T, enable_if_t<iterable<T>::value
-        && !is_one_of<T, vector<bool> >::value && !is_str<T>::value> >
+        && !is_one_of<T, vector<bool> >::value && !is_flexible_str<T>::value> >
 {
     size_t operator () (const T& t) const
     {
@@ -727,7 +769,7 @@ string repl(const string& a, const string& old, const string& ne, uint n = -1)
     }
     return o + a.substr(prev);
 }
-template <class T> enable_if_t<!is_str<T>::value, string>
+template <class T> enable_if_t<!is_flexible_str<T>::value, string>
         repl(const string& a, const T& old, const string& ne, uint n = -1)
 {
     typedef pair<size_t, size_t> location;
@@ -840,7 +882,7 @@ template <typename... T> istream& FSCAN(istream& is, T&... t)
 }
 #define SCAN(...) FSCAN(in, __VA_ARGS__)
 
-template <typename T> enable_if_t<!is_str<T>::value, bool>
+template <typename T> enable_if_t<!is_flexible_str<T>::value, bool>
         scan_unless(istream& is, T& t, const T& stop)
 {
     T temp;
@@ -1102,32 +1144,6 @@ template <typename T = uint> T mask(int start, int end = sizeof(T) * CHAR_BIT)
 }
 
 
-template <class T> enable_if_t<can_change_back<T>::value, val_type_t<T> > pop(T& t)
-{
-    val_type_t<T> v = t.back();
-    t.popb();
-    return v;
-}
-template <class T> enable_if_t<is_adaptor<T>::value &&
-        is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
-        val_type_t<T> > pop(T& t)
-{
-    val_type_t<T> v = t.front();
-    t.pop();
-    return v;
-}
-template <class T> enable_if_t<is_adaptor<T>::value &&
-        !is_one_of<queue<val_type_t<T>, typename T::container_type>, T>::value,
-        val_type_t<T> > pop(T& t)
-{
-    val_type_t<T> v = t.top();
-    t.pop();
-    return v;
-}
-
-
-
-
 template <class I, class C> bool strict_sorted(I first, I last, C c, bool canEqual = false)
 {
     if (first == last) { return true; }
@@ -1289,7 +1305,7 @@ template <typename F, typename... Args> void GET_STATS (int tests, F f, const Ar
     typedef typename conditional<chrono::high_resolution_clock::is_steady,
             chrono::high_resolution_clock, chrono::steady_clock>::type clock;
     vector<ullng> times(tests);
-    FOR(i, tests)
+    UE(i, tests)
     {
         auto s = clock::now();
         f();
@@ -1297,11 +1313,11 @@ template <typename F, typename... Args> void GET_STATS (int tests, F f, const Ar
     }
     ullng mean = accumulate(ALL(times), 0ull) / tests;
     long double std_dev = 0;
-    FOR(i, tests) { std_dev += pow((long double)(llng(times[i] - mean)), 2); }
+    UE(i, tests) { std_dev += pow((long double)(llng(times[i] - mean)), 2); }
     std_dev = sqrt(std_dev / (tests - 1 ? : 1));
 
-    fprintf(stderr, "[%s %s called %.1Lg times at line #%d in %s with mean %.4Lg ns and std deviation %.2Lg]\n",
-            args..., (long double)(mean), std_dev);
+    fprintf(stderr, "[%s %s called %.1Lg times at line #%d in %s with mean %.4Lg ns"
+            "and standard deviation %.2Lg]\n", args..., (long double)(mean), std_dev);
 }
 
 #define TIE(t, type, ...) type __VA_ARGS__; tie(__VA_ARGS__) <<= t;
@@ -1587,7 +1603,7 @@ template <class T> enable_if_t<can_reserve<T>::value> try_reserving(T& t, uint n
 template <class T> enable_if_t<!can_reserve<T>::value> try_reserving(T&, uint) {}
 
 
-template <class T> enable_if_t<can_change_back<T>::value && two_way_iter<T>::value, T&>
+template <class T> enable_if_t<can_push_back<T>::value && two_way_iter<T>::value, T&>
         MULTIPLY (T& t, int frac, double dec = 0.0)
 {
     const uint period = t.size();
@@ -1602,7 +1618,7 @@ template <class T> enable_if_t<can_change_back<T>::value && two_way_iter<T>::val
     t.insert(t.cend(), t.cbegin(), next(t.cbegin(), round(period * (frac - m / 2 + dec))));
     return t;
 }
-template <class T> enable_if_t<can_change_back<T>::value && two_way_iter<T>::value, T&>
+template <class T> enable_if_t<can_push_back<T>::value && two_way_iter<T>::value, T&>
         DIVIDE(T& t, double n)
 {
     t.erase(n < 0.5 ? next(t.begin(), round(t.size() * n))
@@ -1616,7 +1632,7 @@ template <class T> enable_if_t<is_multi_assoc<T>::value, T&> MULTIPLY(T& t, int 
     for (auto it = t.cbegin(); it != t.cend(); )
     {
         typename T::const_iterator upper = t.equal_range(*it).second;
-        for (; it != upper; ++it) { FOR(i, frac - 1) { t.insert(it, *it); } }
+        for (; it != upper; ++it) { UE(i, frac - 1) { t.insert(it, *it); } }
     }
     return t;
 }
@@ -1660,7 +1676,7 @@ template <class T> enable_if_t<custom_arith<T>::value, T&> operator /= (T& t, do
     return n > 1 ? DIVIDE(t, 1.0 / n) : t *= 1.0 / n;
 }
 
-template <class A, class B> enable_if_t<can_change_back<A>::value && two_way_iter<A>::value
+template <class A, class B> enable_if_t<can_push_back<A>::value && two_way_iter<A>::value
         && iterable<B>::value && !is_one_of<B, val_type_t<A> >::value, A&>
         operator += (A& a, const B& b)
 {
@@ -1668,7 +1684,7 @@ template <class A, class B> enable_if_t<can_change_back<A>::value && two_way_ite
     a.insert(a.cend(), begin(b), end(b));
     return a;
 }
-template <class A, class B> enable_if_t<can_change_back<A>::value && two_way_iter<A>::value
+template <class A, class B> enable_if_t<can_push_back<A>::value && two_way_iter<A>::value
         && is_one_of<B, val_type_t<A>>::value, A&> operator += (A& a, const B& b)
 {
     try_reserving(a, a.size() + 1);
@@ -1676,7 +1692,7 @@ template <class A, class B> enable_if_t<can_change_back<A>::value && two_way_ite
     return a;
 }
 
-template <class A, class B> enable_if_t<can_change_back<A>::value
+template <class A, class B> enable_if_t<can_push_back<A>::value
         && is_one_of<B, val_type_t<A> >::value, A&> operator += (A& a, const B& b)
 {
     a.push_front(b);
@@ -1777,13 +1793,14 @@ void MAIN(const string& name)
     pout = &fout;
     MAIN();
 }
+#ifndef UNDEFINE_MAIN
 int main()
 {
     cin.tie(nullptr)->sync_with_stdio(false);
     cin.exceptions(cin.failbit);
     MAIN();//"$name");
 }
-
+#endif
 
 
 
